@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/ci-mobile.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/ci-mobile.yaml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install flutter
+        uses: ./.github/actions/install-flutter
+        with:
+          working-directory: mobile
+      - name: Generate secret files
+        run: |
+          echo ${{ secrets.FIREBASE_OPTIONS_DEV }} | base64 --decode > lib/firebase_options.dart
+      - name: Analyze
+        run: dart analyze . --no-fatal-warnings
+      - name: Format
+        run: chmod +x .scripts/format.sh && ./.scripts/format.sh
+      - name: Test
+        run: flutter test

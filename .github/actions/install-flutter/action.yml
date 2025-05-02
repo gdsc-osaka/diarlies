@@ -1,0 +1,51 @@
+name: Install flutter & cache
+description: Install flutter and cache dependencies
+
+inputs:
+  working-directory:
+    description: 'working-directory'
+    required: true
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        flutter-version-file: ${{ inputs.working-directory }}/pubspec.yaml # path to pubspec.
+        cache: true
+    - name: Cache pubspec dependencies
+      uses: actions/cache@v3
+      id: cache-pubspec
+      with:
+        path: |
+          ${{ env.FLUTTER_HOME }}/.pub-cache
+          **/.packages
+          **/.flutter-plugins
+          **/.flutter-plugin-dependencies
+          **/.dart_tool/package_config.json
+        key: build-pubspec-${{ inputs.working-directory }}-${{ hashFiles('**/pubspec.lock') }}
+        restore-keys: |
+          build-pubspec-
+    - name: Install pubspec dependencies
+      run: flutter pub get
+      if: ${{ steps.cache-pubspec.outputs.cache-hit != 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: Print cache result
+      run: echo ${{ steps.cache-pubspec.outputs.cache-hit }}
+      shell: bash
+#    - name: Cache build runner
+#      uses: actions/cache@v2
+#      with:
+#        path: |
+#          **/.dart_tool/build
+#        key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+#        restore-keys: |
+#          build-runner-
+#      shell: bash
+
+# 参考
+# キャッシュ: https://blog.dalt.me/3249
