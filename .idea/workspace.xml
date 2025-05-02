@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f2e21802-2b2b-4a4b-b222-2f700d1a1c6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.scripts/gen_openapi.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/.openapi-generator-ignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/.openapi-generator/FILES" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/.openapi-generator/VERSION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/analysis_options.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/doc/Error.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/doc/NewUser.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/doc/User.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/doc/UsersApi.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/api.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/api.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/api/users_api.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/api_util.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/auth/api_key_auth.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/auth/auth.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/auth/basic_auth.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/auth/bearer_auth.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/auth/oauth.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/date_serializer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/date.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/error.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/error.g.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/new_user.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/new_user.g.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/user.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/model/user.g.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/serializers.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/lib/src/serializers.g.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/pubspec.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/test/error_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/test/new_user_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/test/user_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile/api/test/users_api_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/openapi/openapi.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2wX8MhZQlTJbnRsE0W7fKCxa4Pg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/hari/proj/dearlies",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sh" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="openapi.yaml" type="SwaggerCodegen" editBeforeRun="true" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="generateToPath" value="$USER_HOME$/gen" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorType" value="OPENAPI_GENERATOR_V7" />
+      <option name="jdkPath" value="$APPLICATION_HOME_DIR$/jbr/Contents/Home/bin/java" />
+      <option name="language" value="typescript-node" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="specificationPath" value="$PROJECT_DIR$/openapi/openapi.yaml" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="OpenAPI/Swagger Code Generator.openapi.yaml" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f2e21802-2b2b-4a4b-b222-2f700d1a1c6b" name="Changes" comment="" />
+      <created>1746176511838</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1746176511838</updated>
+      <workItem from="1746176512925" duration="2829000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
