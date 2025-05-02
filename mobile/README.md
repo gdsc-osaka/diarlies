@@ -1,4 +1,4 @@
-# dearlies
+# diarlies
 
 A diary app with LLM
 

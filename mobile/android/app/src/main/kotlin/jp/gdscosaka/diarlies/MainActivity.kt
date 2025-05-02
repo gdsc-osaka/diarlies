@@ -1,4 +1,4 @@
-package jp.gdscosaka.dearlies
+package jp.gdscosaka.diarlies
 
 import io.flutter.embedding.android.FlutterActivity
 
