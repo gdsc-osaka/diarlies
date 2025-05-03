@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - 'backend/**'
-      - '.github/workflows/ci-backend.yaml'
+      - '.github/workflows/cd-backend.yaml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
