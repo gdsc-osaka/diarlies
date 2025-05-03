@@ -2,18 +2,18 @@
   "name": "diarlies-api",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
-    "start": "node --env-file=.env ./dist/main.js",
-    "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && dotenvx run --env-file=.env.dev -- npx ts-node-dev ./src/main.ts",
-    "build": "tsc --outDir dist",
+    "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "lint": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" && eslint src test -c eslint.config.mjs",
     "fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" && eslint --fix src/**/*.ts test/**/*.ts -c eslint.config.mjs",
     "test:unit": "dotenvx run --env-file=.env -- vitest test/unit/",
     "test:integration": "dotenvx run --env-file=.env -- vitest test/integration/",
+    "test:coverage": "dotenvx run --env-file=.env -- vitest test/ --coverage",
     "fire:start": "cd firebase && firebase emulators:start --import .emulator_export",
     "fire:export": "cd firebase && firebase emulators:export .emulator_export"
   },
@@ -27,6 +27,7 @@
     "@eslint/js": "^9.26.0",
     "@types/node": "^22.15.3",
     "@typescript-eslint/parser": "^8.31.1",
+    "@vitest/coverage-v8": "^3.1.2",
     "drizzle-kit": "^0.31.0",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
@@ -37,10 +38,13 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1",
-    "vitest": "^3.1.2"
+    "vitest": "^3.1.2",
+    "wrangler": "^4.14.1"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^0.19.6",
     "drizzle-orm": "^0.43.1",
+    "hono": "^4.7.8",
     "log4js": "^6.9.1",
     "neverthrow": "^8.2.0",
     "postgres": "^3.4.5"
