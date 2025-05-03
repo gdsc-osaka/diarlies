@@ -55,7 +55,8 @@ jobs:
         run: |
           keytool -keystore ${{ github.workspace }}/debug.keystore \
           -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 \
-          -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
+          -storepass android -keypass android -alias androiddebugkey \
+          -dname "CN=Android Debug, O=Android, C=US"
       - name: Prepare Debug key.properties
         shell: bash
         run: |
