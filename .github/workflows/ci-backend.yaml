@@ -40,6 +40,7 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
+          cache-dependency-path: 'backend/pnpm-lock.yaml'
       - name: cache-node-modules
         uses: actions/cache@v3
         id: cache-node
