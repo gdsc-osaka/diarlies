@@ -60,9 +60,6 @@ jobs:
       - name: Test
         shell: bash
         run: npm run test:unit
-      - name: Build
-        shell: bash
-        run: npm run build
       - name: Deploy
         run: pnpm run deploy
         env:
