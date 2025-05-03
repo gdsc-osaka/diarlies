@@ -1,8 +1,7 @@
-import java.io.File
 import java.util.*
 
 val keystoreProperties = Properties().apply {
-        val file = File("key.properties")
+        val file = rootProject.file("key.properties")
         if (file.exists()) load(file.reader())
     }
 
