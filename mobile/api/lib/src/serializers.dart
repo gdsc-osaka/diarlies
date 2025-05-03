@@ -14,22 +14,14 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:api/src/date_serializer.dart';
 import 'package:api/src/model/date.dart';
 
-import 'package:api/src/model/error.dart';
-import 'package:api/src/model/new_user.dart';
-import 'package:api/src/model/user.dart';
+import 'package:api/src/model/get_index200_response.dart';
 
 part 'serializers.g.dart';
 
 @SerializersFor([
-  Error,
-  NewUser,
-  User,
+  GetIndex200Response,
 ])
 Serializers serializers = (_$serializers.toBuilder()
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(User)]),
-        () => ListBuilder<User>(),
-      )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())
       ..add(const DateSerializer())
