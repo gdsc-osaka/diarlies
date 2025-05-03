@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node --env-file=.env ./dist/main.js",
     "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && dotenvx run --env-file=.env.dev -- npx ts-node-dev ./src/main.ts",
-    "build": "tsc src/*.ts src/**/*.ts --outDir dist",
+    "build": "tsc --outDir dist",
     "lint": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" && eslint src test -c eslint.config.mjs",
     "fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" && eslint --fix src/**/*.ts test/**/*.ts -c eslint.config.mjs",
     "test:unit": "dotenvx run --env-file=.env -- vitest test/unit/",
