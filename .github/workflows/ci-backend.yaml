@@ -56,6 +56,10 @@ jobs:
       - name: Install node modules
         if: ${{ steps.cache-node.outputs.cache-hit != 'true' }}
         run: pnpm i
+      - name: Generate .env
+        shell: bash
+        run: |
+          echo "" > .env
       - name: Lint
         shell: bash
         run: npm run lint
