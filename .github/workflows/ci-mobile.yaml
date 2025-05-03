@@ -58,10 +58,10 @@ jobs:
           -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
       - name: Prepare Debug key.properties
         run: |
-          echo "storePassword=android" > android/key.properties
-          echo "keyPassword=android" >> android/key.properties
-          echo "keyAlias=androiddebugkey" >> android/key.properties
-          echo "storeFile=${{ github.workspace }}/debug.keystore" >> android/key.properties
+          echo "storePassword=android" > ${{ github.workspace }}/mobile/android/key.properties
+          echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
+          echo "keyAlias=androiddebugkey" >> ${{ github.workspace }}/mobile/android/key.properties
+          echo "storeFile=${{ github.workspace }}/debug.keystore" >> ${{ github.workspace }}/mobile/android/key.properties
       - name: Build App Bundle
         run: flutter build appbundle --release
   build-ios:
