@@ -34,3 +34,5 @@ lerna-debug.log*
 
 # Test coverage
 coverage
+
+.key

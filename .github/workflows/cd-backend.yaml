@@ -1,8 +1,8 @@
-name: CI (backend)
+name: CD (backend)
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches:
       - main
     paths:
@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  analyze:
+  deploy:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     defaults:
@@ -24,6 +24,7 @@ jobs:
       checks: write
       contents: read
       pull-requests: read
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -62,3 +63,7 @@ jobs:
       - name: Build
         shell: bash
         run: npm run build
+      - name: Deploy
+        run: pnpm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
