@@ -1,4 +1,4 @@
-name: CI
+name: CI (mobile)
 
 on:
   workflow_dispatch:
