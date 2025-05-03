@@ -1,8 +1,5 @@
 import { Configuration, configure, getLogger } from "log4js";
-import * as path from "node:path";
 import { env } from "./env";
-
-const logDir = path.resolve(__dirname, "./log");
 
 const log4jsConfig: Configuration = {
   appenders: {
@@ -15,14 +12,14 @@ const log4jsConfig: Configuration = {
     },
     application: {
       type: "dateFile",
-      filename: path.resolve(logDir, "application.log"),
+      filename: "log/application.log",
       pattern: ".yyyyMMdd-hhmmss",
       keepFileExt: true,
       numBackups: 5,
     },
     access: {
       type: "dateFile",
-      filename: path.resolve(logDir, "access.log"),
+      filename: "log/access.log",
       pattern: ".yyyyMMdd-hhmmss",
       keepFileExt: true,
       numBackups: 5,

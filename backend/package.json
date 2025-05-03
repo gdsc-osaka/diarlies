@@ -6,7 +6,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && wrangler dev",
+    "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && wrangler dev --port 3000",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "lint": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" && eslint src test -c eslint.config.mjs",
@@ -22,6 +22,16 @@
     "url": "https://github.com/gdsc-osaka/dearlies.git"
   },
   "private": true,
+  "dependencies": {
+    "@hono/arktype-validator": "^2.0.1",
+    "arktype": "^2.1.20",
+    "drizzle-orm": "^0.43.1",
+    "hono": "^4.7.8",
+    "hono-openapi": "^0.4.8",
+    "log4js": "^6.9.1",
+    "neverthrow": "^8.2.0",
+    "postgres": "^3.4.5"
+  },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.42.2",
     "@eslint/js": "^9.26.0",
@@ -40,13 +50,5 @@
     "typescript-eslint": "^8.31.1",
     "vitest": "^3.1.2",
     "wrangler": "^4.14.1"
-  },
-  "dependencies": {
-    "@hono/zod-openapi": "^0.19.6",
-    "drizzle-orm": "^0.43.1",
-    "hono": "^4.7.8",
-    "log4js": "^6.9.1",
-    "neverthrow": "^8.2.0",
-    "postgres": "^3.4.5"
   }
 }
