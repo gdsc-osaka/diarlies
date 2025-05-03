@@ -50,22 +50,22 @@ jobs:
         uses: ./.github/actions/install-flutter
         with:
           working-directory: mobile
-      - name: Generating debug keystore and SHA1 key
-        shell: bash
-        run: |
-          keytool -keystore ${{ github.workspace }}/debug.keystore \
-          -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 \
-          -storepass android -keypass android -alias androiddebugkey \
-          -dname "CN=Android Debug, O=Android, C=US"
-      - name: Prepare Debug key.properties
-        shell: bash
-        run: |
-          echo "storePassword=android" > ${{ github.workspace }}/mobile/android/key.properties
-          echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
-          echo "keyAlias=androiddebugkey" >> ${{ github.workspace }}/mobile/android/key.properties
-          echo "storeFile=${{ github.workspace }}/debug.keystore" >> ${{ github.workspace }}/mobile/android/key.properties
+#      - name: Generating debug keystore and SHA1 key
+#        shell: bash
+#        run: |
+#          keytool -keystore ${{ github.workspace }}/debug.keystore \
+#          -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 \
+#          -storepass android -keypass android -alias androiddebugkey \
+#          -dname "CN=Android Debug, O=Android, C=US"
+#      - name: Prepare Debug key.properties
+#        shell: bash
+#        run: |
+#          echo "storePassword=android" > ${{ github.workspace }}/mobile/android/key.properties
+#          echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
+#          echo "keyAlias=androiddebugkey" >> ${{ github.workspace }}/mobile/android/key.properties
+#          echo "storeFile=${{ github.workspace }}/debug.keystore" >> ${{ github.workspace }}/mobile/android/key.properties
       - name: Build App Bundle
-        run: flutter build appbundle --release
+        run: flutter build appbundle --debug
   build-ios:
     timeout-minutes: 15
     runs-on: macos-latest
