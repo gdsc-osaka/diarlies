@@ -1,0 +1,6 @@
+# Required to run "flutter run --release"
+# Rename this file to key.properties and replace <path-to-your-keystore-file> with the path to your keystore file
+storePassword=android
+keyPassword=android
+keyAlias=androiddebugkey
+storeFile=<path-to-your-keystore-file>

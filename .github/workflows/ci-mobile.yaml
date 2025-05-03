@@ -32,12 +32,47 @@ jobs:
         uses: ./.github/actions/install-flutter
         with:
           working-directory: mobile
-      - name: Generate secret files
-        run: |
-          echo ${{ secrets.FIREBASE_OPTIONS_DEV }} | base64 --decode > lib/firebase_options.dart
       - name: Analyze
         run: dart analyze . --no-fatal-warnings
       - name: Format
         run: chmod +x .scripts/format.sh && ./.scripts/format.sh
       - name: Test
         run: flutter test
+  build-android:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install flutter
+        uses: ./.github/actions/install-flutter
+        with:
+          working-directory: mobile
+      - name: Generating debug keystore and SHA1 key
+        shell: bash
+        run: |
+          keytool -keystore debug.keystore -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
+      - name: Prepare Debug key.properties
+        run: |
+          echo "storePassword=android" > android/key.properties
+          echo "keyPassword=android" >> android/key.properties
+          echo "keyAlias=androiddebugkey" >> android/key.properties
+          echo "storeFile=debug.keystore" >> android/key.properties
+      - name: Build App Bundle
+        run: flutter build appbundle --release
+  build-ios:
+    timeout-minutes: 15
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install flutter
+        uses: ./.github/actions/install-flutter
+        with:
+          working-directory: mobile
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
