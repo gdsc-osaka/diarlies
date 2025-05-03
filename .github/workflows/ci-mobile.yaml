@@ -57,6 +57,7 @@ jobs:
           -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 \
           -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
       - name: Prepare Debug key.properties
+        shell: bash
         run: |
           echo "storePassword=android" > ${{ github.workspace }}/mobile/android/key.properties
           echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
