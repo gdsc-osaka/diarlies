@@ -53,13 +53,15 @@ jobs:
       - name: Generating debug keystore and SHA1 key
         shell: bash
         run: |
-          keytool -keystore ~/.android/debug.keystore -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
+          keytool -keystore ${{ github.workspace }}/android/app/debug.keystore \
+          -J-Dkeystore.pkcs12.legacy -genkey -v -keyalg RSA -validity 10950 \
+          -storepass android -alias androiddebugkey -dname "CN=Android Debug, O=Android, C=US"
       - name: Prepare Debug key.properties
         run: |
           echo "storePassword=android" > android/key.properties
           echo "keyPassword=android" >> android/key.properties
           echo "keyAlias=androiddebugkey" >> android/key.properties
-          echo "storeFile=~/.android/debug.keystore" >> android/key.properties
+          echo "storeFile=${{ github.workspace }}/android/app/debug.keystore" >> android/key.properties
       - name: Build App Bundle
         run: flutter build appbundle --release
   build-ios:
