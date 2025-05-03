@@ -2,7 +2,7 @@ import java.io.File
 import java.util.*
 
 val keystoreProperties = Properties().apply {
-        var file = File("key.properties")
+        val file = File("key.properties")
         if (file.exists()) load(file.reader())
     }
 
@@ -19,7 +19,7 @@ plugins {
 android {
     namespace = "jp.gdscosaka.diarlies"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -49,7 +49,7 @@ android {
                 keyAlias = System.getenv()["CM_KEY_ALIAS"]
                 keyPassword = System.getenv()["CM_KEY_PASSWORD"]
             } else {
-                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storeFile = keystoreProperties.getProperty("storeFile")?.let { file(it) }
                 storePassword = keystoreProperties.getProperty("storePassword")
                 keyAlias = keystoreProperties.getProperty("keyAlias")
                 keyPassword = keystoreProperties.getProperty("keyPassword")
@@ -57,8 +57,13 @@ android {
         }
     }
     buildTypes {
-        getByName("release") {
+        getByName("debug") {
             isMinifyEnabled = false
+            isShrinkResources = false
+        }
+
+        getByName("release") {
+            isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("release")
         }
     }
