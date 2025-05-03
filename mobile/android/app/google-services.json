@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "223226992422",
+    "project_id": "diarlies",
+    "storage_bucket": "diarlies.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223226992422:android:563d2c5b8dfcbb00c413e7",
+        "android_client_info": {
+          "package_name": "jp.gdscosaka.diarlies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223226992422-rkhnmjqlnit6ggapkm677bq22uev77tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj_b8ab_QFKJ3qFrPL9NpvRriXtBOAE6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223226992422-rkhnmjqlnit6ggapkm677bq22uev77tj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
