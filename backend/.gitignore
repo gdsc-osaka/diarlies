@@ -1,0 +1,14 @@
+/node_modules/**
+/dist
+.env
+.env.dev
+.env.production
+
+# APIドキュメント
+/doc
+
+/log
+
+/coverage
+
+stripe.exe
