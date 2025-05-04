@@ -8,15 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@hono/arktype-validator':
-        specifier: ^2.0.1
-        version: 2.0.1(arktype@2.1.20)(hono@4.7.8)
       '@hono/zod-validator':
         specifier: ^0.5.0
         version: 0.5.0(hono@4.7.8)(zod@3.24.3)
-      arktype:
-        specifier: ^2.1.20
-        version: 2.1.20
       drizzle-orm:
         specifier: ^0.43.1
         version: 0.43.1(@opentelemetry/api@1.9.0)(postgres@3.4.5)
@@ -3159,8 +3153,10 @@ snapshots:
   '@ark/schema@0.46.0':
     dependencies:
       '@ark/util': 0.46.0
+    optional: true
 
-  '@ark/util@0.46.0': {}
+  '@ark/util@0.46.0':
+    optional: true
 
   '@babel/helper-string-parser@7.27.1': {}
 
@@ -3610,6 +3606,7 @@ snapshots:
     dependencies:
       arktype: 2.1.20
       hono: 4.7.8
+    optional: true
 
   '@hono/zod-validator@0.5.0(hono@4.7.8)(zod@3.24.3)':
     dependencies:
@@ -4167,6 +4164,7 @@ snapshots:
     dependencies:
       '@ark/schema': 0.46.0
       '@ark/util': 0.46.0
+    optional: true
 
   arrify@2.0.1:
     optional: true

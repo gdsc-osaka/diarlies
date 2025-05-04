@@ -1,16 +1,18 @@
-import {type} from "arktype";
-import {ok, Result} from "neverthrow";
+import { ok, Result } from "neverthrow";
+import z from "zod";
+import "zod-openapi/extend";
 
-export const Timestamp = type({
-    seconds: "number % 1", // integer
-    nanoseconds: "number % 1", // integer
-});
-
-export type Timestamp = typeof Timestamp.infer;
+export const Timestamp = z
+  .object({
+    seconds: z.number().int(),
+    nanoseconds: z.number().int(),
+  })
+  .openapi({ ref: "Timestamp" });
+export type Timestamp = z.infer<typeof Timestamp>;
 
 export const toTimestamp = (date: Date): Result<Timestamp, never> => {
-    return ok({
-        seconds: Math.floor(date.getTime() / 1000),
-        nanoseconds: (date.getTime() % 1000) * 1_000_000,
-    });
-}
+  return ok({
+    seconds: Math.floor(date.getTime() / 1000),
+    nanoseconds: (date.getTime() % 1000) * 1_000_000,
+  });
+};

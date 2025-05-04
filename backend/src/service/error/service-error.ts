@@ -27,12 +27,3 @@ export const createServiceError = <T extends ErrorCode = DefaultErrorCode>(
         message,
         code: "unknown" as T,
       };
-
-export const convertServiceErrorToJSON = <T extends ErrorCode>(
-  err: ServiceError<T>,
-): { message: string; code: string } => {
-  return {
-    message: err.message,
-    code: err.code,
-  };
-};
