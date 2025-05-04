@@ -3,3 +3,5 @@
 - 例: `harineko0/test#1`
 
 コミットメッセージ: 'コミットで行った変更を簡潔に' (prefix はつけない)
+
+PR Notification Test
