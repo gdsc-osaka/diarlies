@@ -1,5 +1,5 @@
 import { Configuration, configure, getLogger } from "log4js";
-import { env } from "./env";
+import env from "./env";
 
 const log4jsConfig: Configuration = {
   appenders: {

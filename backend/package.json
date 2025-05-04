@@ -14,8 +14,8 @@
     "test:unit": "dotenvx run --env-file=.env -- vitest test/unit/",
     "test:integration": "dotenvx run --env-file=.env -- vitest test/integration/",
     "test:coverage": "dotenvx run --env-file=.env -- vitest test/ --coverage",
-    "fire:start": "cd firebase && firebase emulators:start --import .emulator_export",
-    "fire:export": "cd firebase && firebase emulators:export .emulator_export"
+    "fire:start": "cd ../firebase && (ls .emulator_export && firebase emulators:start --import .emulator_export) || firebase emulators:start",
+    "fire:export": "cd ../firebase && firebase emulators:export .emulator_export"
   },
   "repository": {
     "type": "git",
@@ -24,23 +24,29 @@
   "private": true,
   "dependencies": {
     "@hono/arktype-validator": "^2.0.1",
+    "@hono/zod-validator": "^0.5.0",
     "arktype": "^2.1.20",
     "drizzle-orm": "^0.43.1",
     "hono": "^4.7.8",
     "hono-openapi": "^0.4.8",
     "log4js": "^6.9.1",
     "neverthrow": "^8.2.0",
-    "postgres": "^3.4.5"
+    "postgres": "^3.4.5",
+    "ts-pattern": "^5.7.0",
+    "zod": "^3.24.3",
+    "zod-openapi": "^4.2.4"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.42.2",
     "@eslint/js": "^9.26.0",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@types/node": "^22.15.3",
     "@typescript-eslint/parser": "^8.31.1",
     "@vitest/coverage-v8": "^3.1.2",
     "drizzle-kit": "^0.31.0",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
+    "firebase-admin": "^13.3.0",
     "fishery": "^2.3.0",
     "globals": "^16.0.0",
     "nodemon": "^3.1.10",
