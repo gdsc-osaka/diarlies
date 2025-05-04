@@ -47,13 +47,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:api/api.dart';
 
 
-final api = Api().getDefaultApi();
+final api = Api().getUsersApi();
 
 try {
-    final response = await api.getIndex();
+    final response = await api.getUsers();
     print(response);
 } catch on DioException (e) {
-    print("Exception when calling DefaultApi->getIndex: $e\n");
+    print("Exception when calling UsersApi->getUsers: $e\n");
 }
 
 ```
@@ -64,17 +64,23 @@ All URIs are relative to *http://localhost:3000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*DefaultApi*](doc/DefaultApi.md) | [**getIndex**](doc/DefaultApi.md#getindex) | **GET** / | 
+[*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
 
 
 ## Documentation For Models
 
- - [GetIndex200Response](doc/GetIndex200Response.md)
+ - [ApiError](doc/ApiError.md)
+ - [Timestamp](doc/Timestamp.md)
+ - [User](doc/User.md)
 
 
 ## Documentation For Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+### bearerAuth
+
+- **Type**: HTTP Bearer Token authentication (JWT)
 
 
 ## Author

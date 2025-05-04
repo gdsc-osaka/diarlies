@@ -7,7 +7,9 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(GetIndex200Response.serializer))
+      ..add(ApiError.serializer)
+      ..add(Timestamp.serializer)
+      ..add(User.serializer))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
