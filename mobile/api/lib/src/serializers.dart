@@ -14,14 +14,16 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:api/src/date_serializer.dart';
 import 'package:api/src/model/date.dart';
 
-import 'package:api/src/model/api_error.dart';
+import 'package:api/src/model/create_user_service_error.dart';
+import 'package:api/src/model/service_error.dart';
 import 'package:api/src/model/timestamp.dart';
 import 'package:api/src/model/user.dart';
 
 part 'serializers.g.dart';
 
 @SerializersFor([
-  ApiError,
+  CreateUserServiceError,
+  ServiceError,
   Timestamp,
   User,
 ])

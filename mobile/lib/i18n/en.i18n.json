@@ -1,0 +1,40 @@
+{
+  "signup": {
+    "subtitle": "A diary app with AI agent",
+    "btn": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple"
+    }
+  },
+  "onboarding": {
+    "title": "Hi deary",
+    "subtitle": "This is a text-free social diary app.\nBefore we begin, let’s finish the setup.",
+    "label": {
+      "language": "Choose diary language"
+    },
+    "placeholder": {
+      "language": "Select language"
+    },
+    "btn": {
+      "next": "Next"
+    }
+  },
+  "onboarding_permission": {
+    "title": "Check permissions",
+    "subtitle": "For the best app experience,\nwe'll need access to your personal data.",
+    "label": {
+      "location": "Background location",
+      "storage": "Storage"
+    },
+    "description": {
+      "location": "To automatically create a map or timeline of places you visited today in your diary, this app collects location data in the background.",
+      "storage": "To create diary entries using your photos, this app needs access to your photo library."
+    },
+    "btn": {
+      "configure": "Configure Permissions",
+      "not_now": "Not Now",
+      "back": "Back",
+      "finish": "Finish"
+    }
+  }
+}

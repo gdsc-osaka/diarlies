@@ -14,5 +14,12 @@ void main() {
       // TODO
     });
 
+    // Create a new user
+    //
+    //Future<User> postUsers() async
+    test('test postUsers', () async {
+      // TODO
+    });
+
   });
 }

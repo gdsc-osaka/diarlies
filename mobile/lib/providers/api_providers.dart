@@ -1,0 +1,60 @@
+import 'package:api/api.dart';
+import 'package:diarlies/logger.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import 'auth_providers.dart';
+
+part 'api_providers.g.dart';
+
+@Riverpod(keepAlive: true)
+Api api(Ref ref) {
+  final api = Api(
+    basePathOverride: kDebugMode ? null : 'https://diarlies.harineko0927.workers.dev:443',
+    interceptors: [BearerAuthInterceptor(), LoggingInterceptor()],
+  );
+
+  ref.listen(currentAuthUserProvider, (prev, next) async {
+    final authUser = next.value;
+    if (authUser == null) {
+      api.setBearerAuth('bearerAuth', '');
+      return;
+    }
+
+    try {
+      final idToken = await authUser.getIdToken();
+
+      if (idToken == null) {
+        api.setBearerAuth('bearerAuth', '');
+        return;
+      }
+
+      logger.d('idToken: ${idToken.substring(0, 10)}...');
+      api.setBearerAuth('bearerAuth', idToken);
+    } catch (e) {
+      logger.e('Error getting idToken: $e');
+      api.setBearerAuth('bearerAuth', '');
+    }
+  });
+
+  return api;
+}
+
+class LoggingInterceptor extends Interceptor {
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    logger.d('[ApiResponse] ${response.statusCode} ${response.data}');
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    logger.e('[ApiError] ${err.response?.statusCode} ${err.response?.data}');
+    super.onError(err, handler);
+  }
+}
+
+@riverpod
+UsersApi usersApi(Ref ref) => ref.watch(apiProvider).getUsersApi();

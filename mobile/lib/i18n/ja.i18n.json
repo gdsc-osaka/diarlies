@@ -1,0 +1,40 @@
+{
+  "signup": {
+    "subtitle": "AIエージェントを搭載した日記アプリ",
+    "btn": {
+      "google": "Googleで続ける",
+      "apple": "Appleで続ける"
+    }
+  },
+  "onboarding": {
+    "title": "こんにちは",
+    "subtitle": "Diarliesはテキストフリーのソーシャル日記アプリです。\n始める前に、セットアップを完了させましょう。",
+    "label": {
+      "language": "日記の言語を選択"
+    },
+    "placeholder": {
+      "language": "言語を選択してください"
+    },
+    "btn": {
+      "next": "次へ"
+    }
+  },
+  "onboarding_permission": {
+    "title": "権限を確認",
+    "subtitle": "最高のアプリ体験のために、\n個人データへのアクセスが必要です。",
+    "label": {
+      "location": "バックグラウンド位置情報",
+      "storage": "ストレージ"
+    },
+    "description": {
+      "location": "今日訪れた場所の地図やタイムラインを自動的に作成するために、\nこのアプリはバックグラウンドで位置情報データを収集します。",
+      "storage": "写真ライブラリへのアクセスが必要です。\n日記のエントリーを写真を使って作成するために、\nこのアプリはあなたの写真ライブラリへのアクセスが必要です。"
+    },
+    "btn": {
+      "configure": "権限を設定",
+      "not_now": "今はやめておく",
+      "back": "戻る",
+      "finish": "完了"
+    }
+  }
+}

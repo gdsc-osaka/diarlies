@@ -65,11 +65,13 @@ All URIs are relative to *http://localhost:3000*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 [*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
+[*UsersApi*](doc/UsersApi.md) | [**postUsers**](doc/UsersApi.md#postusers) | **POST** /users | 
 
 
 ## Documentation For Models
 
- - [ApiError](doc/ApiError.md)
+ - [CreateUserServiceError](doc/CreateUserServiceError.md)
+ - [ServiceError](doc/ServiceError.md)
  - [Timestamp](doc/Timestamp.md)
  - [User](doc/User.md)
 

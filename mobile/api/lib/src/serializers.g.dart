@@ -7,7 +7,11 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(ApiError.serializer)
+      ..add(CreateUserServiceError.serializer)
+      ..add(CreateUserServiceErrorBrandEnum.serializer)
+      ..add(CreateUserServiceErrorCodeEnum.serializer)
+      ..add(ServiceError.serializer)
+      ..add(ServiceErrorBrandEnum.serializer)
       ..add(Timestamp.serializer)
       ..add(User.serializer))
     .build();

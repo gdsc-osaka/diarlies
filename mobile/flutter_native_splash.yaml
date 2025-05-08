@@ -1,0 +1,43 @@
+flutter_native_splash:
+  color: "#DAF5F0"
+  color_dark: "#394845"
+
+  # 中央に表示する画像 (任意)
+  image: assets/images/splash_icon.png
+  image_dark: assets/images/splash_icon_invert.png
+
+  android_12:
+    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+    # the app's launcher icon will be used instead.
+    # Please note that the splash screen will be clipped to a circle on the center of the screen.
+    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+    # 640 pixels in diameter.
+    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply
+    # ensure that the most important design elements of your image are placed within a circular area
+    # with a 768 diameter at the center of the 1152x1152 canvas.
+    image: assets/images/splash_icon.png
+    image_dark: assets/images/splash_icon_invert.png
+
+    # Splash screen background color.
+    color: "#DAF5F0"
+    color_dark: "#394845"
+
+    # App icon background color.
+  #  icon_background_color: "#DAF5F0"
+  #  icon_background_color_dark: "#394845"
+
+    # The branding property allows you to specify an image used as branding in the splash screen.
+    #branding: assets/dart.png
+
+    # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
+    # apply when the device is in dark mode. If they are not specified, the app will use the
+    # parameters from above.  If there is no parameter above, the app will use the light mode values.
+    #image_dark: assets/android12splash-invert.png
+    #color_dark: "#042a49"
+
+  ios: true # iOSでもこの設定を有効にする
+  # image_ios: assets/splash_icon_ios.png # iOS用に別画像を指定する場合
+
+  # Web固有の設定 (任意)
+  # web: false
