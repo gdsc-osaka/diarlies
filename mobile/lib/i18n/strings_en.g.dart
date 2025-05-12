@@ -43,6 +43,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsOnboardingEn onboarding = TranslationsOnboardingEn._(_root);
 	late final TranslationsOnboardingPermissionEn onboarding_permission = TranslationsOnboardingPermissionEn._(_root);
 	late final TranslationsOnboardingFinishEn onboarding_finish = TranslationsOnboardingFinishEn._(_root);
+	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
 }
 
 // Path: signup
@@ -94,6 +95,20 @@ class TranslationsOnboardingFinishEn {
 	String get title => 'Welcome';
 	String get subtitle => 'Your AI diary assistant, Diarlies.';
 	late final TranslationsOnboardingFinishBtnEn btn = TranslationsOnboardingFinishBtnEn._(_root);
+}
+
+// Path: home
+class TranslationsHomeEn {
+	TranslationsHomeEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'what happened today?';
+	late final TranslationsHomeBottomNavEn bottom_nav = TranslationsHomeBottomNavEn._(_root);
+	late final TranslationsHomeBtnEn btn = TranslationsHomeBtnEn._(_root);
+	late final TranslationsHomeLabelEn label = TranslationsHomeLabelEn._(_root);
+	late final TranslationsHomePlaceholderEn placeholder = TranslationsHomePlaceholderEn._(_root);
 }
 
 // Path: signup.btn
@@ -182,6 +197,51 @@ class TranslationsOnboardingFinishBtnEn {
 	String get start => 'Start';
 }
 
+// Path: home.bottom_nav
+class TranslationsHomeBottomNavEn {
+	TranslationsHomeBottomNavEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get diary => 'Diary';
+	String get social => 'Social';
+	String get settings => 'Settings';
+}
+
+// Path: home.btn
+class TranslationsHomeBtnEn {
+	TranslationsHomeBtnEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get add_photo => 'Add photo';
+	String get keep_diary => 'Keep diary';
+}
+
+// Path: home.label
+class TranslationsHomeLabelEn {
+	TranslationsHomeLabelEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get photo => 'Today’s photos';
+	String get journey => 'Today’s journey';
+	String get memo => 'Memo';
+}
+
+// Path: home.placeholder
+class TranslationsHomePlaceholderEn {
+	TranslationsHomePlaceholderEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get memo => 'Today I feel like...';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on Translations {
@@ -208,6 +268,16 @@ extension on Translations {
 			case 'onboarding_finish.title': return 'Welcome';
 			case 'onboarding_finish.subtitle': return 'Your AI diary assistant, Diarlies.';
 			case 'onboarding_finish.btn.start': return 'Start';
+			case 'home.title': return 'what happened today?';
+			case 'home.bottom_nav.diary': return 'Diary';
+			case 'home.bottom_nav.social': return 'Social';
+			case 'home.bottom_nav.settings': return 'Settings';
+			case 'home.btn.add_photo': return 'Add photo';
+			case 'home.btn.keep_diary': return 'Keep diary';
+			case 'home.label.photo': return 'Today’s photos';
+			case 'home.label.journey': return 'Today’s journey';
+			case 'home.label.memo': return 'Memo';
+			case 'home.placeholder.memo': return 'Today I feel like...';
 			default: return null;
 		}
 	}

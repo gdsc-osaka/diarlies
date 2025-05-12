@@ -1,5 +1,7 @@
 import 'package:diarlies/logger.dart';
+import 'package:diarlies/pages/home/layout.dart';
 import 'package:diarlies/pages/home/page.dart';
+import 'package:diarlies/pages/home/social/page.dart';
 import 'package:diarlies/pages/onboarding/finish/page.dart';
 import 'package:diarlies/pages/onboarding/page.dart';
 import 'package:diarlies/pages/onboarding/permission/page.dart';
@@ -52,7 +54,23 @@ GoRouter router(Ref ref) {
           ),
         ],
       ),
-      GoRoute(path: HomePage.path, name: HomePage.name, builder: (context, state) => const HomePage()),
+      StatefulShellRoute.indexedStack(
+        pageBuilder:
+            (context, state, shell) =>
+                CustomTransitionPage(child: HomeLayout(shell: shell), transitionsBuilder: TransitionBuilders.fadeIn),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: HomePage.path, name: HomePage.name, builder: (context, state) => HomePage()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: HomeSocialPage.path, name: HomeSocialPage.name, builder: (context, state) => HomeSocialPage()),
+            ],
+          ),
+        ],
+      ),
     ],
   );
 

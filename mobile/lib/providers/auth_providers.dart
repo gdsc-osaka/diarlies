@@ -78,9 +78,7 @@ Stream<AuthEvent> authEvent(Ref ref) {
         return controller.add(AuthEvent.signedInWithAnotherAccount);
       }
 
-      if (userNotFound) {
-        return controller.add(AuthEvent.unauthenticated);
-      }
+      controller.add(AuthEvent.unauthenticated);
     },
     onError: (err, stack) {
       controller.addError(err, stack);

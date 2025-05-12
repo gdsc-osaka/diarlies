@@ -1,6 +1,23 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "NSCameraUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow access to your camera to generate diary based on your photo. Selected photos may be included in your diary entries."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真から日記を生成するためにカメラへのアクセスを許可してください。選択された写真は日記に含まれる可能性があります。"
+          }
+        }
+      }
+    },
     "NSLocationAlwaysAndWhenInUseUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -47,7 +64,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "写真に基づいて日記を生成するためにフォトライブラリへのアクセスを許可してください。選択された写真は日記に含まれる可能性があります。"
+            "value" : "写真から日記を生成するためにフォトライブラリへのアクセスを許可してください。選択された写真は日記に含まれる可能性があります。"
           }
         }
       }

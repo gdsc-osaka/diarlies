@@ -20,6 +20,7 @@ class ColorStyles {
     required this.onDisabled,
     required this.link,
     required this.border,
+    required this.paper,
     required this.googleButton,
     required this.onGoogleButton,
     required this.appleButton,
@@ -59,7 +60,9 @@ class ColorStyles {
     required this.pinkHalfTone,
     required this.onPinkHalfTone,
     required this.pink,
-    required this.onPink
+    required this.onPink,
+    required this.grey,
+    required this.onGrey,
   });
 
   static ColorStyles from(Brightness brightness) {
@@ -86,7 +89,8 @@ class ColorStyles {
   final Color onDisabled;
   final Color link;
   final Color border;
- 
+  final Color paper;
+
   final Color googleButton;
   final Color onGoogleButton;
   final Color appleButton;
@@ -134,6 +138,9 @@ class ColorStyles {
   final Color pink;
   final Color onPink;
 
+  final Color grey;
+  final Color onGrey;
+
   static const light = ColorStyles(
     background: Color(0xFFDAF5F0),
     onBackground: Color(0xFF000000),
@@ -148,9 +155,10 @@ class ColorStyles {
     error: Color(0xFFFF6262),
     onError: Color(0xFFFFFFFF),
     disabled: Color(0xFFACACAC),
-    onDisabled: Color(0xFF000000),
+    onDisabled: Color(0xFF222222),
     link: Color(0xFF1C7AE6),
     border: Color(0xFF000000),
+    paper: Color(0xFFFAEECD),
 
     googleButton: Color(0xFFFFFFFF),
     onGoogleButton: Color(0xFF000000),
@@ -167,7 +175,7 @@ class ColorStyles {
     onBluePastel: Color(0xFF000000),
     blueHalfTone: Color(0xFF69D2E7),
     onBlueHalfTone: Color(0xFF000000),
-    blue: Color(0xFF87CEEB),
+    blue: Color(0xFF69D2E7),
     onBlue: Color(0xFFFFFFFF),
     orangePastel: Color(0xFFFDFD96),
     onOrangePastel: Color(0xFF000000),
@@ -193,6 +201,8 @@ class ColorStyles {
     onPinkHalfTone: Color(0xFF000000),
     pink: Color(0xFFFF69B4),
     onPink: Color(0xFFFFFFFF),
+    grey: Color(0xFFE3E3E3),
+    onGrey: Color(0xFF000000),
   );
 
   static const dark = ColorStyles(
@@ -212,6 +222,7 @@ class ColorStyles {
     onDisabled: Color(0xFFFFFFFF),
     link: Color(0xFF549AE8),
     border: Color(0xFF505050),
+    paper: Color(0xFF3A362D),
 
     googleButton: Color(0xFF424242),
     onGoogleButton: Color(0xFFFFFFFF),
@@ -259,5 +270,8 @@ class ColorStyles {
     onPinkHalfTone: Color(0xFF000000),
     pink: Color(0xFFFF94CF),
     onPink: Color(0xFF000000),
+
+    grey: Color(0xFF3A3A3A),
+    onGrey: Color(0xFFE0E0E0),
   );
 }

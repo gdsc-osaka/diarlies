@@ -1,13 +1,107 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class HomePage extends StatelessWidget {
+import 'package:diarlies/components/nb_button.dart';
+import 'package:diarlies/components/nb_image.dart';
+import 'package:diarlies/components/nb_text_field.dart';
+import 'package:diarlies/components/variant.dart';
+import 'package:diarlies/i18n/strings.g.dart';
+import 'package:diarlies/logger.dart';
+import 'package:diarlies/pages/home/_components/diary_card.dart';
+import 'package:diarlies/shared/flux_action.dart';
+import 'package:diarlies/styles/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'action.dart';
+
+part 'providers.dart';
+
+part 'page.g.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   static const path = '/home';
   static const name = 'home';
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final styles = Styles.of(context);
+    final action = ref.watch(_homeActionProvider);
+
+    final selectedPhotos = ref.watch(selectedPhotosProvider);
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(top: 64, child: Text(t.home.title, style: styles.text.headline.m)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DiaryCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(t.home.label.photo, style: styles.text.title.m),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    NBButton(
+                      onPressed: action.addPhoto,
+                      direction: Axis.vertical,
+                      variant: Variant.secondary,
+                      icon: Icon(Icons.add_a_photo_outlined),
+                      label: Text(t.home.btn.add_photo),
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 180,
+                      height: 100,
+                      child: GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 3.0,
+                          mainAxisSpacing: 3.0,
+                          childAspectRatio: 9/16,
+                        ),
+                        itemCount: selectedPhotos.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return NBImage(
+                            image: Image.file(
+                              selectedPhotos[index],
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Text(t.home.label.journey, style: styles.text.title.m),
+                const SizedBox(height: 12),
+                const SizedBox(height: 24),
+                Text(t.home.label.memo, style: styles.text.title.m),
+                const SizedBox(height: 12),
+                NBTextField(
+                  value: ref.watch(diaryMemoProvider),
+                  maxLines: 2,
+                  placeholder: t.home.placeholder.memo,
+                  onChanged: action.updateMemo,
+                ),
+                const Expanded(child: SizedBox()),
+                NBButton(label: Text(t.home.btn.keep_diary), onPressed: action.writeDiary),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

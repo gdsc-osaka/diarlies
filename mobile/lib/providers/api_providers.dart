@@ -38,8 +38,9 @@ Api api(Ref ref) {
 
       logger.d('idToken: ${idToken.substring(0, 10)}...');
       api.setBearerAuth('bearerAuth', idToken);
-    } catch (e) {
-      logger.e('Error getting idToken: $e');
+    } catch (e, s) {
+      logger.e('Error getting idToken: $e, $s');
+
       api.setBearerAuth('bearerAuth', '');
     }
   });

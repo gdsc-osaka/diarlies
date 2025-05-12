@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:diarlies/components/variant.dart';
+import 'package:diarlies/shared/color_utils.dart';
+import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../styles/styles.dart';
 
 class NBButton<T> extends HookWidget {
   const NBButton({
@@ -16,6 +16,7 @@ class NBButton<T> extends HookWidget {
     this.foregroundColor,
     this.icon,
     this.mainAxisSize = MainAxisSize.max,
+    this.direction = Axis.horizontal,
   });
 
   final Widget label;
@@ -25,13 +26,7 @@ class NBButton<T> extends HookWidget {
   final Color? foregroundColor;
   final Widget? icon;
   final MainAxisSize mainAxisSize;
-
-  static Color _darkenColor(Color color, {double lightnessFactor = 0.1, double saturationFactor = 0.1}) {
-    final hslColor = HSLColor.fromColor(color);
-    final newLightness = (hslColor.lightness - lightnessFactor).clamp(0.0, 1.0);
-    final newSaturation = (hslColor.saturation - saturationFactor).clamp(0.0, 1.0);
-    return hslColor.withLightness(newLightness).withSaturation(newSaturation).toColor();
-  }
+  final Axis direction;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +49,14 @@ class NBButton<T> extends HookWidget {
     final shadowOffset = styles.shadow.low.offset;
 
     final disabled = onPressed == null;
-    final pressedBgColor = _darkenColor(effectiveBgColor, lightnessFactor: 0.08, saturationFactor: 0.05);
+    final pressedBgColor = darkenColor(effectiveBgColor, lightnessFactor: 0.08, saturationFactor: 0.05);
     final positionOffset = (disabled || isPressed.value) ? shadowOffset : Offset.zero;
-    final currentBgColor = disabled ? styles.color.disabled : isPressed.value ? pressedBgColor : effectiveBgColor;
+    final currentBgColor =
+        disabled
+            ? styles.color.disabled
+            : isPressed.value
+            ? pressedBgColor
+            : effectiveBgColor;
     final canInteract = !isLoading.value || disabled;
 
     final handlePressed = useCallback(() async {
@@ -93,26 +93,48 @@ class NBButton<T> extends HookWidget {
     }, [isPressed]);
 
     Widget buildButtonContent(Styles styles, Color fgColor, {required bool isLoadingOverride}) {
-      return Row(
-        mainAxisSize: mainAxisSize,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (isLoadingOverride) ...[
-            SizedBox(
+      final labelWidget = DefaultTextStyle(style: styles.text.label.m.copyWith(color: effectiveFgColor), child: label);
+
+      return switch (direction) {
+        Axis.horizontal => Row(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (isLoadingOverride) ...[SizedBox(
               width: 20,
               height: 20,
               child: CircularProgressIndicator(strokeWidth: 2.0, valueColor: AlwaysStoppedAnimation<Color>(fgColor)),
-            ),
-            const SizedBox(width: 8.0),
+            ), const SizedBox(width: 8.0)],
+            if (!isLoadingOverride && icon != null) ...[
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: IconTheme(data: IconThemeData(color: effectiveFgColor, size: 20), child: icon!),
+              ),
+              const SizedBox(width: 8.0),
+            ],
+            labelWidget,
           ],
-          if (!isLoadingOverride && icon != null) ...[
-            SizedBox(width: 20, height: 20, child: icon!),
-            const SizedBox(width: 8.0),
+        ),
+        Axis.vertical => Column(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (!isLoadingOverride && icon != null) ...[
+              IconTheme(data: IconThemeData(color: effectiveFgColor, size: 32), child: icon!),
+              const SizedBox(height: 12.0),
+            ],
+            if (isLoadingOverride) ...[SizedBox(
+              width: 32,
+              height: 32,
+              child: CircularProgressIndicator(strokeWidth: 2.0, valueColor: AlwaysStoppedAnimation<Color>(fgColor)),
+            ), const SizedBox(height: 12.0)],
+            labelWidget,
           ],
-          DefaultTextStyle(style: styles.text.label.m.copyWith(color: effectiveFgColor), child: label),
-        ],
-      );
+        ),
+      };
     }
 
     final padding = EdgeInsets.only(left: icon == null ? 14 : 18, right: 18.0, top: 12.0, bottom: 12.0);

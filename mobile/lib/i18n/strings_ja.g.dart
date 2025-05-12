@@ -40,6 +40,7 @@ class TranslationsJa implements Translations {
 	@override late final _TranslationsOnboardingJa onboarding = _TranslationsOnboardingJa._(_root);
 	@override late final _TranslationsOnboardingPermissionJa onboarding_permission = _TranslationsOnboardingPermissionJa._(_root);
 	@override late final _TranslationsOnboardingFinishJa onboarding_finish = _TranslationsOnboardingFinishJa._(_root);
+	@override late final _TranslationsHomeJa home = _TranslationsHomeJa._(_root);
 }
 
 // Path: signup
@@ -91,6 +92,20 @@ class _TranslationsOnboardingFinishJa implements TranslationsOnboardingFinishEn 
 	@override String get title => 'ようこそ';
 	@override String get subtitle => 'あなたのAI日記アシスタント、Diarlies。';
 	@override late final _TranslationsOnboardingFinishBtnJa btn = _TranslationsOnboardingFinishBtnJa._(_root);
+}
+
+// Path: home
+class _TranslationsHomeJa implements TranslationsHomeEn {
+	_TranslationsHomeJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => '今日は何がありましたか？';
+	@override late final _TranslationsHomeBottomNavJa bottom_nav = _TranslationsHomeBottomNavJa._(_root);
+	@override late final _TranslationsHomeBtnJa btn = _TranslationsHomeBtnJa._(_root);
+	@override late final _TranslationsHomeLabelJa label = _TranslationsHomeLabelJa._(_root);
+	@override late final _TranslationsHomePlaceholderJa placeholder = _TranslationsHomePlaceholderJa._(_root);
 }
 
 // Path: signup.btn
@@ -179,6 +194,51 @@ class _TranslationsOnboardingFinishBtnJa implements TranslationsOnboardingFinish
 	@override String get start => 'はじめる';
 }
 
+// Path: home.bottom_nav
+class _TranslationsHomeBottomNavJa implements TranslationsHomeBottomNavEn {
+	_TranslationsHomeBottomNavJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get diary => '日記';
+	@override String get social => 'ソーシャル';
+	@override String get settings => '設定';
+}
+
+// Path: home.btn
+class _TranslationsHomeBtnJa implements TranslationsHomeBtnEn {
+	_TranslationsHomeBtnJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get add_photo => '写真を追加';
+	@override String get keep_diary => '日記をつける';
+}
+
+// Path: home.label
+class _TranslationsHomeLabelJa implements TranslationsHomeLabelEn {
+	_TranslationsHomeLabelJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get photo => '今日の写真';
+	@override String get journey => '今日の旅路';
+	@override String get memo => 'メモ';
+}
+
+// Path: home.placeholder
+class _TranslationsHomePlaceholderJa implements TranslationsHomePlaceholderEn {
+	_TranslationsHomePlaceholderJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get memo => '今日の気分は...';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on TranslationsJa {
@@ -205,6 +265,16 @@ extension on TranslationsJa {
 			case 'onboarding_finish.title': return 'ようこそ';
 			case 'onboarding_finish.subtitle': return 'あなたのAI日記アシスタント、Diarlies。';
 			case 'onboarding_finish.btn.start': return 'はじめる';
+			case 'home.title': return '今日は何がありましたか？';
+			case 'home.bottom_nav.diary': return '日記';
+			case 'home.bottom_nav.social': return 'ソーシャル';
+			case 'home.bottom_nav.settings': return '設定';
+			case 'home.btn.add_photo': return '写真を追加';
+			case 'home.btn.keep_diary': return '日記をつける';
+			case 'home.label.photo': return '今日の写真';
+			case 'home.label.journey': return '今日の旅路';
+			case 'home.label.memo': return 'メモ';
+			case 'home.placeholder.memo': return '今日の気分は...';
 			default: return null;
 		}
 	}

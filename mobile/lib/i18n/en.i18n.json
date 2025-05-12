@@ -45,6 +45,23 @@
     }
   },
   "home": {
-    "title": "what happened today?"
+    "title": "what happened today?",
+    "bottom_nav": {
+      "diary": "Diary",
+      "social": "Social",
+      "settings": "Settings"
+    },
+    "btn": {
+      "add_photo": "Add photo",
+      "keep_diary": "Keep diary"
+    },
+    "label": {
+      "photo": "Today’s photos",
+      "journey": "Today’s journey",
+      "memo": "Memo"
+    },
+    "placeholder": {
+      "memo": "Today I feel like..."
+    }
   }
 }

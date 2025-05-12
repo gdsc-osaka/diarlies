@@ -69,6 +69,8 @@
 	<string>$(NSLocationAlwaysAndWhenInUseUsageDescription)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(NSPhotoLibraryUsageDescription)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(NSCameraUsageDescription)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

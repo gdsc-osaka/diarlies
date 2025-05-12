@@ -45,6 +45,23 @@
     }
   },
   "home": {
-    "title": "今日は何がありましたか？"
+    "title": "今日は何がありましたか？",
+    "bottom_nav": {
+      "diary": "日記",
+      "social": "ソーシャル",
+      "settings": "設定"
+    },
+    "btn": {
+      "add_photo": "写真を追加",
+      "keep_diary": "日記をつける"
+    },
+    "label": {
+      "photo": "今日の写真",
+      "journey": "今日の旅路",
+      "memo": "メモ"
+    },
+    "placeholder": {
+      "memo": "今日の気分は..."
+    }
   }
 }
