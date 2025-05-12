@@ -19,5 +19,3 @@ export const users = pgTable(
   },
   (t) => [index("users_uid_idx").using("btree", t.uid)],
 );
-
-export type DBUser = typeof users.$inferSelect;

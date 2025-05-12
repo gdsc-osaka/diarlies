@@ -1,22 +1,91 @@
-import { ResultAsync } from "neverthrow";
-import { convertToUser, User } from "../domain/user";
-import { AuthUser } from "../infra/authenticator";
-import { FetchUserByUid } from "../infra/user-repository";
+import { errAsync, okAsync, ResultAsync } from "neverthrow";
+import { convertToUser, createDBUserForCreate, User } from "../domain/user";
+import { CreateDBUser, FetchDBUserByUid } from "../infra/user-repository";
 import { match } from "ts-pattern";
-import db from "../db/db";
-import { createServiceError, ServiceError } from "./error/service-error";
+import {
+  createServiceError,
+  ServiceError,
+  StatusCode,
+} from "./error/service-error";
+import { AuthUser } from "../domain/auth";
+import z from "zod";
+import { DB } from "../db/db";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
 export const fetchUser =
-  (fetchUserByUid: FetchUserByUid): FetchUser =>
+  (fetchUserByUid: FetchDBUserByUid, db: DB): FetchUser =>
   (authUser: AuthUser) =>
-    fetchUserByUid(db)(authUser.uid)
-      .andThen(convertToUser)
-      .mapErr((err) =>
-        match(err)
-          .with({ __brand: "DBError" }, (e) =>
-            createServiceError(500, e.message),
+    authUser === null
+      ? errAsync(createServiceError(StatusCode.Unauthorized, "Unauthorized"))
+      : fetchUserByUid(db)(authUser.uid)
+          .andThen(convertToUser)
+          .mapErr((err) =>
+            match(err)
+              .with({ __brand: "DBError" }, (e) =>
+                createServiceError(
+                  match(e.code)
+                    .with("not-found", () => StatusCode.NotFound)
+                    .with("unknown", () => StatusCode.InternalServerError)
+                    .exhaustive(),
+                  e.message,
+                ),
+              )
+              .exhaustive(),
+          );
+
+export const CreateUserServiceError = ServiceError.extend({
+  code: z.enum(["user-already-exists", "unknown"]).optional(),
+  user: User.optional(),
+}).openapi({ ref: "CreateUserServiceError" });
+export type CreateUserServiceError = z.infer<typeof CreateUserServiceError>;
+
+export type CreateUser = (
+  authUser: AuthUser,
+) => ResultAsync<User, CreateUserServiceError>;
+
+export const createUser =
+  (
+    createDBUser: CreateDBUser,
+    fetchDBUserByUid: FetchDBUserByUid,
+    db: DB,
+  ): CreateUser =>
+  (authUser: AuthUser): ResultAsync<User, CreateUserServiceError> =>
+    authUser === null
+      ? errAsync(createServiceError(StatusCode.Unauthorized, "Unauthorized"))
+      : fetchDBUserByUid(db)(authUser.uid)
+          .andThen(convertToUser)
+          .orElse((err) =>
+            match(err)
+              .with({ __brand: "DBError", code: "not-found" }, () => okAsync())
+              .with({ __brand: "DBError", code: "unknown" }, (e) => errAsync(e))
+              .exhaustive(),
           )
-          .exhaustive(),
-      );
+          .andThen((user) =>
+            user
+              ? errAsync({
+                  ...createServiceError(
+                    StatusCode.BadRequest,
+                    "User already exists",
+                    "user-already-exists",
+                  ),
+                  user,
+                })
+              : okAsync(),
+          )
+          .andThen(() => createDBUserForCreate(authUser))
+          .andThen(createDBUser(db))
+          .andThen(convertToUser)
+          .mapErr((err) =>
+            match(err)
+              .with({ __brand: "ServiceError" }, (e) => e)
+              .with({ __brand: "DBError" }, (e) =>
+                createServiceError(
+                  match(e.code)
+                    .with("unknown", () => StatusCode.InternalServerError)
+                    .exhaustive(),
+                  e.message,
+                ),
+              )
+              .exhaustive(),
+          );

@@ -9,11 +9,10 @@ function getDBUrl(): string {
   if (env.NODE_ENV === "production") {
     return env.DATABASE_URL ?? "";
   }
-  return "postgres://user:password@localhost:5432/db";
+  return "postgres://user:password@localhost:6543/db";
 }
 
-const client = postgres(getDBUrl(), { prepare: false });
-const db = drizzle(client, { schema });
+const db = () => drizzle(postgres(getDBUrl()), { schema });
 
 type TransactionClient = PgTransaction<
   PostgresJsQueryResultHKT,
@@ -21,6 +20,7 @@ type TransactionClient = PgTransaction<
   ExtractTablesWithRelations<typeof schema>
 >;
 
-export type DB = typeof db | TransactionClient;
+export type DB = ReturnType<typeof db>;
+export type DBorTx = DB | TransactionClient;
 
 export default db;

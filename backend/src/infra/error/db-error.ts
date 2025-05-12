@@ -20,7 +20,7 @@ export const createDBError = <T extends DBErrorCode>(
   cause,
 });
 
-export const handleDBError = (error: unknown): DBError => {
+export const handleDBError = (error: unknown): DBError<"unknown"> => {
   // TODO: Handle drizzle error
   if (error instanceof DrizzleError) {
     return createDBError("unknown", error.message, error.cause);
