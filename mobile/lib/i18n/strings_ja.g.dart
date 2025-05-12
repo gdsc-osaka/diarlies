@@ -39,6 +39,7 @@ class TranslationsJa implements Translations {
 	@override late final _TranslationsSignupJa signup = _TranslationsSignupJa._(_root);
 	@override late final _TranslationsOnboardingJa onboarding = _TranslationsOnboardingJa._(_root);
 	@override late final _TranslationsOnboardingPermissionJa onboarding_permission = _TranslationsOnboardingPermissionJa._(_root);
+	@override late final _TranslationsOnboardingFinishJa onboarding_finish = _TranslationsOnboardingFinishJa._(_root);
 }
 
 // Path: signup
@@ -78,6 +79,18 @@ class _TranslationsOnboardingPermissionJa implements TranslationsOnboardingPermi
 	@override late final _TranslationsOnboardingPermissionLabelJa label = _TranslationsOnboardingPermissionLabelJa._(_root);
 	@override late final _TranslationsOnboardingPermissionDescriptionJa description = _TranslationsOnboardingPermissionDescriptionJa._(_root);
 	@override late final _TranslationsOnboardingPermissionBtnJa btn = _TranslationsOnboardingPermissionBtnJa._(_root);
+}
+
+// Path: onboarding_finish
+class _TranslationsOnboardingFinishJa implements TranslationsOnboardingFinishEn {
+	_TranslationsOnboardingFinishJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'ようこそ';
+	@override String get subtitle => 'あなたのAI日記アシスタント、Diarlies。';
+	@override late final _TranslationsOnboardingFinishBtnJa btn = _TranslationsOnboardingFinishBtnJa._(_root);
 }
 
 // Path: signup.btn
@@ -156,6 +169,16 @@ class _TranslationsOnboardingPermissionBtnJa implements TranslationsOnboardingPe
 	@override String get finish => '完了';
 }
 
+// Path: onboarding_finish.btn
+class _TranslationsOnboardingFinishBtnJa implements TranslationsOnboardingFinishBtnEn {
+	_TranslationsOnboardingFinishBtnJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get start => 'はじめる';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on TranslationsJa {
@@ -179,6 +202,9 @@ extension on TranslationsJa {
 			case 'onboarding_permission.btn.not_now': return '今はやめておく';
 			case 'onboarding_permission.btn.back': return '戻る';
 			case 'onboarding_permission.btn.finish': return '完了';
+			case 'onboarding_finish.title': return 'ようこそ';
+			case 'onboarding_finish.subtitle': return 'あなたのAI日記アシスタント、Diarlies。';
+			case 'onboarding_finish.btn.start': return 'はじめる';
 			default: return null;
 		}
 	}

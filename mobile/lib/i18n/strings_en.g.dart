@@ -42,6 +42,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsSignupEn signup = TranslationsSignupEn._(_root);
 	late final TranslationsOnboardingEn onboarding = TranslationsOnboardingEn._(_root);
 	late final TranslationsOnboardingPermissionEn onboarding_permission = TranslationsOnboardingPermissionEn._(_root);
+	late final TranslationsOnboardingFinishEn onboarding_finish = TranslationsOnboardingFinishEn._(_root);
 }
 
 // Path: signup
@@ -81,6 +82,18 @@ class TranslationsOnboardingPermissionEn {
 	late final TranslationsOnboardingPermissionLabelEn label = TranslationsOnboardingPermissionLabelEn._(_root);
 	late final TranslationsOnboardingPermissionDescriptionEn description = TranslationsOnboardingPermissionDescriptionEn._(_root);
 	late final TranslationsOnboardingPermissionBtnEn btn = TranslationsOnboardingPermissionBtnEn._(_root);
+}
+
+// Path: onboarding_finish
+class TranslationsOnboardingFinishEn {
+	TranslationsOnboardingFinishEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Welcome';
+	String get subtitle => 'Your AI diary assistant, Diarlies.';
+	late final TranslationsOnboardingFinishBtnEn btn = TranslationsOnboardingFinishBtnEn._(_root);
 }
 
 // Path: signup.btn
@@ -159,6 +172,16 @@ class TranslationsOnboardingPermissionBtnEn {
 	String get finish => 'Finish';
 }
 
+// Path: onboarding_finish.btn
+class TranslationsOnboardingFinishBtnEn {
+	TranslationsOnboardingFinishBtnEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get start => 'Start';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on Translations {
@@ -182,6 +205,9 @@ extension on Translations {
 			case 'onboarding_permission.btn.not_now': return 'Not Now';
 			case 'onboarding_permission.btn.back': return 'Back';
 			case 'onboarding_permission.btn.finish': return 'Finish';
+			case 'onboarding_finish.title': return 'Welcome';
+			case 'onboarding_finish.subtitle': return 'Your AI diary assistant, Diarlies.';
+			case 'onboarding_finish.btn.start': return 'Start';
 			default: return null;
 		}
 	}

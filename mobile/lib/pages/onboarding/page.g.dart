@@ -25,6 +25,25 @@ final _onboardingActionProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _OnboardingActionRef = AutoDisposeProviderRef<OnboardingAction>;
+String _$isPermissionAllGrantedHash() =>
+    r'f2f390092cd0106afc77c7883bdcf656682fa629';
+
+/// See also [isPermissionAllGranted].
+@ProviderFor(isPermissionAllGranted)
+final isPermissionAllGrantedProvider = AutoDisposeFutureProvider<bool>.internal(
+  isPermissionAllGranted,
+  name: r'isPermissionAllGrantedProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$isPermissionAllGrantedHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef IsPermissionAllGrantedRef = AutoDisposeFutureProviderRef<bool>;
 String _$diaryLanguageHash() => r'24594d08abeae14c4f67a65b3518e772accd8b37';
 
 /// See also [DiaryLanguage].

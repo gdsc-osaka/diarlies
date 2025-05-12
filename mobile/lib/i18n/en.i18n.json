@@ -36,5 +36,15 @@
       "back": "Back",
       "finish": "Finish"
     }
+  },
+  "onboarding_finish": {
+    "title": "Welcome",
+    "subtitle": "Your AI diary assistant, Diarlies.",
+    "btn": {
+      "start": "Start"
+    }
+  },
+  "home": {
+    "title": "what happened today?"
   }
 }

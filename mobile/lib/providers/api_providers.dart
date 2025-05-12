@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:api/api.dart';
 import 'package:diarlies/logger.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +14,10 @@ part 'api_providers.g.dart';
 @Riverpod(keepAlive: true)
 Api api(Ref ref) {
   final api = Api(
-    basePathOverride: kDebugMode ? null : 'https://diarlies.harineko0927.workers.dev:443',
+    basePathOverride: switch (kDebugMode) {
+      true => Platform.isAndroid ? '10.0.2.2' : null,
+      false => 'https://diarlies.harineko0927.workers.dev:443',
+    },
     interceptors: [BearerAuthInterceptor(), LoggingInterceptor()],
   );
 

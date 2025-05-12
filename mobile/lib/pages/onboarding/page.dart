@@ -1,5 +1,7 @@
 import 'package:diarlies/components/nb_card.dart';
+import 'package:diarlies/pages/onboarding/_components/onboarding_positioned.dart';
 import 'package:diarlies/pages/onboarding/permission/page.dart';
+import 'package:diarlies/providers/permission_providers.dart';
 import 'package:diarlies/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,9 +11,11 @@ import '../../components/images.dart';
 import '../../components/nb_button.dart';
 import '../../components/nb_select.dart';
 import '../../i18n/strings.g.dart';
+import '../../services/permission_service.dart';
 import '../../shared/flux_action.dart';
 import '../../shared/language.dart';
 import '../../styles/styles.dart';
+import 'finish/page.dart';
 
 part 'action.dart';
 
@@ -35,11 +39,7 @@ class OnboardingPage extends ConsumerWidget {
         child: Stack(
           children: [
             Align(alignment: Alignment.center, child: ImageAdapter(image: Images.book, size: Size(220, 220))),
-            Positioned(
-              left: 32,
-              right: 32,
-              top: 120,
-              bottom: 80,
+            OnboardingPositioned(
               child: Column(
                 children: [
                   Text(t.onboarding.title, style: styles.text.display.m),

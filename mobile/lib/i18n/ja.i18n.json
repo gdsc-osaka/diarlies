@@ -36,5 +36,15 @@
       "back": "戻る",
       "finish": "完了"
     }
+  },
+  "onboarding_finish": {
+    "title": "ようこそ",
+    "subtitle": "あなたのAI日記アシスタント、Diarlies。",
+    "btn": {
+      "start": "はじめる"
+    }
+  },
+  "home": {
+    "title": "今日は何がありましたか？"
   }
 }

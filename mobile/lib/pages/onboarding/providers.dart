@@ -11,3 +11,13 @@ class DiaryLanguage extends _$DiaryLanguage {
     state = language;
   }
 }
+
+@riverpod
+Future<bool> isPermissionAllGranted(Ref ref) async {
+  final permissionStatuses = await Future.wait([
+    ref.watch(locationPermissionProvider.future),
+    ref.watch(photoPermissionProvider.future)
+  ]);
+
+  return permissionStatuses.every((status) => status == PermissionStatus.granted);
+}
