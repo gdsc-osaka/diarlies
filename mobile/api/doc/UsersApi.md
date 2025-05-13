@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 
 
-Say hello to the user
+Get user information
 
 ### Example
 ```dart

@@ -22,6 +22,11 @@ void main() {
       // TODO
     });
 
+    // BuiltMap<String, JsonObject> extra
+    test('to test the property `extra`', () async {
+      // TODO
+    });
+
     // String brand
     test('to test the property `brand`', () async {
       // TODO

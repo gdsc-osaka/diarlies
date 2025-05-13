@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 import 'package:api/src/model/user.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -16,6 +17,7 @@ part 'create_user_service_error.g.dart';
 /// * [status] 
 /// * [message] 
 /// * [code] 
+/// * [extra] 
 /// * [brand] 
 /// * [user] 
 @BuiltValue()
@@ -29,6 +31,9 @@ abstract class CreateUserServiceError implements Built<CreateUserServiceError, C
   @BuiltValueField(wireName: r'code')
   CreateUserServiceErrorCodeEnum? get code;
   // enum codeEnum {  user-already-exists,  unknown,  };
+
+  @BuiltValueField(wireName: r'extra')
+  BuiltMap<String, JsonObject?>? get extra;
 
   @BuiltValueField(wireName: r'__brand')
   CreateUserServiceErrorBrandEnum get brand;
@@ -75,6 +80,13 @@ class _$CreateUserServiceErrorSerializer implements PrimitiveSerializer<CreateUs
       yield serializers.serialize(
         object.code,
         specifiedType: const FullType(CreateUserServiceErrorCodeEnum),
+      );
+    }
+    if (object.extra != null) {
+      yield r'extra';
+      yield serializers.serialize(
+        object.extra,
+        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
       );
     }
     yield r'__brand';
@@ -132,6 +144,13 @@ class _$CreateUserServiceErrorSerializer implements PrimitiveSerializer<CreateUs
             specifiedType: const FullType(CreateUserServiceErrorCodeEnum),
           ) as CreateUserServiceErrorCodeEnum;
           result.code = valueDes;
+          break;
+        case r'extra':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+          ) as BuiltMap<String, JsonObject?>;
+          result.extra.replace(valueDes);
           break;
         case r'__brand':
           final valueDes = serializers.deserialize(

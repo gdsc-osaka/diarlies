@@ -1,4 +1,4 @@
-# api.model.ServiceError
+# api.model.Diary
 
 ## Load the model package
 ```dart
@@ -8,11 +8,11 @@ import 'package:api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **int** |  | 
-**message** | **String** |  | 
-**code** | **String** |  | [optional] 
-**extra** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  | [optional] 
-**brand** | **String** |  | 
+**id** | **String** |  | 
+**content** | **String** |  | 
+**diaryDate** | [**Day**](Day.md) |  | 
+**createdAt** | [**Timestamp**](Timestamp.md) |  | 
+**updatedAt** | [**Timestamp**](Timestamp.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

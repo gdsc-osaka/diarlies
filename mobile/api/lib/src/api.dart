@@ -9,6 +9,7 @@ import 'package:api/src/auth/api_key_auth.dart';
 import 'package:api/src/auth/basic_auth.dart';
 import 'package:api/src/auth/bearer_auth.dart';
 import 'package:api/src/auth/oauth.dart';
+import 'package:api/src/api/diaries_api.dart';
 import 'package:api/src/api/users_api.dart';
 
 class Api {
@@ -63,6 +64,12 @@ class Api {
     if (this.dio.interceptors.any((i) => i is ApiKeyAuthInterceptor)) {
       (this.dio.interceptors.firstWhere((element) => element is ApiKeyAuthInterceptor) as ApiKeyAuthInterceptor).apiKeys[name] = apiKey;
     }
+  }
+
+  /// Get DiariesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  DiariesApi getDiariesApi() {
+    return DiariesApi(dio, serializers);
   }
 
   /// Get UsersApi instance, base route and serializer can be overridden by a given but be careful,

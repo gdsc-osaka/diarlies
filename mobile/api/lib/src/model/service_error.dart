@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -15,6 +16,7 @@ part 'service_error.g.dart';
 /// * [status] 
 /// * [message] 
 /// * [code] 
+/// * [extra] 
 /// * [brand] 
 @BuiltValue()
 abstract class ServiceError implements Built<ServiceError, ServiceErrorBuilder> {
@@ -26,6 +28,9 @@ abstract class ServiceError implements Built<ServiceError, ServiceErrorBuilder> 
 
   @BuiltValueField(wireName: r'code')
   String? get code;
+
+  @BuiltValueField(wireName: r'extra')
+  BuiltMap<String, JsonObject?>? get extra;
 
   @BuiltValueField(wireName: r'__brand')
   ServiceErrorBrandEnum get brand;
@@ -69,6 +74,13 @@ class _$ServiceErrorSerializer implements PrimitiveSerializer<ServiceError> {
       yield serializers.serialize(
         object.code,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.extra != null) {
+      yield r'extra';
+      yield serializers.serialize(
+        object.extra,
+        specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
       );
     }
     yield r'__brand';
@@ -119,6 +131,13 @@ class _$ServiceErrorSerializer implements PrimitiveSerializer<ServiceError> {
             specifiedType: const FullType(String),
           ) as String;
           result.code = valueDes;
+          break;
+        case r'extra':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+          ) as BuiltMap<String, JsonObject?>;
+          result.extra.replace(valueDes);
           break;
         case r'__brand':
           final valueDes = serializers.deserialize(

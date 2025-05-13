@@ -47,13 +47,16 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:api/api.dart';
 
 
-final api = Api().getUsersApi();
+final api = Api().getDiariesApi();
+final String locationHistories = locationHistories_example; // String | Location histories for diary generation
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
+final LanguageCode languageCode = ; // LanguageCode | 
 
 try {
-    final response = await api.getUsers();
+    final response = await api.postDiaries(locationHistories, images, languageCode);
     print(response);
 } catch on DioException (e) {
-    print("Exception when calling UsersApi->getUsers: $e\n");
+    print("Exception when calling DiariesApi->postDiaries: $e\n");
 }
 
 ```
@@ -64,6 +67,7 @@ All URIs are relative to *http://localhost:3000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*DiariesApi*](doc/DiariesApi.md) | [**postDiaries**](doc/DiariesApi.md#postdiaries) | **POST** /diaries | 
 [*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
 [*UsersApi*](doc/UsersApi.md) | [**postUsers**](doc/UsersApi.md#postusers) | **POST** /users | 
 
@@ -71,6 +75,9 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [CreateUserServiceError](doc/CreateUserServiceError.md)
+ - [Day](doc/Day.md)
+ - [Diary](doc/Diary.md)
+ - [LanguageCode](doc/LanguageCode.md)
  - [ServiceError](doc/ServiceError.md)
  - [Timestamp](doc/Timestamp.md)
  - [User](doc/User.md)

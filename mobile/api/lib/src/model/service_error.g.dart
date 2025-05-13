@@ -60,6 +60,8 @@ class _$ServiceError extends ServiceError {
   @override
   final String? code;
   @override
+  final BuiltMap<String, JsonObject?>? extra;
+  @override
   final ServiceErrorBrandEnum brand;
 
   factory _$ServiceError([void Function(ServiceErrorBuilder)? updates]) =>
@@ -69,6 +71,7 @@ class _$ServiceError extends ServiceError {
       {required this.status,
       required this.message,
       this.code,
+      this.extra,
       required this.brand})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(status, r'ServiceError', 'status');
@@ -90,6 +93,7 @@ class _$ServiceError extends ServiceError {
         status == other.status &&
         message == other.message &&
         code == other.code &&
+        extra == other.extra &&
         brand == other.brand;
   }
 
@@ -99,6 +103,7 @@ class _$ServiceError extends ServiceError {
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, message.hashCode);
     _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, extra.hashCode);
     _$hash = $jc(_$hash, brand.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -110,6 +115,7 @@ class _$ServiceError extends ServiceError {
           ..add('status', status)
           ..add('message', message)
           ..add('code', code)
+          ..add('extra', extra)
           ..add('brand', brand))
         .toString();
   }
@@ -131,6 +137,11 @@ class ServiceErrorBuilder
   String? get code => _$this._code;
   set code(String? code) => _$this._code = code;
 
+  MapBuilder<String, JsonObject?>? _extra;
+  MapBuilder<String, JsonObject?> get extra =>
+      _$this._extra ??= new MapBuilder<String, JsonObject?>();
+  set extra(MapBuilder<String, JsonObject?>? extra) => _$this._extra = extra;
+
   ServiceErrorBrandEnum? _brand;
   ServiceErrorBrandEnum? get brand => _$this._brand;
   set brand(ServiceErrorBrandEnum? brand) => _$this._brand = brand;
@@ -145,6 +156,7 @@ class ServiceErrorBuilder
       _status = $v.status;
       _message = $v.message;
       _code = $v.code;
+      _extra = $v.extra?.toBuilder();
       _brand = $v.brand;
       _$v = null;
     }
@@ -166,16 +178,30 @@ class ServiceErrorBuilder
   ServiceError build() => _build();
 
   _$ServiceError _build() {
-    final _$result = _$v ??
-        new _$ServiceError._(
-          status: BuiltValueNullFieldError.checkNotNull(
-              status, r'ServiceError', 'status'),
-          message: BuiltValueNullFieldError.checkNotNull(
-              message, r'ServiceError', 'message'),
-          code: code,
-          brand: BuiltValueNullFieldError.checkNotNull(
-              brand, r'ServiceError', 'brand'),
-        );
+    _$ServiceError _$result;
+    try {
+      _$result = _$v ??
+          new _$ServiceError._(
+            status: BuiltValueNullFieldError.checkNotNull(
+                status, r'ServiceError', 'status'),
+            message: BuiltValueNullFieldError.checkNotNull(
+                message, r'ServiceError', 'message'),
+            code: code,
+            extra: _extra?.build(),
+            brand: BuiltValueNullFieldError.checkNotNull(
+                brand, r'ServiceError', 'brand'),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'extra';
+        _extra?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ServiceError', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

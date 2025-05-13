@@ -10,9 +10,13 @@ export 'package:api/src/auth/oauth.dart';
 export 'package:api/src/serializers.dart';
 export 'package:api/src/model/date.dart';
 
+export 'package:api/src/api/diaries_api.dart';
 export 'package:api/src/api/users_api.dart';
 
 export 'package:api/src/model/create_user_service_error.dart';
+export 'package:api/src/model/day.dart';
+export 'package:api/src/model/diary.dart';
+export 'package:api/src/model/language_code.dart';
 export 'package:api/src/model/service_error.dart';
 export 'package:api/src/model/timestamp.dart';
 export 'package:api/src/model/user.dart';

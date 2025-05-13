@@ -21,7 +21,7 @@ class UsersApi {
   const UsersApi(this._dio, this._serializers);
 
   /// getUsers
-  /// Say hello to the user
+  /// Get user information
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **status** | **int** |  | 
 **message** | **String** |  | 
 **code** | **String** |  | [optional] 
+**extra** | [**BuiltMap&lt;String, JsonObject&gt;**](JsonObject.md) |  | [optional] 
 **brand** | **String** |  | 
 **user** | [**User**](User.md) |  | [optional] 
 

@@ -124,6 +124,8 @@ class _$CreateUserServiceError extends CreateUserServiceError {
   @override
   final CreateUserServiceErrorCodeEnum? code;
   @override
+  final BuiltMap<String, JsonObject?>? extra;
+  @override
   final CreateUserServiceErrorBrandEnum brand;
   @override
   final User? user;
@@ -136,6 +138,7 @@ class _$CreateUserServiceError extends CreateUserServiceError {
       {required this.status,
       required this.message,
       this.code,
+      this.extra,
       required this.brand,
       this.user})
       : super._() {
@@ -163,6 +166,7 @@ class _$CreateUserServiceError extends CreateUserServiceError {
         status == other.status &&
         message == other.message &&
         code == other.code &&
+        extra == other.extra &&
         brand == other.brand &&
         user == other.user;
   }
@@ -173,6 +177,7 @@ class _$CreateUserServiceError extends CreateUserServiceError {
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, message.hashCode);
     _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, extra.hashCode);
     _$hash = $jc(_$hash, brand.hashCode);
     _$hash = $jc(_$hash, user.hashCode);
     _$hash = $jf(_$hash);
@@ -185,6 +190,7 @@ class _$CreateUserServiceError extends CreateUserServiceError {
           ..add('status', status)
           ..add('message', message)
           ..add('code', code)
+          ..add('extra', extra)
           ..add('brand', brand)
           ..add('user', user))
         .toString();
@@ -207,6 +213,11 @@ class CreateUserServiceErrorBuilder
   CreateUserServiceErrorCodeEnum? get code => _$this._code;
   set code(CreateUserServiceErrorCodeEnum? code) => _$this._code = code;
 
+  MapBuilder<String, JsonObject?>? _extra;
+  MapBuilder<String, JsonObject?> get extra =>
+      _$this._extra ??= new MapBuilder<String, JsonObject?>();
+  set extra(MapBuilder<String, JsonObject?>? extra) => _$this._extra = extra;
+
   CreateUserServiceErrorBrandEnum? _brand;
   CreateUserServiceErrorBrandEnum? get brand => _$this._brand;
   set brand(CreateUserServiceErrorBrandEnum? brand) => _$this._brand = brand;
@@ -225,6 +236,7 @@ class CreateUserServiceErrorBuilder
       _status = $v.status;
       _message = $v.message;
       _code = $v.code;
+      _extra = $v.extra?.toBuilder();
       _brand = $v.brand;
       _user = $v.user?.toBuilder();
       _$v = null;
@@ -256,6 +268,7 @@ class CreateUserServiceErrorBuilder
             message: BuiltValueNullFieldError.checkNotNull(
                 message, r'CreateUserServiceError', 'message'),
             code: code,
+            extra: _extra?.build(),
             brand: BuiltValueNullFieldError.checkNotNull(
                 brand, r'CreateUserServiceError', 'brand'),
             user: _user?.build(),
@@ -263,6 +276,9 @@ class CreateUserServiceErrorBuilder
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'extra';
+        _extra?.build();
+
         _$failedField = 'user';
         _user?.build();
       } catch (e) {

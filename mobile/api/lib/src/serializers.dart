@@ -15,6 +15,9 @@ import 'package:api/src/date_serializer.dart';
 import 'package:api/src/model/date.dart';
 
 import 'package:api/src/model/create_user_service_error.dart';
+import 'package:api/src/model/day.dart';
+import 'package:api/src/model/diary.dart';
+import 'package:api/src/model/language_code.dart';
 import 'package:api/src/model/service_error.dart';
 import 'package:api/src/model/timestamp.dart';
 import 'package:api/src/model/user.dart';
@@ -23,6 +26,9 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   CreateUserServiceError,
+  Day,
+  Diary,
+  LanguageCode,
   ServiceError,
   Timestamp,
   User,
