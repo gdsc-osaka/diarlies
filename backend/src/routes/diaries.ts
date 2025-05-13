@@ -13,17 +13,12 @@ import {
 import { LanguageCode } from "../domain/language";
 import db from "../db/db";
 import { fetchNearbyPlaces } from "../infra/map-repository";
-import {
-  createDBDiaryGenerationJob,
-  updateDBDiaryGenerationJob,
-} from "../infra/diary-generation-job-repository";
 import { createDBDiary } from "../infra/diary-repository";
 import { fetchDBUserByUid } from "../infra/user-repository";
 import { generateContent } from "../infra/ai-repository";
 import { createMapPlaceClient } from "../domain/map";
-import { getFirebaseToken } from "@hono/firebase-auth";
 import { createGenAI } from "../domain/ai";
-import {AuthUser} from "../domain/auth";
+import { AuthUser } from "../domain/auth";
 import env from "../env";
 
 type Bindings = {
@@ -119,10 +114,8 @@ app.post(
       fetchDBUserByUid,
       fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
       createDBDiary,
-      createDBDiaryGenerationJob,
-      updateDBDiaryGenerationJob,
       generateContent(createGenAI(env.GEMINI_API_KEY)),
-    )({uid: 'testUid'} as AuthUser, parseResult.data); // getFirebaseToken(c)!
+    )({ uid: "testUid" } as AuthUser, parseResult.data); // getFirebaseToken(c)!
 
     if (res.isErr()) {
       throw toHTTPException(res.error);

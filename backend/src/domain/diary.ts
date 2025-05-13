@@ -1,6 +1,6 @@
 import z from "zod";
-import { Timestamp } from "./timestamp";
-import { Date } from "./date";
+import { Timestamp, toTimestamp } from "./timestamp";
+import { Day } from "./day";
 import { diaries } from "../db/schema/diaries";
 import { ok, Result } from "neverthrow";
 
@@ -8,7 +8,7 @@ export const Diary = z
   .object({
     id: z.string(),
     content: z.string(),
-    diaryDate: Date,
+    diaryDate: Day,
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -21,11 +21,28 @@ export type DBDiaryForCreate = typeof diaries.$inferInsert;
 export const dbDiaryForCreate = (
   userId: string,
   content: string,
-  diaryDate: Date,
+  diaryDate: Day,
 ): Result<DBDiaryForCreate, never> => {
   return ok({
     userId,
     content,
-    diaryDate: `${diaryDate.year}-${diaryDate.month}-${diaryDate.day}`,
+    diaryDate: new Date(diaryDate.year, diaryDate.month - 1, diaryDate.day),
   });
+};
+
+export const convertToDiary = (dbDiary: DBDiary): Result<Diary, never> => {
+  return Result.combine([
+    toTimestamp(dbDiary.createdAt),
+    toTimestamp(dbDiary.updatedAt),
+  ]).map(([createdAt, updatedAt]) => ({
+    id: dbDiary.id,
+    content: dbDiary.content,
+    diaryDate: {
+      year: dbDiary.diaryDate.getFullYear(),
+      month: dbDiary.diaryDate.getMonth() + 1,
+      day: dbDiary.diaryDate.getDate(),
+    },
+    createdAt,
+    updatedAt,
+  }));
 };

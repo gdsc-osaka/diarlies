@@ -18,12 +18,10 @@ export const generateContent =
   (prompt, images) =>
     ResultAsync.fromPromise(
       (async () => {
-        const inlineData: {
-          inlineData: { data: string; mimeType: string };
-        }[] = await Promise.all(
+        const inlineData = await Promise.all(
           images.map(async (image) => ({
             inlineData: {
-              data: (await image.bytes()).toString(),
+              data: Buffer.from(await image.arrayBuffer()).toString("base64"),
               mimeType: image.type,
             },
           })),

@@ -1,10 +1,10 @@
 import z from "zod";
 
-export const Date = z
+export const Day = z
   .object({
     year: z.number().int(),
     month: z.number().int(),
     day: z.number().int(),
   })
-  .openapi({ ref: "Date" });
-export type Date = z.infer<typeof Date>;
+  .openapi({ ref: "Day" });
+export type Day = z.infer<typeof Day>;
