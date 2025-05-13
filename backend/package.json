@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && wrangler dev --port 3000",
+    "dev:node": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && dotenvx run --env-file=.dev.vars -- npx ts-node-dev ./src/index.ts",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "lint": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" && eslint src test -c eslint.config.mjs",
@@ -25,6 +26,8 @@
   },
   "private": true,
   "dependencies": {
+    "@google/genai": "^0.13.0",
+    "@googlemaps/places": "^2.0.1",
     "@hono/firebase-auth": "^1.4.2",
     "@hono/zod-validator": "^0.5.0",
     "drizzle-orm": "^0.43.1",

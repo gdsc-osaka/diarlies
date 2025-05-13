@@ -12,11 +12,33 @@ export enum StatusCode {
   ServiceUnavailable = 503,
 }
 
+const toMessage = (status: StatusCode): string => {
+  switch (status) {
+    case StatusCode.BadRequest:
+      return "Bad Request";
+    case StatusCode.Unauthorized:
+      return "Unauthorized";
+    case StatusCode.Forbidden:
+      return "Forbidden";
+    case StatusCode.NotFound:
+      return "Not Found";
+    case StatusCode.TooManyRequests:
+      return "Too Many Requests";
+    case StatusCode.InternalServerError:
+      return "Internal Server Error";
+    case StatusCode.NotImplemented:
+      return "Not Implemented";
+    case StatusCode.ServiceUnavailable:
+      return "Service Unavailable";
+  }
+};
+
 export const ServiceError = z
   .object({
     status: z.number().int(),
     message: z.string(),
     code: z.string().optional(),
+    extra: z.record(z.unknown()).optional(),
     __brand: z.literal("ServiceError"),
   })
   .openapi({ ref: "ServiceError" });
@@ -26,28 +48,39 @@ export const createServiceError = <T extends string = never>(
   status: StatusCode,
   message: string,
   code?: T,
-): { __brand: "ServiceError"; status: number; message: string; code?: T } =>
-  code
-    ? {
-        __brand: "ServiceError",
-        status: status,
-        code: code,
-        message,
-      }
-    : {
-        __brand: "ServiceError",
-        status,
-        code: "unknown" as T,
-        message,
-      };
+  extra?: Record<string, unknown>,
+): {
+  __brand: "ServiceError";
+  status: number;
+  message: string;
+  code?: T;
+  extra?: Record<string, unknown>;
+} => {
+  return {
+    __brand: "ServiceError",
+    status,
+    message,
+    code,
+    extra,
+  };
+};
 
 export const toHTTPException = <T extends ServiceError>(err: T) =>
   new HTTPException(err.status as StatusCode, {
     message: err.message,
-    res: new Response("Unauthorized", {
-      status: 401,
-      headers: {
-        Authenticate: 'error="invalid_token"',
+    res: new Response(
+      JSON.stringify({
+        status: err.status,
+        code: err.code,
+        message: err.message,
+        ...err.extra,
+      }),
+      {
+        status: err.status,
+        headers: {
+          Authenticate: 'error="invalid_token"',
+          "Content-Type": "application/json",
+        },
       },
-    }),
+    ),
   });
