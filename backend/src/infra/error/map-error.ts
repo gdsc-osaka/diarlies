@@ -19,6 +19,7 @@ export const createMapError = <T extends MapErrorCode>(
 });
 
 export const handleMapError = (error: unknown): MapError<"unknown"> => {
+  console.error(JSON.stringify(error, null, 2));
   if (error instanceof Error) {
     return createMapError("unknown", error.message, error);
   }

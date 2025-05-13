@@ -17,10 +17,8 @@ export const diaryGenerationJobs = pgTable(
       .$defaultFn(() => createId())
       .primaryKey()
       .notNull(),
-    diaryId: varchar("diary_id", { length: CUID_LENGTH }).references(
-      () => diaries.id,
-      { onDelete: "cascade" },
-    ),
+    // diaryGenerationJob 作成時点では Diary は存在しないため、nullable かつ外部キー制約なし
+    diaryId: varchar("diary_id", { length: CUID_LENGTH }),
     status: diaryGenerationEnum("status").notNull(),
     errorMessage: text("error_message"),
     createdAt: timestamp("created_at").defaultNow().notNull(),

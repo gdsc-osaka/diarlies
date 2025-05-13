@@ -154,3 +154,4 @@ class Stacktrace extends Error {
 //   ? new GCloudLogger("access")
 //   : getLogger("access");
 export const infraLogger = console;
+export const serviceLogger = console;

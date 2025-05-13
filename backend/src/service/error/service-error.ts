@@ -1,4 +1,5 @@
 import z from "zod";
+import "zod-openapi/extend";
 import { HTTPException } from "hono/http-exception";
 
 export enum StatusCode {

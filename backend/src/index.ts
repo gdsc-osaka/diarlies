@@ -1,4 +1,6 @@
 import { Hono } from "hono";
+import { logger } from "hono/logger";
+import { serve } from "@hono/node-server";
 import { verifyFirebaseAuth } from "@hono/firebase-auth";
 import { openApiSpec } from "./openapiSpec";
 import { firebaseAuthConfig } from "./firebase";
@@ -7,11 +9,16 @@ import diaries from "./routes/diaries";
 
 const app = new Hono();
 
-
-// app.route("/diaries", diaries);
+app.use(logger());
+app.route("/diaries", diaries);
 app.use("*", verifyFirebaseAuth(firebaseAuthConfig));
 app.route("/users", users);
 
 app.get("/openapi", openApiSpec(app));
 
-export default app;
+serve({
+  fetch: app.fetch,
+  port: 8080,
+});
+
+console.log("Server started");

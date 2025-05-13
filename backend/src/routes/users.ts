@@ -33,7 +33,7 @@ app.get(
     },
   }),
   async (c) => {
-    const res = await fetchUser(fetchDBUserByUid, db())(getFirebaseToken(c));
+    const res = await fetchUser(fetchDBUserByUid, db())(getFirebaseToken(c)!);
     if (res.isErr()) {
       throw toHTTPException(res.error);
     }
@@ -71,7 +71,7 @@ app.post(
       createDBUser,
       fetchDBUserByUid,
       db(),
-    )(getFirebaseToken(c));
+    )(getFirebaseToken(c)!);
     if (res.isErr()) {
       throw toHTTPException(res.error);
     }

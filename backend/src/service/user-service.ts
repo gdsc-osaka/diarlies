@@ -51,41 +51,39 @@ export const createUser =
     db: DB,
   ): CreateUser =>
   (authUser: AuthUser): ResultAsync<User, CreateUserServiceError> =>
-    authUser === null
-      ? errAsync(createServiceError(StatusCode.Unauthorized, "Unauthorized"))
-      : fetchDBUserByUid(db)(authUser.uid)
-          .andThen(convertToUser)
-          .orElse((err) =>
-            match(err)
-              .with({ __brand: "DBError", code: "not-found" }, () => okAsync())
-              .with({ __brand: "DBError", code: "unknown" }, (e) => errAsync(e))
-              .exhaustive(),
+    fetchDBUserByUid(db)(authUser.uid)
+      .andThen(convertToUser)
+      .orElse((err) =>
+        match(err)
+          .with({ __brand: "DBError", code: "not-found" }, () => okAsync())
+          .with({ __brand: "DBError", code: "unknown" }, (e) => errAsync(e))
+          .exhaustive(),
+      )
+      .andThen((user) =>
+        user
+          ? errAsync({
+              ...createServiceError(
+                StatusCode.BadRequest,
+                "User already exists",
+                "user-already-exists",
+              ),
+              user,
+            })
+          : okAsync(),
+      )
+      .andThen(() => createDBUserForCreate(authUser))
+      .andThen(createDBUser(db))
+      .andThen(convertToUser)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "ServiceError" }, (e) => e)
+          .with({ __brand: "DBError" }, (e) =>
+            createServiceError(
+              match(e.code)
+                .with("unknown", () => StatusCode.InternalServerError)
+                .exhaustive(),
+              e.message,
+            ),
           )
-          .andThen((user) =>
-            user
-              ? errAsync({
-                  ...createServiceError(
-                    StatusCode.BadRequest,
-                    "User already exists",
-                    "user-already-exists",
-                  ),
-                  user,
-                })
-              : okAsync(),
-          )
-          .andThen(() => createDBUserForCreate(authUser))
-          .andThen(createDBUser(db))
-          .andThen(convertToUser)
-          .mapErr((err) =>
-            match(err)
-              .with({ __brand: "ServiceError" }, (e) => e)
-              .with({ __brand: "DBError" }, (e) =>
-                createServiceError(
-                  match(e.code)
-                    .with("unknown", () => StatusCode.InternalServerError)
-                    .exhaustive(),
-                  e.message,
-                ),
-              )
-              .exhaustive(),
-          );
+          .exhaustive(),
+      );

@@ -1,14 +1,14 @@
 import type { DBorTx } from "../db/db";
-import {
-  DBDiaryGenerationJob,
-  DBDiaryGenerationJobForCreate,
-  DBDiaryGenerationJobForUpdate,
-} from "../domain/diary";
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { createDBError, DBError, handleDBError } from "./error/db-error";
 import { infraLogger } from "../logger";
 import { diaryGenerationJobs } from "../db/schema/diary-generation-jobs";
 import { eq } from "drizzle-orm";
+import {
+  DBDiaryGenerationJob,
+  DBDiaryGenerationJobForCreate,
+  DBDiaryGenerationJobForUpdate,
+} from "../domain/diary-generation-job";
 
 export type CreateDBDiaryGenerationJob = (
   db: DBorTx,
