@@ -46,9 +46,7 @@ app.post(
                 description: "Location histories for diary generation",
               },
               languageCode: {
-                type: "string",
-                enum: LanguageCode.options,
-                description: "Language code for diary generation",
+                $ref: "#/components/schemas/LanguageCode",
               },
               images: {
                 type: "array",

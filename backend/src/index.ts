@@ -9,12 +9,13 @@ import diaries from "./routes/diaries";
 
 const app = new Hono();
 
+app.get("/openapi", openApiSpec(app));
+
 app.use(logger());
 app.route("/diaries", diaries);
 app.use("*", verifyFirebaseAuth(firebaseAuthConfig));
 app.route("/users", users);
 
-app.get("/openapi", openApiSpec(app));
 
 serve({
   fetch: app.fetch,

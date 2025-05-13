@@ -2,6 +2,7 @@ import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { AIError, createAIError, handleAIError } from "./error/ai-error";
 import { infraLogger } from "../logger";
 import { GenAI } from "../domain/ai";
+import {Modality} from "@google/genai";
 
 interface GenerateContentStreamResponse {
   text: string;
@@ -27,25 +28,31 @@ export const generateContent =
           })),
         );
 
-        return ai.models.generateContent({
+        const result = await ai.models.generateContent({
           model: "gemini-2.0-flash-preview-image-generation",
           contents: [prompt, ...inlineData],
           config: {
-            responseModalities: ["text", "image"],
+            responseModalities: [Modality.TEXT, Modality.IMAGE],
           },
         });
+        const parts = result.candidates?.at(0)?.content?.parts;
+
+        if (!parts) {
+            throw new Error("No candidates in response");
+        }
+
+        const image = parts.filter((part) => part.inlineData).at(0)?.inlineData;
+        const text = parts
+          .filter((part) => part.text)
+          .map((part) => part.text)
+          .join("\n");
+
+        return {
+            text,
+            image: image?.data ? Buffer.from(image.data, "base64").toString() : undefined,
+        }
       })(),
       handleAIError,
     )
       // .andTee((res) => infraLogger.info(`AI response: ${JSON.stringify(res, null, 2)}`))
-      .orTee(infraLogger.error)
-      .andThen((res) =>
-        res.text === undefined
-          ? errAsync(createAIError("unknown", "No text in response", undefined))
-          : okAsync({
-              text: res.text,
-              image: res.data
-                ? Buffer.from(res.data, "base64").toString()
-                : undefined,
-            }),
-      );
+      .orTee(infraLogger.error);

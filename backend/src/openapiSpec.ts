@@ -2,6 +2,7 @@ import { openAPISpecs } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { Hono } from "hono";
 import { ServiceError } from "./service/error/service-error";
+import {LanguageCode} from "./domain/language";
 
 export const openApiSpec = (app: Hono) =>
   openAPISpecs(app, {
@@ -31,6 +32,13 @@ export const openApiSpec = (app: Hono) =>
             bearerFormat: "JWT",
           },
         },
+        schemas: {
+          LanguageCode: {
+            type: "string",
+            enum: LanguageCode.options,
+            description: "Language code for diary generation",
+          }
+        }
       },
     },
     defaultOptions: {
