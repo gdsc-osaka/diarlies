@@ -1,5 +1,5 @@
 {
-  "id": "847cd0a4-6fea-4f46-a5ef-f96467553e3a",
+  "id": "cf59a1d8-da00-494c-907b-648b6587f3b9",
   "prevId": "03353c77-82ed-44a9-819a-7b19d5aa8548",
   "version": "7",
   "dialect": "postgresql",
@@ -26,8 +26,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "diary_date": {
-          "name": "diary_date",
+        "diaryDate": {
+          "name": "diaryDate",
           "type": "date",
           "primaryKey": false,
           "notNull": true
@@ -66,7 +66,7 @@
           "name": "diaries_diary_date_idx",
           "columns": [
             {
-              "expression": "diary_date",
+              "expression": "diaryDate",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
