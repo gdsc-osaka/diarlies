@@ -17,7 +17,7 @@ export const diaries = pgTable(
       { onDelete: "cascade" },
     ),
     content: varchar("content", { length: 1000 }).notNull(),
-    diaryDate: date({ mode: "date" }).notNull(),
+    diaryDate: date('diary_date', { mode: "date" }).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())

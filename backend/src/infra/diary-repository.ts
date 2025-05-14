@@ -4,6 +4,7 @@ import { createDBError, DBError, handleDBError } from "./error/db-error";
 import { DBDiary, DBDiaryForCreate } from "../domain/diary";
 import { diaries } from "../db/schema/diaries";
 import { infraLogger } from "../logger";
+import { and, eq } from "drizzle-orm";
 
 export type CreateDBDiary = (
   db: DBorTx,
@@ -21,6 +22,60 @@ export const createDBDiary: CreateDBDiary = (db) => (diary) =>
             createDBError(
               "unknown",
               `Diary with uid ${diary.id} not created`,
+              undefined,
+            ),
+          ),
+    )
+    .orTee(infraLogger.error);
+
+export type FetchDBDiaryById = (
+  db: DBorTx,
+) => (
+  diaryId: string,
+) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+
+export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
+  ResultAsync.fromPromise(
+    db.select().from(diaries).where(eq(diaries.id, diaryId)).limit(1).execute(),
+    handleDBError,
+  )
+    .andThen((records) =>
+      records.length > 0
+        ? okAsync(records[0])
+        : errAsync(
+            createDBError(
+              "not-found",
+              `Diary with id ${diaryId} not found`,
+              undefined,
+            ),
+          ),
+    )
+    .orTee(infraLogger.error);
+
+export type FetchDBDiaryByDate = (
+  db: DBorTx,
+) => (
+  userId: string,
+  date: Date,
+) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+
+export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
+  ResultAsync.fromPromise(
+    db
+      .select()
+      .from(diaries)
+      .where(and(eq(diaries.userId, userId), eq(diaries.diaryDate, date)))
+      .limit(1)
+      .execute(),
+    handleDBError,
+  )
+    .andThen((records) =>
+      records.length > 0
+        ? okAsync(records[0])
+        : errAsync(
+            createDBError(
+              "not-found",
+              `Diary with date ${date} not found`,
               undefined,
             ),
           ),

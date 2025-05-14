@@ -9,19 +9,19 @@ import {
   ServiceError,
   StatusCode,
 } from "./error/service-error";
-import { CreateDBDiary } from "../infra/diary-repository";
+import { CreateDBDiary, FetchDBDiaryByDate } from "../infra/diary-repository";
 import { GenerateContent } from "../infra/ai-repository";
 import { AuthUser } from "../domain/auth";
 import { FetchDBUserByUid } from "../infra/user-repository";
 import { convertToDiary, dbDiaryForCreate, Diary } from "../domain/diary";
 import { diaryGenerationPrompt } from "../domain/ai";
+import { match } from "ts-pattern";
 
 export const Image = z
   .instanceof(File)
   .refine((file) => file.size <= 10 * 1024 * 1024, {
     message: "File size must be less than 10MB",
   });
-
 export const CreateDiaryRequest = z.object({
   locationHistories: z.array(
     z.object({
@@ -127,3 +127,76 @@ export const createDiary =
         return convertToDiary(diary.value);
       })(),
     ).andThen((result) => result);
+
+export type FetchDiaryByDate = (
+  authUser: AuthUser,
+  date: Date,
+) => ResultAsync<Diary, ServiceError>;
+
+export const fetchDiaryByDate =
+  (
+    db: DBorTx,
+    fetchDBUserByUid: FetchDBUserByUid,
+    fetchDBDiaryByDate: FetchDBDiaryByDate,
+  ): FetchDiaryByDate =>
+  (authUser: AuthUser, date: Date) =>
+    fetchDBUserByUid(db)(authUser.uid)
+      .mapErr((err) =>
+        match(err)
+          .with(
+            {
+              __brand: "DBError",
+              code: "not-found",
+            },
+            () =>
+              createServiceError(
+                StatusCode.Unauthorized,
+                "User not found",
+                err.message,
+              ),
+          )
+          .with(
+            {
+              __brand: "DBError",
+              code: "unknown",
+            },
+            (e) =>
+              createServiceError(
+                StatusCode.InternalServerError,
+                "Failed to find user",
+                e.message,
+              ),
+          )
+          .exhaustive(),
+      )
+      .andThen((dbUser) => fetchDBDiaryByDate(db)(dbUser.id, date))
+      .andThen(convertToDiary)
+      .mapErr((err) =>
+        match(err)
+          .with(
+            {
+              __brand: "DBError",
+              code: "not-found",
+            },
+            (e) =>
+              createServiceError(
+                StatusCode.NotFound,
+                "Diary not found",
+                e.message,
+              ),
+          )
+          .with(
+            {
+              __brand: "DBError",
+              code: "unknown",
+            },
+            (e) =>
+              createServiceError(
+                StatusCode.InternalServerError,
+                "Failed to fetch diary",
+                e.message,
+              ),
+          )
+          .with({ __brand: "ServiceError" }, (e) => e)
+          .exhaustive(),
+      );

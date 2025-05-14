@@ -2,16 +2,17 @@ import { ResultAsync } from "neverthrow";
 import { DecodedIdToken } from "firebase-admin/auth";
 import { AuthError, handleAuthError } from "./error/auth-error";
 import firebase from "../firebase";
+import {infraLogger} from "../logger";
 
 export type AuthUser = DecodedIdToken;
 
 export type VerifyIdToken = (
-    fireSa: string,
-    idToken: string,
+  fireSa: string,
+  idToken: string,
 ) => ResultAsync<AuthUser, AuthError>;
 
 export const verifyIdToken: VerifyIdToken = (fireSa, idToken) =>
-    ResultAsync.fromPromise(
-        firebase(fireSa).auth().verifyIdToken(idToken),
-        handleAuthError,
-    );
+  ResultAsync.fromPromise(
+    firebase(fireSa).auth().verifyIdToken(idToken),
+    handleAuthError,
+  ).orTee(infraLogger.error);

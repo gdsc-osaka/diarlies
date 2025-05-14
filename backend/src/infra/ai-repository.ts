@@ -1,5 +1,5 @@
-import { errAsync, okAsync, ResultAsync } from "neverthrow";
-import { AIError, createAIError, handleAIError } from "./error/ai-error";
+import { ResultAsync } from "neverthrow";
+import { AIError, handleAIError } from "./error/ai-error";
 import { infraLogger } from "../logger";
 import { GenAI } from "../domain/ai";
 import { Modality } from "@google/genai";

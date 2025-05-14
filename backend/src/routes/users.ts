@@ -10,7 +10,7 @@ import { createDBUser, fetchDBUserByUid } from "../infra/user-repository";
 import { resolver } from "hono-openapi/zod";
 import { toHTTPException } from "../service/error/service-error";
 import db from "../db/db";
-import {getAUthUser} from "./middleware/authorize";
+import { getAUthUser } from "./middleware/authorize";
 
 const app = new Hono();
 const tags = ["Users"];

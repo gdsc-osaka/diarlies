@@ -40,7 +40,7 @@ export const convertToDiary = (dbDiary: DBDiary): Result<Diary, never> => {
     diaryDate: {
       year: dbDiary.diaryDate.getFullYear(),
       month: dbDiary.diaryDate.getMonth() + 1,
-      day: dbDiary.diaryDate.getDate(),
+      day: dbDiary.diaryDate.getDate() + 1,
     },
     createdAt,
     updatedAt,

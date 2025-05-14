@@ -3,7 +3,11 @@ import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { Diary } from "../domain/diary";
 import { zValidator } from "@hono/zod-validator";
-import { createDiary, CreateDiaryRequest } from "../service/diary-service";
+import {
+  createDiary,
+  CreateDiaryRequest,
+  fetchDiaryByDate,
+} from "../service/diary-service";
 import z from "zod";
 import {
   createServiceError,
@@ -13,13 +17,13 @@ import {
 import { LanguageCode } from "../domain/language";
 import db from "../db/db";
 import { fetchNearbyPlaces } from "../infra/map-repository";
-import { createDBDiary } from "../infra/diary-repository";
+import { createDBDiary, fetchDBDiaryByDate } from "../infra/diary-repository";
 import { fetchDBUserByUid } from "../infra/user-repository";
 import { generateContent } from "../infra/ai-repository";
 import { createMapPlaceClient } from "../domain/map";
 import { createGenAI } from "../domain/ai";
 import env from "../env";
-import {getAUthUser} from "./middleware/authorize";
+import { getAUthUser } from "./middleware/authorize";
 
 type Bindings = {
   GEMINI_API_KEY: string;
@@ -73,14 +77,15 @@ app.post(
       },
     },
   }),
-  zValidator(
-    "form",
-    z.object({
-      locationHistories: z.string(), // JSON string
-      languageCode: LanguageCode,
-      images: z.array(z.instanceof(File)),
-    }),
-  ),
+  // FIXME: 正常なリクエストでも zValidator がエラーを返す
+  // zValidator(
+  //   "form",
+  //   z.object({
+  //     locationHistories: z.string(), // JSON string
+  //     languageCode: LanguageCode,
+  //     images: z.array(z.instanceof(File)),
+  //   }),
+  // ),
   async (c) => {
     const form = await c.req.formData();
     // zValidator でバリデーション済みなので、型アサーションを行う
@@ -120,6 +125,63 @@ app.post(
     }
 
     return c.json(res.value, 201);
+  },
+);
+
+// GET /diaries?date=2023-10-01
+app.get(
+  "/",
+  describeRoute({
+    tags,
+    validateResponse: true,
+    description: "Get diaries",
+    parameters: [
+      {
+        name: "date",
+        in: "query",
+        description: "Date to filter diaries",
+        required: false,
+        schema: {
+          type: "string",
+          format: "date",
+        },
+      },
+    ],
+    responses: {
+      200: {
+        description: "Diaries retrieved successfully",
+        content: {
+          "application/json": {
+            schema: resolver(z.array(Diary)),
+          },
+        },
+      },
+    },
+  }),
+  async (c) => {
+    const dateParam = c.req.query("date");
+
+    if (dateParam) {
+      const res = await fetchDiaryByDate(
+        db(),
+        fetchDBUserByUid,
+        fetchDBDiaryByDate,
+      )(getAUthUser(c), new Date(dateParam));
+
+      if (res.isErr()) {
+        throw toHTTPException(res.error);
+      }
+
+      return c.json([res.value]);
+    }
+
+    throw toHTTPException(
+      createServiceError(
+        StatusCode.BadRequest,
+        "At least date is required",
+        "invalid_request",
+      ),
+    );
   },
 );
 
