@@ -29,10 +29,10 @@
   "dependencies": {
     "@google/genai": "^0.13.0",
     "@googlemaps/places": "^2.0.1",
-    "@hono/firebase-auth": "^1.4.2",
     "@hono/node-server": "^1.14.1",
     "@hono/zod-validator": "^0.5.0",
     "drizzle-orm": "^0.43.1",
+    "firebase-admin": "^13.4.0",
     "hono": "^4.7.8",
     "hono-openapi": "^0.4.8",
     "log4js": "^6.9.1",

@@ -8,9 +8,9 @@ import {
 } from "../service/user-service";
 import { createDBUser, fetchDBUserByUid } from "../infra/user-repository";
 import { resolver } from "hono-openapi/zod";
-import { getFirebaseToken } from "@hono/firebase-auth";
 import { toHTTPException } from "../service/error/service-error";
 import db from "../db/db";
+import {getAUthUser} from "./middleware/authorize";
 
 const app = new Hono();
 const tags = ["Users"];
@@ -33,7 +33,7 @@ app.get(
     },
   }),
   async (c) => {
-    const res = await fetchUser(fetchDBUserByUid, db())(getFirebaseToken(c)!);
+    const res = await fetchUser(fetchDBUserByUid, db())(getAUthUser(c));
     if (res.isErr()) {
       throw toHTTPException(res.error);
     }
@@ -71,7 +71,7 @@ app.post(
       createDBUser,
       fetchDBUserByUid,
       db(),
-    )(getFirebaseToken(c)!);
+    )(getAUthUser(c));
     if (res.isErr()) {
       throw toHTTPException(res.error);
     }

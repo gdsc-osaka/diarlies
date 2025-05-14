@@ -2,7 +2,7 @@ import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { AIError, createAIError, handleAIError } from "./error/ai-error";
 import { infraLogger } from "../logger";
 import { GenAI } from "../domain/ai";
-import {Modality} from "@google/genai";
+import { Modality } from "@google/genai";
 
 interface GenerateContentStreamResponse {
   text: string;
@@ -38,7 +38,7 @@ export const generateContent =
         const parts = result.candidates?.at(0)?.content?.parts;
 
         if (!parts) {
-            throw new Error("No candidates in response");
+          throw new Error("No candidates in response");
         }
 
         const image = parts.filter((part) => part.inlineData).at(0)?.inlineData;
@@ -48,9 +48,11 @@ export const generateContent =
           .join("\n");
 
         return {
-            text,
-            image: image?.data ? Buffer.from(image.data, "base64").toString() : undefined,
-        }
+          text,
+          image: image?.data
+            ? Buffer.from(image.data, "base64").toString()
+            : undefined,
+        };
       })(),
       handleAIError,
     )

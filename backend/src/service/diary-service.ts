@@ -1,6 +1,5 @@
 import z from "zod";
 import { Timestamp, toDate } from "../domain/timestamp";
-import { LatLng } from "../domain/location";
 import { LanguageCode } from "../domain/language";
 import { FetchNearbyPlaces } from "../infra/map-repository";
 import { errAsync, ResultAsync } from "neverthrow";
@@ -26,7 +25,8 @@ export const Image = z
 export const CreateDiaryRequest = z.object({
   locationHistories: z.array(
     z.object({
-      latlng: LatLng,
+      lag: z.number(),
+      lng: z.number(),
       visitedAt: Timestamp,
     }),
   ),
@@ -60,7 +60,7 @@ export const createDiary =
           return errAsync(
             createServiceError(
               StatusCode.Unauthorized,
-              "Unauthorized",
+              "User not found",
               dbUser.error.message,
             ),
           );
@@ -71,7 +71,8 @@ export const createDiary =
           args.locationHistories.map((locationHistory) =>
             fetchNearbyPlaces({
               languageCode: args.languageCode,
-              latlng: locationHistory.latlng,
+              lat: locationHistory.lag,
+              lng: locationHistory.lng,
             }).map((places) => ({
               visitedAt: toDate(locationHistory.visitedAt),
               places,

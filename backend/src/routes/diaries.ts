@@ -18,8 +18,8 @@ import { fetchDBUserByUid } from "../infra/user-repository";
 import { generateContent } from "../infra/ai-repository";
 import { createMapPlaceClient } from "../domain/map";
 import { createGenAI } from "../domain/ai";
-import { AuthUser } from "../domain/auth";
 import env from "../env";
+import {getAUthUser} from "./middleware/authorize";
 
 type Bindings = {
   GEMINI_API_KEY: string;
@@ -57,7 +57,7 @@ app.post(
                 },
               },
             },
-            required: ["locationHistories", "images"],
+            required: ["locationHistories", "images", "languageCode"],
           },
         },
       },
@@ -113,7 +113,7 @@ app.post(
       fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
       createDBDiary,
       generateContent(createGenAI(env.GEMINI_API_KEY)),
-    )({ uid: "testUid" } as AuthUser, parseResult.data); // getFirebaseToken(c)!
+    )(getAUthUser(c), parseResult.data); // getFirebaseToken(c)!
 
     if (res.isErr()) {
       throw toHTTPException(res.error);

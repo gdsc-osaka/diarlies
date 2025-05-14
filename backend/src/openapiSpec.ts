@@ -2,7 +2,7 @@ import { openAPISpecs } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { Hono } from "hono";
 import { ServiceError } from "./service/error/service-error";
-import {LanguageCode} from "./domain/language";
+import { LanguageCode } from "./domain/language";
 
 export const openApiSpec = (app: Hono) =>
   openAPISpecs(app, {
@@ -13,7 +13,7 @@ export const openApiSpec = (app: Hono) =>
         description: "Greeting API",
       },
       servers: [
-        { url: "http://localhost:3000", description: "Local Server" },
+        { url: "http://localhost:8080", description: "Local Server" },
         {
           url: "https://diarlies.harineko0927.workers.dev",
           description: "Production Server",
@@ -37,8 +37,8 @@ export const openApiSpec = (app: Hono) =>
             type: "string",
             enum: LanguageCode.options,
             description: "Language code for diary generation",
-          }
-        }
+          },
+        },
       },
     },
     defaultOptions: {

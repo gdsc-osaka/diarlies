@@ -1,13 +1,13 @@
 import { MapPlace, MapPlaceClient } from "../domain/map";
 import { okAsync, ResultAsync } from "neverthrow";
 import { LanguageCode } from "../domain/language";
-import { LatLng } from "../domain/location";
 import { handleMapError, MapError } from "./error/map-error";
 import { infraLogger } from "../logger";
 
 export interface FetchNearbyPlacesArgs {
   languageCode: LanguageCode;
-  latlng: LatLng;
+  lat: number;
+  lng: number;
 }
 
 export type FetchNearbyPlaces = (
@@ -16,7 +16,7 @@ export type FetchNearbyPlaces = (
 
 export const fetchNearbyPlaces =
   (mapPlace: MapPlaceClient): FetchNearbyPlaces =>
-  ({ languageCode, latlng }: FetchNearbyPlacesArgs) =>
+  ({ languageCode, lng, lat }: FetchNearbyPlacesArgs) =>
     ResultAsync.fromPromise(
       mapPlace.searchNearby(
         {
@@ -25,8 +25,8 @@ export const fetchNearbyPlaces =
           locationRestriction: {
             circle: {
               center: {
-                latitude: latlng.lat,
-                longitude: latlng.lng,
+                latitude: lat,
+                longitude: lng,
               },
               // GPS の誤差は概ね 100m
               radius: 100,
