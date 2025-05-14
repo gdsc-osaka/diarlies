@@ -158,6 +158,7 @@ class _TranslationsOnboardingPermissionLabelJa implements TranslationsOnboarding
 	// Translations
 	@override String get location => 'バックグラウンド位置情報';
 	@override String get storage => 'ストレージ';
+	@override String get notification => '通知';
 }
 
 // Path: onboarding_permission.description
@@ -167,8 +168,9 @@ class _TranslationsOnboardingPermissionDescriptionJa implements TranslationsOnbo
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get location => '今日訪れた場所の地図やタイムラインを自動的に作成するために、\nこのアプリはバックグラウンドで位置情報データを収集します。';
-	@override String get storage => '写真ライブラリへのアクセスが必要です。\n日記のエントリーを写真を使って作成するために、\nこのアプリはあなたの写真ライブラリへのアクセスが必要です。';
+	@override String get location => '今日訪れた場所の地図やタイムラインを自動的に作成するために、このアプリはバックグラウンドで位置情報データを収集します。';
+	@override String get storage => '写真ライブラリへのアクセスが必要です。日記のエントリーを写真を使って作成するために、このアプリはあなたの写真ライブラリへのアクセスが必要です。';
+	@override String get notification => '日記を書くリマインダーや、位置情報を追跡している間の通知を表示するために、このアプリは通知を送信する権限が必要です。';
 }
 
 // Path: onboarding_permission.btn
@@ -181,7 +183,7 @@ class _TranslationsOnboardingPermissionBtnJa implements TranslationsOnboardingPe
 	@override String get configure => '権限を設定';
 	@override String get not_now => '今はやめておく';
 	@override String get back => '戻る';
-	@override String get finish => '完了';
+	@override String get next => '次へ';
 }
 
 // Path: onboarding_finish.btn
@@ -256,12 +258,14 @@ extension on TranslationsJa {
 			case 'onboarding_permission.subtitle': return '最高のアプリ体験のために、\n個人データへのアクセスが必要です。';
 			case 'onboarding_permission.label.location': return 'バックグラウンド位置情報';
 			case 'onboarding_permission.label.storage': return 'ストレージ';
-			case 'onboarding_permission.description.location': return '今日訪れた場所の地図やタイムラインを自動的に作成するために、\nこのアプリはバックグラウンドで位置情報データを収集します。';
-			case 'onboarding_permission.description.storage': return '写真ライブラリへのアクセスが必要です。\n日記のエントリーを写真を使って作成するために、\nこのアプリはあなたの写真ライブラリへのアクセスが必要です。';
+			case 'onboarding_permission.label.notification': return '通知';
+			case 'onboarding_permission.description.location': return '今日訪れた場所の地図やタイムラインを自動的に作成するために、このアプリはバックグラウンドで位置情報データを収集します。';
+			case 'onboarding_permission.description.storage': return '写真ライブラリへのアクセスが必要です。日記のエントリーを写真を使って作成するために、このアプリはあなたの写真ライブラリへのアクセスが必要です。';
+			case 'onboarding_permission.description.notification': return '日記を書くリマインダーや、位置情報を追跡している間の通知を表示するために、このアプリは通知を送信する権限が必要です。';
 			case 'onboarding_permission.btn.configure': return '権限を設定';
 			case 'onboarding_permission.btn.not_now': return '今はやめておく';
 			case 'onboarding_permission.btn.back': return '戻る';
-			case 'onboarding_permission.btn.finish': return '完了';
+			case 'onboarding_permission.btn.next': return '次へ';
 			case 'onboarding_finish.title': return 'ようこそ';
 			case 'onboarding_finish.subtitle': return 'あなたのAI日記アシスタント、Diarlies。';
 			case 'onboarding_finish.btn.start': return 'はじめる';

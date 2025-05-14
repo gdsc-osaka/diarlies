@@ -23,3 +23,15 @@ class DiaryMemo extends _$DiaryMemo {
     state = value;
   }
 }
+
+@Riverpod(keepAlive: true)
+class TodaysDiary extends _$TodaysDiary {
+  @override
+  Future<Diary?> build() async {
+    return null;
+  }
+
+  void set(Diary? value) {
+    state = AsyncValue.data(value);
+  }
+}

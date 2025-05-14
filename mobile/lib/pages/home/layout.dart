@@ -1,6 +1,5 @@
 import 'package:diarlies/components/nb_bottom_navigation.dart';
 import 'package:diarlies/i18n/strings.g.dart';
-import 'package:diarlies/logger.dart';
 import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -39,12 +38,12 @@ class HomeLayout extends StatelessWidget {
                     backgroundColor: styles.color.orangeHalfTone,
                   ),
                   NBBottomNavigationItem(
-                    icon: Icon(Icons.book_outlined),
+                    icon: Icon(Icons.language_outlined),
                     label: t.home.bottom_nav.social,
                     backgroundColor: styles.color.greenHalfTone,
                   ),
                   NBBottomNavigationItem(
-                    icon: Icon(Icons.book_outlined),
+                    icon: Icon(Icons.settings_outlined),
                     label: t.home.bottom_nav.settings,
                     backgroundColor: styles.color.grey,
                   ),

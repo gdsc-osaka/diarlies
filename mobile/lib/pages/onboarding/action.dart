@@ -16,9 +16,9 @@ class OnboardingAction extends FluxAction {
     }
   }
 
-  void setLanguage(Language? language) {
+  Future<void> setLanguage(Language? language) async {
     if (language == null) return;
 
-    ref.read(diaryLanguageProvider.notifier).setLanguage(language);
+    await ref.read(diaryLanguageProvider.notifier).setLanguage(language);
   }
 }

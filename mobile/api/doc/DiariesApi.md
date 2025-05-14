@@ -5,7 +5,7 @@
 import 'package:api/api.dart';
 ```
 
-All URIs are relative to *http://localhost:3000*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **postDiaries**
-> Diary postDiaries(locationHistories, images, languageCode)
+> Diary postDiaries(locationHistories, languageCode, images)
 
 
 
@@ -25,11 +25,11 @@ import 'package:api/api.dart';
 
 final api = Api().getDiariesApi();
 final String locationHistories = locationHistories_example; // String | Location histories for diary generation
-final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 final LanguageCode languageCode = ; // LanguageCode | 
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = api.postDiaries(locationHistories, images, languageCode);
+    final response = api.postDiaries(locationHistories, languageCode, images);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling DiariesApi->postDiaries: $e\n');
@@ -41,8 +41,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **locationHistories** | **String**| Location histories for diary generation | 
+ **languageCode** | [**LanguageCode**](LanguageCode.md)|  | 
  **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | 
- **languageCode** | [**LanguageCode**](LanguageCode.md)|  | [optional] 
 
 ### Return type
 

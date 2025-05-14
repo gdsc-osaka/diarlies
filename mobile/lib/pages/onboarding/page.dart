@@ -3,6 +3,7 @@ import 'package:diarlies/pages/onboarding/_components/onboarding_positioned.dart
 import 'package:diarlies/pages/onboarding/permission/page.dart';
 import 'package:diarlies/providers/permission_providers.dart';
 import 'package:diarlies/router.dart';
+import 'package:diarlies/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -59,7 +60,7 @@ class OnboardingPage extends ConsumerWidget {
                         NBSelect(
                           placeholder: t.onboarding.placeholder.language,
                           onChanged: action.setLanguage,
-                          value: ref.watch(diaryLanguageProvider),
+                          value: ref.watch(diaryLanguageProvider).valueOrNull,
                           values: [Language.ja, Language.en],
                           builder: (Language language) {
                             return Row(

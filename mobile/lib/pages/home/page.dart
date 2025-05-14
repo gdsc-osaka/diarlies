@@ -1,18 +1,31 @@
 import 'dart:io';
 
+import 'package:api/api.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:diarlies/components/nb_button.dart';
 import 'package:diarlies/components/nb_image.dart';
+import 'package:diarlies/components/nb_snackbar.dart';
 import 'package:diarlies/components/nb_text_field.dart';
 import 'package:diarlies/components/variant.dart';
 import 'package:diarlies/i18n/strings.g.dart';
 import 'package:diarlies/logger.dart';
 import 'package:diarlies/pages/home/_components/diary_card.dart';
+import 'package:diarlies/pages/onboarding/page.dart';
+import 'package:diarlies/providers/api_providers.dart';
+import 'package:diarlies/providers/location_providers.dart';
+import 'package:diarlies/services/api_adapter.dart';
+import 'package:diarlies/shared/error_handler.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:diarlies/styles/styles.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '_components/map.dart';
 
 part 'action.dart';
 
@@ -33,6 +46,12 @@ class HomePage extends ConsumerWidget {
 
     final selectedPhotos = ref.watch(selectedPhotosProvider);
 
+    handleWriteDiary() async {
+      await action.writeDiary(errorHandler: (message) {
+        showNBSnackBar(context, title: message, type: SnackBarType.error);
+      });
+    }
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -44,7 +63,7 @@ class HomePage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(t.home.label.photo, style: styles.text.title.m),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -83,12 +102,15 @@ class HomePage extends ConsumerWidget {
                     )
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 Text(t.home.label.journey, style: styles.text.title.m),
-                const SizedBox(height: 12),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
+                JourneyMap(
+                  initialLocation: LatLng(135, 75),
+                ),
+                const SizedBox(height: 16),
                 Text(t.home.label.memo, style: styles.text.title.m),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 NBTextField(
                   value: ref.watch(diaryMemoProvider),
                   maxLines: 2,
@@ -96,7 +118,7 @@ class HomePage extends ConsumerWidget {
                   onChanged: action.updateMemo,
                 ),
                 const Expanded(child: SizedBox()),
-                NBButton(label: Text(t.home.btn.keep_diary), onPressed: action.writeDiary),
+                NBButton(label: Text(t.home.btn.keep_diary), onPressed: handleWriteDiary),
               ],
             ),
           ),

@@ -9,7 +9,7 @@ void main() {
   group(DiariesApi, () {
     // Create a new diary
     //
-    //Future<Diary> postDiaries(String locationHistories, BuiltList<MultipartFile> images, { LanguageCode languageCode }) async
+    //Future<Diary> postDiaries(String locationHistories, LanguageCode languageCode, BuiltList<MultipartFile> images) async
     test('test postDiaries', () async {
       // TODO
     });

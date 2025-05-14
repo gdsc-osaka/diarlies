@@ -26,8 +26,8 @@ class DiariesApi {
   ///
   /// Parameters:
   /// * [locationHistories] - Location histories for diary generation
-  /// * [images] 
   /// * [languageCode] 
+  /// * [images] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,8 +39,8 @@ class DiariesApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<Diary>> postDiaries({ 
     required String locationHistories,
+    required LanguageCode languageCode,
     required BuiltList<MultipartFile> images,
-    LanguageCode? languageCode,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -73,7 +73,7 @@ class DiariesApi {
     try {
       _bodyData = FormData.fromMap(<String, dynamic>{
         r'locationHistories': encodeFormParameter(_serializers, locationHistories, const FullType(String)),
-        if (languageCode != null) r'languageCode': encodeFormParameter(_serializers, languageCode, const FullType(LanguageCode)),
+        r'languageCode': encodeFormParameter(_serializers, languageCode, const FullType(LanguageCode)),
         r'images': images.toList(),
       });
 

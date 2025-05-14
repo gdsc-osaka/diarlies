@@ -38,5 +38,21 @@ final usersApiProvider = AutoDisposeProvider<UsersApi>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef UsersApiRef = AutoDisposeProviderRef<UsersApi>;
+String _$diariesApiHash() => r'db9276777d59b98608275b78a8de1c0d2307c180';
+
+/// See also [diariesApi].
+@ProviderFor(diariesApi)
+final diariesApiProvider = AutoDisposeProvider<DiariesApi>.internal(
+  diariesApi,
+  name: r'diariesApiProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$diariesApiHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef DiariesApiRef = AutoDisposeProviderRef<DiariesApi>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

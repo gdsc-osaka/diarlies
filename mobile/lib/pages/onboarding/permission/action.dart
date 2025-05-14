@@ -7,11 +7,18 @@ class OnboardingPermissionAction extends FluxAction {
   OnboardingPermissionAction(super.ref);
 
   Future<void> requestPermission() async {
-    final permission = ref.read(permissionServiceProvider);
-    final loc = await permission.requestLocationPermission();
-    final photo = await permission.requestPhotoPermission();
+    final permissionService = ref.read(permissionServiceProvider);
 
-    logger.d('[requestPermission] Location: $loc, Photo: $photo');
+    if (ref.read(locationPermissionProvider).valueOrNull != PermissionStatus.granted) {
+      await permissionService.requestLocationPermission();
+    }
+    if (ref.read(notificationPermissionProvider).valueOrNull != PermissionStatus.granted) {
+      await permissionService.requestNotificationPermission();
+    }
+
+    if (ref.read(notificationPermissionProvider).valueOrNull == PermissionStatus.granted) {
+      await permissionService.requestNotificationPermission();
+    }
 
     // reload
     ref.invalidate(permissionServiceProvider);
@@ -21,6 +28,5 @@ class OnboardingPermissionAction extends FluxAction {
     ref.read(routerProvider).pop();
   }
 
-  void finish() {
-  }
+  void finish() {}
 }

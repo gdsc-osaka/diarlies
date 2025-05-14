@@ -64,3 +64,6 @@ class LoggingInterceptor extends Interceptor {
 
 @riverpod
 UsersApi usersApi(Ref ref) => ref.watch(apiProvider).getUsersApi();
+
+@riverpod
+DiariesApi diariesApi(Ref ref) => ref.watch(apiProvider).getDiariesApi();

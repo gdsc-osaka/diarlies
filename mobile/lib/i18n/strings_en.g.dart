@@ -161,6 +161,7 @@ class TranslationsOnboardingPermissionLabelEn {
 	// Translations
 	String get location => 'Background location';
 	String get storage => 'Storage';
+	String get notification => 'Notification';
 }
 
 // Path: onboarding_permission.description
@@ -172,6 +173,7 @@ class TranslationsOnboardingPermissionDescriptionEn {
 	// Translations
 	String get location => 'To automatically create a map or timeline of places you visited today in your diary, this app collects location data in the background.';
 	String get storage => 'To create diary entries using your photos, this app needs access to your photo library.';
+	String get notification => 'To remind you to write your diary and show notification while tracing your location, this app needs permission to send notifications.';
 }
 
 // Path: onboarding_permission.btn
@@ -184,7 +186,7 @@ class TranslationsOnboardingPermissionBtnEn {
 	String get configure => 'Configure Permissions';
 	String get not_now => 'Not Now';
 	String get back => 'Back';
-	String get finish => 'Finish';
+	String get next => 'Next';
 }
 
 // Path: onboarding_finish.btn
@@ -259,12 +261,14 @@ extension on Translations {
 			case 'onboarding_permission.subtitle': return 'For the best app experience,\nwe\'ll need access to your personal data.';
 			case 'onboarding_permission.label.location': return 'Background location';
 			case 'onboarding_permission.label.storage': return 'Storage';
+			case 'onboarding_permission.label.notification': return 'Notification';
 			case 'onboarding_permission.description.location': return 'To automatically create a map or timeline of places you visited today in your diary, this app collects location data in the background.';
 			case 'onboarding_permission.description.storage': return 'To create diary entries using your photos, this app needs access to your photo library.';
+			case 'onboarding_permission.description.notification': return 'To remind you to write your diary and show notification while tracing your location, this app needs permission to send notifications.';
 			case 'onboarding_permission.btn.configure': return 'Configure Permissions';
 			case 'onboarding_permission.btn.not_now': return 'Not Now';
 			case 'onboarding_permission.btn.back': return 'Back';
-			case 'onboarding_permission.btn.finish': return 'Finish';
+			case 'onboarding_permission.btn.next': return 'Next';
 			case 'onboarding_finish.title': return 'Welcome';
 			case 'onboarding_finish.subtitle': return 'Your AI diary assistant, Diarlies.';
 			case 'onboarding_finish.btn.start': return 'Start';

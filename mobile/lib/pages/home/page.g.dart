@@ -56,5 +56,19 @@ final diaryMemoProvider =
     );
 
 typedef _$DiaryMemo = AutoDisposeNotifier<String?>;
+String _$todaysDiaryHash() => r'3ca376a2c795963377853008c07e355f2098f3ba';
+
+/// See also [TodaysDiary].
+@ProviderFor(TodaysDiary)
+final todaysDiaryProvider = AsyncNotifierProvider<TodaysDiary, Diary?>.internal(
+  TodaysDiary.new,
+  name: r'todaysDiaryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$todaysDiaryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TodaysDiary = AsyncNotifier<Diary?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

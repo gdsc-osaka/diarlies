@@ -2,6 +2,7 @@ import 'package:diarlies/components/variant.dart';
 import 'package:diarlies/logger.dart';
 import 'package:diarlies/providers/permission_providers.dart';
 import 'package:diarlies/router.dart';
+import 'package:diarlies/services/permission_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,6 +17,7 @@ import '../page.dart';
 import '_components/permission_section.dart';
 
 part 'action.dart';
+
 part 'page.g.dart';
 
 class OnboardingPermissionPage extends ConsumerWidget {
@@ -28,6 +30,8 @@ class OnboardingPermissionPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final styles = Styles.of(context);
     final action = ref.watch(_onboardingPermissionActionProvider);
+
+    final isAllGranted = ref.watch(isPermissionAllGrantedProvider).valueOrNull == true;
 
     return Scaffold(
       body: SafeArea(
@@ -63,18 +67,41 @@ class OnboardingPermissionPage extends ConsumerWidget {
                           color: styles.color.blueHalfTone,
                           enabled: true,
                         ),
+                        const SizedBox(height: 12),
+                        PermissionSection(
+                          title: t.onboarding_permission.label.notification,
+                          description: t.onboarding_permission.description.notification,
+                          icon: Icon(Icons.notifications_outlined),
+                          color: styles.color.pinkHalfTone,
+                          enabled: true,
+                        ),
                         const SizedBox(height: 20),
-                        NBButton(label: Text(t.onboarding_permission.btn.configure), onPressed: ref.watch(isPermissionAllGrantedProvider).when(
-                          data: (allGranted) => allGranted ? null : action.requestPermission,
-                          loading: () => null,
-                          error: (error, stack) => null,
-                        )),
+                        NBButton(
+                          label: Text(t.onboarding_permission.btn.configure),
+                          onPressed: isAllGranted ? null : action.requestPermission,
+                        ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            Expanded(child: NBButton(label: Text(t.onboarding_permission.btn.back), onPressed: action.back, variant: Variant.secondary)),
+                            Expanded(
+                              child: NBButton(
+                                label: Text(t.onboarding_permission.btn.back),
+                                onPressed: action.back,
+                                variant: Variant.secondary,
+                              ),
+                            ),
                             const SizedBox(width: 8),
-                            Expanded(child: NBButton(label: Text(t.onboarding_permission.btn.not_now), onPressed: action.finish, variant: Variant.secondary)),
+                            Expanded(
+                              child: NBButton(
+                                label: Text(
+                                  isAllGranted
+                                      ? t.onboarding_permission.btn.next
+                                      : t.onboarding_permission.btn.not_now,
+                                ),
+                                onPressed: action.finish,
+                                variant: isAllGranted ? Variant.primary : Variant.secondary,
+                              ),
+                            ),
                           ],
                         ),
                       ],

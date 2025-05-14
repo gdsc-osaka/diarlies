@@ -55,30 +55,80 @@ enum AuthEvent { signedIn, signedOut, reloaded, signedInWithAnotherAccount, unau
 Stream<AuthEvent> authEvent(Ref ref) {
   final controller = StreamController<AuthEvent>();
   controller.add(AuthEvent.uninitialized);
+  AuthEvent oldState = AuthEvent.uninitialized;
 
   ref.listen(
     currentUserProvider,
-    (prevUser, user) {
+    (prevUser, user) async {
+      final isLoading = user.isLoading;
       final userNotFound = user.hasValue && user.value == null;
       final userExists = user.hasValue && user.value != null;
+      final failedToAuthenticate = user.hasError && user.error is f.FirebaseAuthException;
 
-      if (userNotFound && prevUser != null && prevUser.hasValue) {
-        return controller.add(AuthEvent.signedOut);
-      }
+      final newState = switch (oldState) {
+        AuthEvent.uninitialized => switch (true) {
+          _ when isLoading => AuthEvent.uninitialized,
+          _ when userNotFound || failedToAuthenticate => AuthEvent.unauthenticated,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.uninitialized,
+        },
+        AuthEvent.signedIn => switch (true) {
+          _ when isLoading => AuthEvent.signedIn,
+          _ when userNotFound => AuthEvent.signedOut,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.signedIn,
+        },
+        AuthEvent.signedOut => switch (true) {
+          _ when isLoading => AuthEvent.signedOut,
+          _ when userNotFound => AuthEvent.signedOut,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.signedOut,
+        },
+        AuthEvent.reloaded => switch (true) {
+          _ when isLoading => AuthEvent.reloaded,
+          _ when userNotFound => AuthEvent.signedOut,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.reloaded,
+        },
+        AuthEvent.signedInWithAnotherAccount => switch (true) {
+          _ when isLoading => AuthEvent.signedInWithAnotherAccount,
+          _ when userNotFound => AuthEvent.signedOut,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.signedInWithAnotherAccount,
+        },
+        AuthEvent.unauthenticated => switch (true) {
+          _ when isLoading => AuthEvent.unauthenticated,
+          _ when userNotFound => AuthEvent.unauthenticated,
+          _ when userExists => AuthEvent.signedIn,
+          _ => AuthEvent.unauthenticated,
+        },
+      };
 
-      if (userExists && (prevUser == null || prevUser.isLoading)) {
-        return controller.add(AuthEvent.signedIn);
-      }
+      logger.i(
+        '[AuthEvent] oldState: $oldState, newState: $newState, user: ${user.valueOrNull}',
+      );
+      if (oldState == newState) return;
 
-      // if (userExists && prevUser != null && prevUser.value != null && user.value!.id == prevUser.value!.id) {
-      //   return controller.add(AuthEvent.reloaded);
+      controller.add(newState);
+      oldState = newState;
+
+      // if (userNotFound && prevUser != null && prevUser.hasValue) {
+      //   return controller.add(AuthEvent.signedOut);
       // }
-
-      if (userExists && prevUser != null && prevUser.value != null && user.value!.id != prevUser.value!.id) {
-        return controller.add(AuthEvent.signedInWithAnotherAccount);
-      }
-
-      controller.add(AuthEvent.unauthenticated);
+      //
+      // if (userExists && (prevUser == null || prevUser.isLoading)) {
+      //   return controller.add(AuthEvent.signedIn);
+      // }
+      //
+      // // if (userExists && prevUser != null && prevUser.value != null && user.value!.id == prevUser.value!.id) {
+      // //   return controller.add(AuthEvent.reloaded);
+      // // }
+      //
+      // if (userExists && prevUser != null && prevUser.value != null && user.value!.id != prevUser.value!.id) {
+      //   return controller.add(AuthEvent.signedInWithAnotherAccount);
+      // }
+      //
+      // controller.add(AuthEvent.unauthenticated);
     },
     onError: (err, stack) {
       controller.addError(err, stack);

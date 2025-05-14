@@ -49,11 +49,11 @@ import 'package:api/api.dart';
 
 final api = Api().getDiariesApi();
 final String locationHistories = locationHistories_example; // String | Location histories for diary generation
-final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 final LanguageCode languageCode = ; // LanguageCode | 
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = await api.postDiaries(locationHistories, images, languageCode);
+    final response = await api.postDiaries(locationHistories, languageCode, images);
     print(response);
 } catch on DioException (e) {
     print("Exception when calling DiariesApi->postDiaries: $e\n");
@@ -63,7 +63,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:3000*
+All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

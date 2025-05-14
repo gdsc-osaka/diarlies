@@ -54,7 +54,7 @@ class PermissionSection extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 description,
-                style: styles.text.body.m,
+                style: styles.text.body.s,
               ),
             ],
           ),

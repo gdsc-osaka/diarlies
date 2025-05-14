@@ -1,0 +1,1 @@
+export 'src/location_point.dart';

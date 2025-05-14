@@ -26,7 +26,7 @@ final _onboardingActionProvider =
 // ignore: unused_element
 typedef _OnboardingActionRef = AutoDisposeProviderRef<OnboardingAction>;
 String _$isPermissionAllGrantedHash() =>
-    r'f2f390092cd0106afc77c7883bdcf656682fa629';
+    r'ddd6f06df91ebfdcc01612aefefe8058e91f81ad';
 
 /// See also [isPermissionAllGranted].
 @ProviderFor(isPermissionAllGranted)
@@ -44,12 +44,12 @@ final isPermissionAllGrantedProvider = AutoDisposeFutureProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef IsPermissionAllGrantedRef = AutoDisposeFutureProviderRef<bool>;
-String _$diaryLanguageHash() => r'24594d08abeae14c4f67a65b3518e772accd8b37';
+String _$diaryLanguageHash() => r'bbdff2c3302825499768ab23978e1c37beade837';
 
 /// See also [DiaryLanguage].
 @ProviderFor(DiaryLanguage)
 final diaryLanguageProvider =
-    NotifierProvider<DiaryLanguage, Language?>.internal(
+    AsyncNotifierProvider<DiaryLanguage, Language?>.internal(
       DiaryLanguage.new,
       name: r'diaryLanguageProvider',
       debugGetCreateSourceHash:
@@ -60,6 +60,6 @@ final diaryLanguageProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$DiaryLanguage = Notifier<Language?>;
+typedef _$DiaryLanguage = AsyncNotifier<Language?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -24,17 +24,19 @@
     "subtitle": "For the best app experience,\nwe'll need access to your personal data.",
     "label": {
       "location": "Background location",
-      "storage": "Storage"
+      "storage": "Storage",
+      "notification": "Notification"
     },
     "description": {
       "location": "To automatically create a map or timeline of places you visited today in your diary, this app collects location data in the background.",
-      "storage": "To create diary entries using your photos, this app needs access to your photo library."
+      "storage": "To create diary entries using your photos, this app needs access to your photo library.",
+      "notification": "To remind you to write your diary and show notification while tracing your location, this app needs permission to send notifications."
     },
     "btn": {
       "configure": "Configure Permissions",
       "not_now": "Not Now",
       "back": "Back",
-      "finish": "Finish"
+      "next": "Next"
     }
   },
   "onboarding_finish": {

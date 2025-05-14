@@ -19,3 +19,8 @@ Future<PermissionStatus> locationPermission(Ref ref) {
 Future<PermissionStatus> photoPermission(Ref ref) {
   return ref.watch(permissionServiceProvider).photoStatus();
 }
+
+@riverpod
+Future<PermissionStatus> notificationPermission(Ref ref) {
+  return ref.watch(permissionServiceProvider).notificationStatus();
+}

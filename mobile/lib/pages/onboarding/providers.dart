@@ -3,12 +3,16 @@ part of 'page.dart';
 @Riverpod(keepAlive: true)
 class DiaryLanguage extends _$DiaryLanguage {
   @override
-  Language? build() {
-    return null;
+  Future<Language?> build() async {
+    final pref = await ref.watch(preferencesServiceProvider.future);
+    return pref.getDiaryLanguage();
   }
 
-  void setLanguage(Language language) {
-    state = language;
+  Future<void> setLanguage(Language language) async {
+    state = AsyncValue.data(language);
+
+    final pref = await ref.watch(preferencesServiceProvider.future);
+    await pref.setDiaryLanguage(language);
   }
 }
 
@@ -16,7 +20,8 @@ class DiaryLanguage extends _$DiaryLanguage {
 Future<bool> isPermissionAllGranted(Ref ref) async {
   final permissionStatuses = await Future.wait([
     ref.watch(locationPermissionProvider.future),
-    ref.watch(photoPermissionProvider.future)
+    ref.watch(photoPermissionProvider.future),
+    ref.watch(notificationPermissionProvider.future),
   ]);
 
   return permissionStatuses.every((status) => status == PermissionStatus.granted);
