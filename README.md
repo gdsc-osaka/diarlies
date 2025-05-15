@@ -11,6 +11,10 @@
   * pnpm i
   * npm run fire:start
   * npm run dev:node
+* Run flutter app
+  * Install fvm or flutter 3.29.3
+  * fvm flutter run --debug --dart-define-from-file=dart_defines/.env.dev
+  * fvm flutter build <ipa|apk|appbundle> --dart-define-from-file=dart_defines/.env.dev
 
 ## Git rules
 ブランチ名: `<user-id>/<わかりやすい名前>#<issue番号>`
