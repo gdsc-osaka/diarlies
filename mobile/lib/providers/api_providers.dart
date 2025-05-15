@@ -16,7 +16,7 @@ Api api(Ref ref) {
   final api = Api(
     dio: Dio(BaseOptions(
       baseUrl: switch (kDebugMode) {
-        true => Platform.isAndroid ? '10.0.2.2' : Api.basePath,
+        true => Platform.isAndroid ? 'http://10.0.2.2:8080' : Api.basePath,
         false => 'https://diarlies.harineko0927.workers.dev:443',
       },
       connectTimeout: const Duration(milliseconds: 5000),
@@ -63,7 +63,7 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    logger.e('[ApiError] ${err.response?.statusCode} ${err.response?.data}');
+    logger.e('[ApiError] $err\n\tstatus: ${err.response?.statusCode}\n\tbody: ${err.response?.data}');
     super.onError(err, handler);
   }
 }

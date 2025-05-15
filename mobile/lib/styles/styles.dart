@@ -20,7 +20,7 @@ class Styles {
   /// Create a [Styles] instance based on the [BuildContext].
   /// This method uses Theme.of(context) to get the current theme and color scheme.
   static Styles from(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = MediaQuery.platformBrightnessOf(context);
     final color = switch (brightness) {
       Brightness.light => ColorStyles.light,
       Brightness.dark => ColorStyles.dark,

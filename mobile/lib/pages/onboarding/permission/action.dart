@@ -28,5 +28,7 @@ class OnboardingPermissionAction extends FluxAction {
     ref.read(routerProvider).pop();
   }
 
-  void finish() {}
+  void finish() {
+    ref.read(routerProvider).goNamed(OnboardingFinishPage.name);
+  }
 }

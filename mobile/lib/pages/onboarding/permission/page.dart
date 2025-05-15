@@ -1,5 +1,4 @@
 import 'package:diarlies/components/variant.dart';
-import 'package:diarlies/logger.dart';
 import 'package:diarlies/providers/permission_providers.dart';
 import 'package:diarlies/router.dart';
 import 'package:diarlies/services/permission_service.dart';
@@ -13,6 +12,7 @@ import '../../../i18n/strings.g.dart';
 import '../../../shared/flux_action.dart';
 import '../../../styles/styles.dart';
 import '../_components/onboarding_positioned.dart';
+import '../finish/page.dart';
 import '../page.dart';
 import '_components/permission_section.dart';
 
