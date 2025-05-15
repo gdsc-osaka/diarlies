@@ -5,11 +5,12 @@
 import 'package:api/api.dart';
 ```
 
-All URIs are relative to *http://localhost:3000*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getUsers**](UsersApi.md#getusers) | **GET** /users | 
+[**postUsers**](UsersApi.md#postusers) | **POST** /users | 
 
 
 # **getUsers**
@@ -17,7 +18,7 @@ Method | HTTP request | Description
 
 
 
-Say hello to the user
+Get user information
 
 ### Example
 ```dart
@@ -42,7 +43,46 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **postUsers**
+> User postUsers()
+
+
+
+Create a new user
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getUsersApi();
+
+try {
+    final response = api.postUsers();
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->postUsers: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**User**](User.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

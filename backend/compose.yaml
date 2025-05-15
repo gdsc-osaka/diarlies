@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgis/postgis:16-master
+    ports:
+      - "6543:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    restart: always
+    command: postgres -c log_destination=stderr -c log_statement=all -c log_connections=on -c log_disconnections=on
+    networks:
+      - db-network
+  cli:
+    image: postgres:16.0
+    networks:
+      - db-network
+    command: psql -hpostgres -Uuser db
+
+networks:
+  db-network:
+    driver: bridge

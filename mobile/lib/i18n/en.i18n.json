@@ -1,0 +1,94 @@
+{
+  "signup": {
+    "subtitle": "A diary app with AI agent",
+    "btn": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple"
+    }
+  },
+  "onboarding": {
+    "title": "Hi deary",
+    "subtitle": "This is a text-free social diary app.\nBefore we begin, let’s finish the setup.",
+    "label": {
+      "language": "Choose diary language"
+    },
+    "placeholder": {
+      "language": "Select language"
+    },
+    "btn": {
+      "next": "Next"
+    }
+  },
+  "onboarding_permission": {
+    "title": "Check permissions",
+    "subtitle": "For the best app experience,\nwe'll need access to your personal data.",
+    "label": {
+      "location": "Background location",
+      "storage": "Storage",
+      "notification": "Notification"
+    },
+    "description": {
+      "location": "To automatically create a map or timeline of places you visited today in your diary, this app collects location data in the background.",
+      "storage": "To create diary entries using your photos, this app needs access to your photo library.",
+      "notification": "To remind you to write your diary and show notification while tracing your location, this app needs permission to send notifications."
+    },
+    "btn": {
+      "configure": "Configure Permissions",
+      "not_now": "Not Now",
+      "back": "Back",
+      "next": "Next"
+    }
+  },
+  "onboarding_finish": {
+    "title": "Welcome",
+    "subtitle": "Your AI diary assistant, Diarlies.",
+    "btn": {
+      "start": "Start"
+    }
+  },
+  "home": {
+    "title": "what happened today?",
+    "bottom_nav": {
+      "diary": "Diary",
+      "social": "Social",
+      "settings": "Settings"
+    },
+    "btn": {
+      "add_photo": "Add photo",
+      "keep_diary": "Keep diary",
+      "retry": "Retry",
+      "regenerate": "Regenerate",
+      "cancel": "Cancel"
+    },
+    "label": {
+      "photo": "Today’s photos",
+      "journey": "Today’s journey",
+      "memo": "Memo"
+    },
+    "placeholder": {
+      "memo": "Today I feel like..."
+    },
+    "error": {
+      "failed_to_fetch_todays_diary": "Failed to fetch today’s diary"
+    },
+    "dialog": {
+      "regenerate_title": "Are you sure you want to regenerate diary?",
+      "regenerate_content": "You can’t undo this action."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "btn": {
+      "sign_out": "Sign out",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "cancel": "Cancel"
+    },
+    "error": {
+        "failed_to_sign_out": "Failed to sign out"
+    },
+    "dialog": {
+      "sign_out_title": "Are you sure you want to sign out?"
+    }
+  }
+}

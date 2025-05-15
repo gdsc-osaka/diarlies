@@ -1,12 +1,13 @@
-import { DBUser } from "../db/schema/users";
+import { users } from "../db/schema/users";
 import z from "zod";
 import "zod-openapi/extend";
-import { Result } from "neverthrow";
+import { ok, Result } from "neverthrow";
 import { Timestamp, toTimestamp } from "./timestamp";
+import { AuthUser } from "./auth";
 
 export const User = z
   .object({
-    id: z.string().uuid(),
+    id: z.string(),
     uid: z.string(),
     createdAt: Timestamp,
     updatedAt: Timestamp,
@@ -14,11 +15,11 @@ export const User = z
   .openapi({ ref: "User" });
 export type User = z.infer<typeof User>;
 
-// check if the User type is compatible with DBUser
-// const okType: User = {} as User;
-// okType satisfies DBUser;
+export type DBUser = typeof users.$inferSelect;
+export type DBUserForCreate = typeof users.$inferInsert;
 
 export const convertToUser = (user: DBUser): Result<User, never> => {
+  // TODO: validate user with zod
   // const out = User(user);
   //
   // if (out instanceof type.errors) {
@@ -34,4 +35,12 @@ export const convertToUser = (user: DBUser): Result<User, never> => {
     createdAt,
     updatedAt,
   }));
+};
+
+export const createDBUserForCreate = (
+  authUser: NonNullable<AuthUser>,
+): Result<DBUserForCreate, never> => {
+  return ok({
+    uid: authUser.uid,
+  });
 };

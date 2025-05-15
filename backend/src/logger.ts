@@ -10,6 +10,13 @@ const log4jsConfig: Configuration = {
         type: "colored",
       },
     },
+    infra: {
+      type: "dateFile",
+      filename: "log/infra.log",
+      pattern: ".yyyyMMdd-hhmmss",
+      keepFileExt: true,
+      numBackups: 5,
+    },
     application: {
       type: "dateFile",
       filename: "log/application.log",
@@ -142,10 +149,12 @@ class Stacktrace extends Error {
 configure(log4jsConfig);
 
 const isProduction = env.NODE_ENV === "production";
-// export const logger = isProduction ? new GCloudLogger('default') : getLogger();
-export const appLogger = isProduction
-  ? new GCloudLogger("app")
-  : getLogger("application");
+export const infraLogger = isProduction
+  ? new GCloudLogger("infra")
+  : getLogger("infra");
 export const accessLogger = isProduction
   ? new GCloudLogger("access")
   : getLogger("access");
+export const serviceLogger = isProduction
+  ? new GCloudLogger("service")
+  : getLogger("service");

@@ -15,6 +15,13 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val dartDefines = project.hasProperty("dart-defines").let {
+    project.property("dart-defines").toString().split(',').associate { entry ->
+        val pair = Base64.getDecoder().decode(entry.toByteArray(Charsets.UTF_8)).decodeToString().split('=')
+        pair[0] to pair[1]
+    }
+}
+
 android {
     namespace = "jp.gdscosaka.diarlies"
     compileSdk = flutter.compileSdkVersion
@@ -23,6 +30,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -37,6 +45,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        resValue("string", "google_map_api_key", dartDefines["androidGoogleMapApiKey"] ?: "")
     }
 
     signingConfigs {
@@ -69,4 +78,8 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }

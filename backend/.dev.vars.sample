@@ -1,0 +1,5 @@
+FIRE_SA='{"type": "service_account", "project_id": "diarlies", "private_key_id": ...}'
+FIREBASE_AUTH_EMULATOR_HOST="127.0.0.1:9099"
+
+GEMINI_API_KEY="AIza..."
+GOOGLE_MAPS_API_KEY="AIza..."

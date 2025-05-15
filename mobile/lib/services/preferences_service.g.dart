@@ -1,0 +1,50 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'preferences_service.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$sharedPreferencesHash() => r'e67df0a5ecab43a2ab436cda307d056793231b8a';
+
+/// See also [_sharedPreferences].
+@ProviderFor(_sharedPreferences)
+final _sharedPreferencesProvider =
+    AutoDisposeFutureProvider<SharedPreferences>.internal(
+      _sharedPreferences,
+      name: r'_sharedPreferencesProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$sharedPreferencesHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef _SharedPreferencesRef = AutoDisposeFutureProviderRef<SharedPreferences>;
+String _$preferencesServiceHash() =>
+    r'3485f42cdc528ad44df09517f0dfde23963c9a5d';
+
+/// See also [preferencesService].
+@ProviderFor(preferencesService)
+final preferencesServiceProvider =
+    AutoDisposeFutureProvider<PreferencesService>.internal(
+      preferencesService,
+      name: r'preferencesServiceProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$preferencesServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PreferencesServiceRef =
+    AutoDisposeFutureProviderRef<PreferencesService>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

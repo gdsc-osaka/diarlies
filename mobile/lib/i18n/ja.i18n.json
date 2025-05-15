@@ -1,0 +1,94 @@
+{
+  "signup": {
+    "subtitle": "AIエージェントを搭載した日記アプリ",
+    "btn": {
+      "google": "Googleで続ける",
+      "apple": "Appleで続ける"
+    }
+  },
+  "onboarding": {
+    "title": "こんにちは",
+    "subtitle": "Diarliesはテキストフリーのソーシャル日記アプリです。\n始める前に、セットアップを完了させましょう。",
+    "label": {
+      "language": "日記の言語を選択"
+    },
+    "placeholder": {
+      "language": "言語を選択してください"
+    },
+    "btn": {
+      "next": "次へ"
+    }
+  },
+  "onboarding_permission": {
+    "title": "権限を確認",
+    "subtitle": "最高のアプリ体験のために、\n個人データへのアクセスが必要です。",
+    "label": {
+      "location": "バックグラウンド位置情報",
+      "storage": "ストレージ",
+      "notification": "通知"
+    },
+    "description": {
+      "location": "今日訪れた場所の地図やタイムラインを自動的に作成するために、このアプリはバックグラウンドで位置情報データを収集します。",
+      "storage": "写真ライブラリへのアクセスが必要です。日記のエントリーを写真を使って作成するために、このアプリはあなたの写真ライブラリへのアクセスが必要です。",
+      "notification": "日記を書くリマインダーや、位置情報を追跡している間の通知を表示するために、このアプリは通知を送信する権限が必要です。"
+    },
+    "btn": {
+      "configure": "権限を設定",
+      "not_now": "今はやめておく",
+      "back": "戻る",
+      "next": "次へ"
+    }
+  },
+  "onboarding_finish": {
+    "title": "ようこそ",
+    "subtitle": "あなたのAI日記アシスタント、Diarlies。",
+    "btn": {
+      "start": "はじめる"
+    }
+  },
+  "home": {
+    "title": "今日は何がありましたか？",
+    "bottom_nav": {
+      "diary": "日記",
+      "social": "ソーシャル",
+      "settings": "設定"
+    },
+    "btn": {
+      "add_photo": "写真を追加",
+      "keep_diary": "日記をつける",
+      "retry": "再試行",
+      "regenerate": "再生成",
+      "cancel": "キャンセル"
+    },
+    "label": {
+      "photo": "今日の写真",
+      "journey": "今日の旅路",
+      "memo": "メモ"
+    },
+    "placeholder": {
+      "memo": "今日の気分は..."
+    },
+    "error": {
+      "failed_to_fetch_todays_diary": "今日の日記の取得に失敗しました"
+    },
+    "dialog": {
+        "regenerate_title": "日記を再生成してもよろしいですか？",
+        "regenerate_content": "この操作は元に戻せません。"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "btn": {
+      "sign_out": "サインアウト",
+      "terms": "利用規約",
+      "privacy": "プライバシーポリシー",
+      "cancel": "キャンセル"
+    },
+    "error": {
+      "failed_to_sign_out": "サインアウトに失敗しました"
+    },
+    "dialog": {
+      "sign_out_title": "ログアウトしますか？"
+    }
+  }
+}

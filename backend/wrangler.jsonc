@@ -3,18 +3,20 @@
   "name": "diarlies",
   "main": "src/index.ts",
   "compatibility_date": "2025-05-03",
-   "compatibility_flags": [
-     "nodejs_compat"
-   ]
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "MY_KV_NAMESPACE",
-  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  //   }
-  // ],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "PROJECT_ID": "diarlies",
+    "PUBLIC_JWK_CACHE_KEY": "diarlies-public-jwk-cache-kv"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "PUBLIC_JWK_CACHE_KV",
+      "id": "2e2e9ad5f0bf4b7fb33a2a684df18f14",
+      "preview_id": ""
+    }
+  ]
   // "r2_buckets": [
   //   {
   //     "binding": "MY_BUCKET",

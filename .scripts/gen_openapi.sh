@@ -1,7 +1,7 @@
 set -e
 
 # Generate OpenAPI spec from local server
-curl -o tmp.openapi.json "http://localhost:3000/openapi"
+curl -o tmp.openapi.json "http://localhost:8080/openapi"
 
 # Install OpenAPI Generator if not already installed
 openapi-generator --version || brew install openapi-generator

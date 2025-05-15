@@ -1,13 +1,12 @@
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
 import { AuthUser, verifyIdToken } from "../../infra/authenticator";
+import { Context } from "hono";
+import env from "../../env";
 
 const authorize = createMiddleware<{
   Variables: {
     authUser: AuthUser;
-  };
-  Bindings: {
-    FIRE_SA: string;
   };
 }>(async (c, next) => {
   // check header
@@ -25,7 +24,7 @@ const authorize = createMiddleware<{
     });
   }
 
-  const res = await verifyIdToken(c.env.FIRE_SA, match[1]);
+  const res = await verifyIdToken(env.FIRE_SA, match[1]);
 
   if (res.isErr()) {
     throw new HTTPException(401, { message: res.error.message });
@@ -35,5 +34,13 @@ const authorize = createMiddleware<{
 
   return next();
 });
+
+export const getAUthUser = (c: Context) => {
+  const authUser = c.get("authUser");
+  if (!authUser) {
+    throw new HTTPException(401, { message: "Unauthorized" });
+  }
+  return authUser;
+};
 
 export default authorize;

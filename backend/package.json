@@ -2,11 +2,13 @@
   "name": "diarlies-api",
   "version": "1.0.0",
   "description": "",
+  "type": "commonjs",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
     "dev": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && wrangler dev --port 3000",
+    "dev:node": "export FIREBASE_AUTH_EMULATOR_HOST=\"127.0.0.1:9099\" && dotenvx run --env-file=.env -- npx ts-node-dev ./src/index.ts",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "lint": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" && eslint src test -c eslint.config.mjs",
@@ -15,7 +17,9 @@
     "test:integration": "dotenvx run --env-file=.env -- vitest test/integration/",
     "test:coverage": "dotenvx run --env-file=.env -- vitest test/ --coverage",
     "fire:start": "cd ../firebase && (ls .emulator_export && firebase emulators:start --import .emulator_export) || firebase emulators:start",
-    "fire:export": "cd ../firebase && firebase emulators:export .emulator_export"
+    "fire:export": "cd ../firebase && firebase emulators:export .emulator_export",
+    "db:gen": "drizzle-kit generate --config drizzle.config.ts",
+    "db:mig": "drizzle-kit migrate --config drizzle.config.ts"
   },
   "repository": {
     "type": "git",
@@ -23,8 +27,12 @@
   },
   "private": true,
   "dependencies": {
+    "@google/genai": "^0.13.0",
+    "@googlemaps/places": "^2.0.1",
+    "@hono/node-server": "^1.14.1",
     "@hono/zod-validator": "^0.5.0",
     "drizzle-orm": "^0.43.1",
+    "firebase-admin": "^13.4.0",
     "hono": "^4.7.8",
     "hono-openapi": "^0.4.8",
     "log4js": "^6.9.1",
@@ -44,7 +52,6 @@
     "drizzle-kit": "^0.31.0",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
-    "firebase-admin": "^13.3.0",
     "fishery": "^2.3.0",
     "globals": "^16.0.0",
     "nodemon": "^3.1.10",

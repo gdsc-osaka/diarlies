@@ -47,29 +47,38 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:api/api.dart';
 
 
-final api = Api().getUsersApi();
+final api = Api().getDiariesApi();
+final String diaryId = diaryId_example; // String | Diary ID to delete
 
 try {
-    final response = await api.getUsers();
+    final response = await api.deleteDiariesByDiaryId(diaryId);
     print(response);
 } catch on DioException (e) {
-    print("Exception when calling UsersApi->getUsers: $e\n");
+    print("Exception when calling DiariesApi->deleteDiariesByDiaryId: $e\n");
 }
 
 ```
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:3000*
+All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*DiariesApi*](doc/DiariesApi.md) | [**deleteDiariesByDiaryId**](doc/DiariesApi.md#deletediariesbydiaryid) | **DELETE** /diaries/{diaryId} | 
+[*DiariesApi*](doc/DiariesApi.md) | [**getDiaries**](doc/DiariesApi.md#getdiaries) | **GET** /diaries | 
+[*DiariesApi*](doc/DiariesApi.md) | [**postDiaries**](doc/DiariesApi.md#postdiaries) | **POST** /diaries | 
 [*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
+[*UsersApi*](doc/UsersApi.md) | [**postUsers**](doc/UsersApi.md#postusers) | **POST** /users | 
 
 
 ## Documentation For Models
 
- - [ApiError](doc/ApiError.md)
+ - [CreateUserServiceError](doc/CreateUserServiceError.md)
+ - [Day](doc/Day.md)
+ - [Diary](doc/Diary.md)
+ - [LanguageCode](doc/LanguageCode.md)
+ - [ServiceError](doc/ServiceError.md)
  - [Timestamp](doc/Timestamp.md)
  - [User](doc/User.md)
 

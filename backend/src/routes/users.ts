@@ -1,23 +1,27 @@
 import { Hono } from "hono";
-import authorize from "./middleware/authorize";
 import { describeRoute } from "hono-openapi";
 import { User } from "../domain/user";
-import { fetchUser } from "../service/user-service";
-import { fetchUserByUid } from "../infra/user-repository";
-import { HTTPException } from "hono/http-exception";
+import {
+  createUser,
+  CreateUserServiceError,
+  fetchUser,
+} from "../service/user-service";
+import { createDBUser, fetchDBUserByUid } from "../infra/user-repository";
 import { resolver } from "hono-openapi/zod";
-import { convertToApiError } from "./error/api-error";
+import { toHTTPException } from "../service/error/service-error";
+import db from "../db/db";
+import { getAUthUser } from "./middleware/authorize";
+import { accessLogger } from "../logger";
 
 const app = new Hono();
 const tags = ["Users"];
 
 app.get(
   "/",
-  authorize,
   describeRoute({
     tags,
     validateResponse: true,
-    description: "Say hello to the user",
+    description: "Get user information",
     responses: {
       200: {
         description: "Successful response",
@@ -30,11 +34,55 @@ app.get(
     },
   }),
   async (c) => {
-    const res = await fetchUser(fetchUserByUid)(c.get("authUser"));
+    const res = await fetchUser(fetchDBUserByUid, db())(getAUthUser(c));
     if (res.isErr()) {
-      throw new HTTPException(res.error.status, convertToApiError(res.error));
+      throw toHTTPException(res.error);
     }
-    return c.json({ user: res.value });
+    return c.json(res.value);
+  },
+);
+
+app.post(
+  "/",
+  describeRoute({
+    tags,
+    validateResponse: true,
+    description: "Create a new user",
+    responses: {
+      201: {
+        description: "User created successfully",
+        content: {
+          "application/json": {
+            schema: resolver(User),
+          },
+        },
+      },
+      400: {
+        description: "Bad Request",
+        content: {
+          "application/json": {
+            schema: resolver(CreateUserServiceError),
+          },
+        },
+      },
+    },
+  }),
+  async (c) => {
+    const res = await createUser(
+      createDBUser,
+      fetchDBUserByUid,
+      db(),
+    )(getAUthUser(c));
+    if (res.isErr()) {
+      accessLogger.debug({
+        status: res.error.status,
+        code: res.error.code,
+        message: res.error.message,
+        ...res.error.extra,
+      });
+      throw toHTTPException(res.error);
+    }
+    return c.json(res.value, 201);
   },
 );
 

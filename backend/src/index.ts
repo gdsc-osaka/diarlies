@@ -1,102 +1,23 @@
 import { Hono } from "hono";
-import { openAPISpecs } from "hono-openapi";
+import { logger } from "hono/logger";
+import { serve } from "@hono/node-server";
+import { openApiSpec } from "./openapiSpec";
 import users from "./routes/users";
-import { resolver } from "hono-openapi/zod";
-import { ApiError } from "./routes/error/api-error";
+import diaries from "./routes/diaries";
+import authorize from "./routes/middleware/authorize";
 
 const app = new Hono();
 
+app.get("/openapi", openApiSpec(app));
+
+app.use(logger());
+app.use(authorize);
 app.route("/users", users);
+app.route("/diaries", diaries);
 
-app.get(
-  "/openapi",
-  openAPISpecs(app, {
-    documentation: {
-      info: {
-        title: "Hono API",
-        version: "1.0.0",
-        description: "Greeting API",
-      },
-      servers: [
-        { url: "http://localhost:3000", description: "Local Server" },
-        {
-          url: "https://diarlies.harineko0927.workers.dev",
-          description: "Production Server",
-        },
-      ],
-      components: {
-        securitySchemes: {
-          bearerAuth: {
-            type: "http",
-            scheme: "Bearer",
-            bearerFormat: "JWT",
-          },
-        },
-      },
-    },
-    defaultOptions: {
-      GET: {
-        responses: {
-          400: {
-            description: "Bad Request",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          401: {
-            description: "Unauthorized",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          403: {
-            description: "Forbidden",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          404: {
-            description: "Not Found",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          429: {
-            description: "Too Many Requests",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          500: {
-            description: "Internal Server Error",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-          503: {
-            description: "Service Unavailable",
-            content: {
-              "application/json": {
-                schema: resolver(ApiError),
-              },
-            },
-          },
-        },
-      },
-    },
-  }),
-);
+serve({
+  fetch: app.fetch,
+  port: 8080,
+});
 
-export default app;
+console.log("Server started");
