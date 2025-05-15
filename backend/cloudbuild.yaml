@@ -1,0 +1,48 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/ocarry-api:$COMMIT_SHA',
+            '--build-arg', 'FIRE_SA=$FIRE_SA',
+            '--build-arg', 'GEMINI_API_KEY=$GEMINI_API_KEY',
+            '--build-arg', 'GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY',
+            '.'
+    ]
+    secretEnv: [
+        'FIRE_SA',
+        'GEMINI_API_KEY',
+        'GOOGLE_MAPS_API_KEY'
+    ]
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/$PROJECT_ID/diarlies:$COMMIT_SHA' ]
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'diarlies'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/diarlies:$COMMIT_SHA'
+      - '--region'
+      - 'asia-northeast-1'
+images:
+  - 'gcr.io/$PROJECT_ID/diarlies:$COMMIT_SHA'
+options:
+  logging: 'CLOUD_LOGGING_ONLY'
+availableSecrets:
+  secretManager:
+#    - versionName: projects/632351198383/secrets/DATABASE_URL/versions/latest
+#      env: 'DATABASE_URL'
+#    - versionName: projects/632351198383/secrets/GCP_SERVICE_ACCOUNT/versions/latest
+#      env: 'GCP_SERVICE_ACCOUNT'
+#    - versionName: projects/632351198383/secrets/FIRE_SERVICE_ACCOUNT/versions/latest
+#      env: 'FIRE_SERVICE_ACCOUNT'
+#    - versionName: projects/632351198383/secrets/GOOGLE_MAPS_API_KEY/versions/latest
+#      env: 'GOOGLE_MAPS_API_KEY'
+#    - versionName: projects/632351198383/secrets/STRIPE_API_KEY/versions/latest
+#      env: 'STRIPE_API_KEY'
+#    - versionName: projects/632351198383/secrets/STRIPE_WEBHOOK_SECRET/versions/latest
+#      env: 'STRIPE_WEBHOOK_SECRET'
+#    - versionName: projects/632351198383/secrets/EKISPERT_API_KEY/versions/latest
+#      env: 'EKISPERT_API_KEY'
