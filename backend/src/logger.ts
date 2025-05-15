@@ -1,4 +1,4 @@
-import {Configuration, configure, getLogger} from "log4js";
+import { Configuration, configure, getLogger } from "log4js";
 import env from "./env";
 
 const log4jsConfig: Configuration = {
@@ -11,11 +11,11 @@ const log4jsConfig: Configuration = {
       },
     },
     infra: {
-        type: "dateFile",
-        filename: "log/infra.log",
-        pattern: ".yyyyMMdd-hhmmss",
-        keepFileExt: true,
-        numBackups: 5,
+      type: "dateFile",
+      filename: "log/infra.log",
+      pattern: ".yyyyMMdd-hhmmss",
+      keepFileExt: true,
+      numBackups: 5,
     },
     application: {
       type: "dateFile",
@@ -156,5 +156,5 @@ export const accessLogger = isProduction
   ? new GCloudLogger("access")
   : getLogger("access");
 export const serviceLogger = isProduction
-    ? new GCloudLogger("service")
-    : getLogger("service");
+  ? new GCloudLogger("service")
+  : getLogger("service");

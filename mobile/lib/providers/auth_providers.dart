@@ -63,7 +63,7 @@ Stream<AuthEvent> authEvent(Ref ref) {
       final isLoading = user.isLoading;
       final userNotFound = user.hasValue && user.value == null;
       final userExists = user.hasValue && user.value != null;
-      final failedToAuthenticate = user.hasError && user.error is f.FirebaseAuthException;
+      final failedToAuthenticate = user.hasError && user.error != 'uninitialized';
 
       final newState = switch (oldState) {
         AuthEvent.uninitialized => switch (true) {
@@ -73,41 +73,34 @@ Stream<AuthEvent> authEvent(Ref ref) {
           _ => AuthEvent.uninitialized,
         },
         AuthEvent.signedIn => switch (true) {
-          _ when isLoading => AuthEvent.signedIn,
-          _ when userNotFound => AuthEvent.signedOut,
-          _ when userExists => AuthEvent.signedIn,
+          _ when userNotFound || failedToAuthenticate => AuthEvent.signedOut,
           _ => AuthEvent.signedIn,
         },
         AuthEvent.signedOut => switch (true) {
-          _ when isLoading => AuthEvent.signedOut,
-          _ when userNotFound => AuthEvent.signedOut,
           _ when userExists => AuthEvent.signedIn,
           _ => AuthEvent.signedOut,
         },
         AuthEvent.reloaded => switch (true) {
-          _ when isLoading => AuthEvent.reloaded,
-          _ when userNotFound => AuthEvent.signedOut,
+          _ when userNotFound || failedToAuthenticate => AuthEvent.signedOut,
           _ when userExists => AuthEvent.signedIn,
           _ => AuthEvent.reloaded,
         },
         AuthEvent.signedInWithAnotherAccount => switch (true) {
           _ when isLoading => AuthEvent.signedInWithAnotherAccount,
-          _ when userNotFound => AuthEvent.signedOut,
+          _ when userNotFound || failedToAuthenticate => AuthEvent.signedOut,
           _ when userExists => AuthEvent.signedIn,
           _ => AuthEvent.signedInWithAnotherAccount,
         },
         AuthEvent.unauthenticated => switch (true) {
-          _ when isLoading => AuthEvent.unauthenticated,
-          _ when userNotFound => AuthEvent.unauthenticated,
           _ when userExists => AuthEvent.signedIn,
           _ => AuthEvent.unauthenticated,
         },
       };
 
-      logger.i(
-        '[AuthEvent] oldState: $oldState, newState: $newState, user: ${user.valueOrNull}',
-      );
       if (oldState == newState) return;
+      logger.i(
+        '[AuthEvent] oldState: $oldState, newState: $newState',
+      );
 
       controller.add(newState);
       oldState = newState;

@@ -2,10 +2,10 @@ import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { Diary } from "../domain/diary";
-import { zValidator } from "@hono/zod-validator";
 import {
   createDiary,
   CreateDiaryRequest,
+  deleteDiary,
   fetchDiaryByDate,
 } from "../service/diary-service";
 import z from "zod";
@@ -17,7 +17,12 @@ import {
 import { LanguageCode } from "../domain/language";
 import db from "../db/db";
 import { fetchNearbyPlaces } from "../infra/map-repository";
-import { createDBDiary, fetchDBDiaryByDate } from "../infra/diary-repository";
+import {
+  createDBDiary,
+  deleteDBDiary,
+  fetchDBDiaryByDate,
+  fetchDBDiaryById,
+} from "../infra/diary-repository";
 import { fetchDBUserByUid } from "../infra/user-repository";
 import { generateContent } from "../infra/ai-repository";
 import { createMapPlaceClient } from "../domain/map";
@@ -182,6 +187,52 @@ app.get(
         "invalid_request",
       ),
     );
+  },
+);
+
+app.delete(
+  "/:diaryId",
+  describeRoute({
+    tags,
+    validateResponse: true,
+    description: "Delete a diary",
+    parameters: [
+      {
+        name: "diaryId",
+        in: "path",
+        description: "Diary ID to delete",
+        required: true,
+        schema: {
+          type: "string",
+        },
+      },
+    ],
+    responses: {
+      200: {
+        description: "Diary deleted successfully",
+        content: {
+          "application/json": {
+            schema: resolver(Diary),
+          },
+        },
+      },
+    },
+  }),
+  async (c) => {
+    const diaryId = c.req.param("diaryId");
+
+    const res = await deleteDiary(
+      db(),
+      fetchDBUserByUid,
+      fetchDBDiaryById,
+      deleteDBDiary,
+    )(getAUthUser(c), diaryId);
+
+    if (res.isErr()) {
+      throw toHTTPException(res.error);
+    }
+
+    return c.json(res.value);
   },
 );
 

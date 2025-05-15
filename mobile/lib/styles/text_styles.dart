@@ -11,6 +11,7 @@ class TextStyles {
     required this.label,
     required this.error,
     required this.link,
+    required this.handwriting,
   });
 
   final TextStyleSet display;
@@ -20,6 +21,7 @@ class TextStyles {
   final TextStyleSet label;
   final TextStyleSet error;
   final TextStyleSet link;
+  final TextStyleSet handwriting;
 
   static TextStyles from(ColorStyles color) {
     return TextStyles(
@@ -58,6 +60,41 @@ class TextStyles {
         m: _normal(fontSize: 14, color: color.link, fontWeight: FontWeight.w700),
         s: _normal(fontSize: 12, color: color.link, fontWeight: FontWeight.w700),
       ),
+      handwriting: TextStyleSet(
+        l: TextStyle(
+          fontSize: 22,
+          height: 1.6,
+          color: color.onSurface,
+          fontWeight: FontWeight.w600,
+          fontFamily: Fonts.caveat.name,
+          fontFamilyFallback: [Fonts.zenkurenaido.name],
+          fontVariations: <FontVariation>[
+            FontVariation('wght', _fontWeightToNumber(FontWeight.w600)),
+          ],
+        ),
+        m: TextStyle(
+          fontSize: 16,
+          height: 1.6,
+          color: color.onSurface,
+          fontWeight: FontWeight.w600,
+          fontFamily: Fonts.caveat.name,
+          fontFamilyFallback: [Fonts.zenkurenaido.name],
+          fontVariations: <FontVariation>[
+            FontVariation('wght', _fontWeightToNumber(FontWeight.w600)),
+          ],
+        ),
+        s: TextStyle(
+          fontSize: 14,
+          height: 1.6,
+          color: color.onSurface,
+          fontWeight: FontWeight.w600,
+          fontFamily: Fonts.caveat.name,
+          fontFamilyFallback: [Fonts.zenkurenaido.name],
+          fontVariations: <FontVariation>[
+            FontVariation('wght', _fontWeightToNumber(FontWeight.w600)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -94,7 +131,9 @@ enum Fonts {
   lexendDeca('LexendDeca'),
   lexendGiga('LexendGiga'),
   publicSans('PublicSans'),
-  notoSansJP('NotoSansJP');
+  caveat('Caveat'),
+  notoSansJP('NotoSansJP'),
+  zenkurenaido('ZenKurenaido');
 
   const Fonts(this.name);
 

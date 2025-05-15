@@ -42,8 +42,13 @@ class SignupAction extends FluxAction {
       ref.read(currentUserProvider.notifier).setUser(user);
 
     } on DioException catch (e) {
-      if (e.response?.data case CreateUserServiceError err when err.code == CreateUserServiceErrorCodeEnum.userAlreadyExists) {
-        final user = err.user;
+      final serviceError = standardSerializers.deserialize(
+        e.response?.data,
+        specifiedType: const FullType(CreateUserServiceError),
+      ) as CreateUserServiceError;
+
+      if (serviceError.code == CreateUserServiceErrorCodeEnum.userAlreadyExists) {
+        final user = serviceError.user;
         if (user == null) {
           throw Exception('error.user must be set');
         }
@@ -52,7 +57,7 @@ class SignupAction extends FluxAction {
         return;
       }
 
-      logger.e('Error creating user: ${e.response?.data}');
+      logger.e('Error creating user: $e');
       return;
     }
   }

@@ -11,6 +11,7 @@ import { resolver } from "hono-openapi/zod";
 import { toHTTPException } from "../service/error/service-error";
 import db from "../db/db";
 import { getAUthUser } from "./middleware/authorize";
+import { accessLogger } from "../logger";
 
 const app = new Hono();
 const tags = ["Users"];
@@ -73,6 +74,12 @@ app.post(
       db(),
     )(getAUthUser(c));
     if (res.isErr()) {
+      accessLogger.debug({
+        status: res.error.status,
+        code: res.error.code,
+        message: res.error.message,
+        ...res.error.extra,
+      });
       throw toHTTPException(res.error);
     }
     return c.json(res.value, 201);

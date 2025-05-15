@@ -14,14 +14,20 @@ part 'api_providers.g.dart';
 @Riverpod(keepAlive: true)
 Api api(Ref ref) {
   final api = Api(
-    basePathOverride: switch (kDebugMode) {
-      true => Platform.isAndroid ? '10.0.2.2' : null,
-      false => 'https://diarlies.harineko0927.workers.dev:443',
-    },
+    dio: Dio(BaseOptions(
+      baseUrl: switch (kDebugMode) {
+        true => Platform.isAndroid ? '10.0.2.2' : Api.basePath,
+        false => 'https://diarlies.harineko0927.workers.dev:443',
+      },
+      connectTimeout: const Duration(milliseconds: 5000),
+      receiveTimeout: const Duration(milliseconds: 15000),
+    )),
     interceptors: [BearerAuthInterceptor(), LoggingInterceptor()],
   );
 
   ref.listen(currentAuthUserProvider, (prev, next) async {
+    logger.d('CurrentAuthUserProvider changed to: $next');
+
     final authUser = next.value;
     if (authUser == null) {
       api.setBearerAuth('bearerAuth', '');

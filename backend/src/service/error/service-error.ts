@@ -40,7 +40,6 @@ export const ServiceError = z
     message: z.string(),
     code: z.string().optional(),
     extra: z.record(z.unknown()).optional(),
-    __brand: z.literal("ServiceError"),
   })
   .openapi({ ref: "ServiceError" });
 export type ServiceError = z.infer<typeof ServiceError>;
@@ -61,8 +60,8 @@ export const createServiceError = <T extends string = never>(
     __brand: "ServiceError",
     status,
     message,
-    code,
-    extra,
+    ...(code ? { code } : {}),
+    ...(extra ? { extra } : {}),
   };
 };
 
@@ -71,6 +70,7 @@ export const toHTTPException = <T extends ServiceError>(err: T) =>
     message: err.message,
     res: new Response(
       JSON.stringify({
+          __brand: "ServiceError",
         status: err.status,
         code: err.code,
         message: err.message,

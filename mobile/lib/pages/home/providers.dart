@@ -28,7 +28,25 @@ class DiaryMemo extends _$DiaryMemo {
 class TodaysDiary extends _$TodaysDiary {
   @override
   Future<Diary?> build() async {
-    return null;
+    final diariesApi = ref.watch(diariesApiProvider);
+
+    try {
+      final diary = await diariesApi.getDiaries(
+        date: DateTime.now().toDate(),
+      );
+
+      return diary.data?.firstOrNull;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        return null;
+      }
+
+      if (e.response?.data case ServiceError err) {
+        return Future.error(err);
+      } else {
+        return Future.error(e.message ?? 'Unknown error occurred');
+      }
+    }
   }
 
   void set(Diary? value) {

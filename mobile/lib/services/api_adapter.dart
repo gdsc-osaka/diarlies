@@ -44,7 +44,7 @@ PostDiarlies postDiaries(DiariesApi diariesApi) =>
       ProgressCallback? onSendProgress,
       ProgressCallback? onReceiveProgress,
     }) => diariesApi.postDiaries(
-      locationHistories: jsonEncode(locationHistories.map((hist) => hist.toJson())),
+      locationHistories: jsonEncode(locationHistories.map((hist) => hist.toJson()).toList()),
       images: images,
       languageCode: languageCode,
       cancelToken: cancelToken,

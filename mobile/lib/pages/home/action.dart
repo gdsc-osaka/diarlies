@@ -40,6 +40,8 @@ class HomeAction extends FluxAction {
 
       logger.i('Diary written successfully: ${res.data?.id}');
 
+      ref.read(todaysDiaryProvider.notifier).set(res.data);
+
     } on DioException catch (e) {
       if (e.response?.data case ServiceError err) {
         errorHandler('${err.code}: ${err.message}');
@@ -62,5 +64,34 @@ class HomeAction extends FluxAction {
 
   void updateMemo(String value) {
     ref.read(diaryMemoProvider.notifier).set(value);
+  }
+
+  void retryFetchDiary() {
+    ref.invalidate(todaysDiaryProvider);
+  }
+
+  Future<void> deleteDiary(Diary diary, {required ErrorHandler errorHandler}) async {
+    try {
+      final res = await ref.watch(diariesApiProvider).deleteDiariesByDiaryId(diaryId: diary.id);
+
+      if (res.data == null) {
+        errorHandler('Failed to regenerate diary');
+        return;
+      }
+
+      logger.i('Diary deleted successfully: ${res.data?.id}');
+
+      ref.read(todaysDiaryProvider.notifier).set(null);
+
+    } on DioException catch (e) {
+      if (e.response?.data case ServiceError err) {
+        errorHandler('${err.code}: ${err.message}');
+      } else {
+        errorHandler(e.message ?? 'Unknown error occurred');
+      }
+
+      logger.e(e);
+      return;
+    }
   }
 }

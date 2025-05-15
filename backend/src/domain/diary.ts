@@ -2,7 +2,8 @@ import z from "zod";
 import { Timestamp, toTimestamp } from "./timestamp";
 import { Day } from "./day";
 import { diaries } from "../db/schema/diaries";
-import { ok, Result } from "neverthrow";
+import { err, ok, Result } from "neverthrow";
+import { DBUser } from "./user";
 
 export const Diary = z
   .object({
@@ -26,7 +27,7 @@ export const dbDiaryForCreate = (
   return ok({
     userId,
     content,
-    diaryDate: new Date(diaryDate.year, diaryDate.month - 1, diaryDate.day),
+    diaryDate: new Date(diaryDate.year, diaryDate.month - 1, diaryDate.day + 1),
   });
 };
 
@@ -40,9 +41,20 @@ export const convertToDiary = (dbDiary: DBDiary): Result<Diary, never> => {
     diaryDate: {
       year: dbDiary.diaryDate.getFullYear(),
       month: dbDiary.diaryDate.getMonth() + 1,
-      day: dbDiary.diaryDate.getDate() + 1,
+      day: dbDiary.diaryDate.getDate(),
     },
     createdAt,
     updatedAt,
   }));
+};
+
+export const isDBDiaryOwnedByUser = (
+  dbDiary: DBDiary,
+  user: DBUser,
+): Result<true, "diary_not_owned_by_user"> => {
+  if (dbDiary.userId === user.id) {
+    return ok(true);
+  } else {
+    return err("diary_not_owned_by_user");
+  }
 };

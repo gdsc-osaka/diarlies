@@ -1,6 +1,7 @@
 import 'package:diarlies/logger.dart';
 import 'package:diarlies/pages/home/layout.dart';
 import 'package:diarlies/pages/home/page.dart';
+import 'package:diarlies/pages/home/settings/page.dart';
 import 'package:diarlies/pages/home/social/page.dart';
 import 'package:diarlies/pages/onboarding/finish/page.dart';
 import 'package:diarlies/pages/onboarding/page.dart';
@@ -69,13 +70,17 @@ GoRouter router(Ref ref) {
               GoRoute(path: HomeSocialPage.path, name: HomeSocialPage.name, builder: (context, state) => HomeSocialPage()),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: HomeSettingsPage.path, name: HomeSettingsPage.name, builder: (context, state) => HomeSettingsPage()),
+            ],
+          ),
         ],
       ),
     ],
   );
 
   ref.listen(authEventProvider, (prev, next) async {
-    logger.d('[AuthEvent changed] prev: $prev, next: $next');
     if (next.value == AuthEvent.signedIn) {
       router.goNamed(OnboardingPage.name);
       return;

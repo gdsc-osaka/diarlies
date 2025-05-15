@@ -61,14 +61,14 @@ export const createUser =
       )
       .andThen((user) =>
         user
-          ? errAsync({
-              ...createServiceError(
+          ? errAsync(
+              createServiceError(
                 StatusCode.BadRequest,
                 "User already exists",
                 "user-already-exists",
+                { user },
               ),
-              user,
-            })
+            )
           : okAsync(),
       )
       .andThen(() => createDBUserForCreate(authUser))

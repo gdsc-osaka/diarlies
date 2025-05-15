@@ -97,7 +97,7 @@ void showNBSnackBar(BuildContext context, {String? title, SnackBarType type = Sn
   final overlay = Overlay.of(context);
   late OverlayEntry overlayEntry;
   const animationDuration = Duration(milliseconds: 300);
-  const displayDuration = Duration(seconds: 3);
+  const displayDuration = Duration(seconds: 5);
 
   // ValueNotifierを使用してNBSnackBarの表示状態を制御
   final isVisibleNotifier = ValueNotifier<bool>(false);

@@ -9,11 +9,21 @@ import {
   ServiceError,
   StatusCode,
 } from "./error/service-error";
-import { CreateDBDiary, FetchDBDiaryByDate } from "../infra/diary-repository";
+import {
+  CreateDBDiary,
+  DeleteDBDiary,
+  FetchDBDiaryByDate,
+  FetchDBDiaryById,
+} from "../infra/diary-repository";
 import { GenerateContent } from "../infra/ai-repository";
 import { AuthUser } from "../domain/auth";
 import { FetchDBUserByUid } from "../infra/user-repository";
-import { convertToDiary, dbDiaryForCreate, Diary } from "../domain/diary";
+import {
+  convertToDiary,
+  dbDiaryForCreate,
+  Diary,
+  isDBDiaryOwnedByUser,
+} from "../domain/diary";
 import { diaryGenerationPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
 
@@ -198,5 +208,73 @@ export const fetchDiaryByDate =
               ),
           )
           .with({ __brand: "ServiceError" }, (e) => e)
+          .exhaustive(),
+      );
+
+// delete
+export type DeleteDiary = (
+  authUser: AuthUser,
+  diaryId: string,
+) => ResultAsync<Diary, ServiceError>;
+
+// fetch dbUser, fetch diary by id, check if diary belongs to user, delete diary.
+export const deleteDiary =
+  (
+    db: DBorTx,
+    fetchDBUserByUid: FetchDBUserByUid,
+    fetchDBDiaryById: FetchDBDiaryById,
+    deleteDBDiary: DeleteDBDiary,
+  ): DeleteDiary =>
+  (authUser: AuthUser, diaryId: string) =>
+    fetchDBUserByUid(db)(authUser.uid)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "DBError", code: "not-found" }, () =>
+            createServiceError(
+              StatusCode.Unauthorized,
+              "User not found",
+              err.message,
+            ),
+          )
+          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to find user",
+              e.message,
+            ),
+          )
+          .exhaustive(),
+      )
+      .andThen((dbUser) =>
+        fetchDBDiaryById(db)(diaryId).andThen((dbDiary) =>
+          isDBDiaryOwnedByUser(dbDiary, dbUser),
+        ),
+      )
+      .andThen(() => deleteDBDiary(db)(diaryId))
+      .andThen(convertToDiary)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "ServiceError" }, (e) => e)
+          .with({ __brand: "DBError", code: "not-found" }, (e) =>
+            createServiceError(
+              StatusCode.NotFound,
+              "Diary not found",
+              e.message,
+            ),
+          )
+          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to delete diary",
+              e.message,
+            ),
+          )
+          .with("diary_not_owned_by_user", () =>
+            createServiceError(
+              StatusCode.Forbidden,
+              "The user does not have permission to delete this diary",
+              "permission_denied",
+            ),
+          )
           .exhaustive(),
       );

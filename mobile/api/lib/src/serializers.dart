@@ -34,6 +34,10 @@ part 'serializers.g.dart';
   User,
 ])
 Serializers serializers = (_$serializers.toBuilder()
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Diary)]),
+        () => ListBuilder<Diary>(),
+      )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())
       ..add(const DateSerializer())

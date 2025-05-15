@@ -81,3 +81,27 @@ export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
           ),
     )
     .orTee(infraLogger.error);
+
+export type DeleteDBDiary = (
+  db: DBorTx,
+) => (
+  diaryId: string,
+) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+
+export const deleteDBDiary: DeleteDBDiary = (db) => (diaryId) =>
+  ResultAsync.fromPromise(
+    db.delete(diaries).where(eq(diaries.id, diaryId)).returning().execute(),
+    handleDBError,
+  )
+    .andThen((records) =>
+      records.length > 0
+        ? okAsync(records[0])
+        : errAsync(
+            createDBError(
+              "not-found",
+              `Diary with id ${diaryId} not found`,
+              undefined,
+            ),
+          ),
+    )
+    .orTee(infraLogger.error);

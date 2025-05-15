@@ -2,7 +2,7 @@ import { ResultAsync } from "neverthrow";
 import { DecodedIdToken } from "firebase-admin/auth";
 import { AuthError, handleAuthError } from "./error/auth-error";
 import firebase from "../firebase";
-import {infraLogger} from "../logger";
+import { infraLogger } from "../logger";
 
 export type AuthUser = DecodedIdToken;
 

@@ -1,4 +1,5 @@
 import 'package:api/api.dart';
+import 'package:built_value/serializer.dart';
 import 'package:diarlies/pages/_components/app_icon.dart';
 import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';

@@ -7,6 +7,20 @@ void main() {
   final instance = Api().getDiariesApi();
 
   group(DiariesApi, () {
+    // Delete a diary
+    //
+    //Future<Diary> deleteDiariesByDiaryId(String diaryId) async
+    test('test deleteDiariesByDiaryId', () async {
+      // TODO
+    });
+
+    // Get diaries
+    //
+    //Future<BuiltList<Diary>> getDiaries({ Date date }) async
+    test('test getDiaries', () async {
+      // TODO
+    });
+
     // Create a new diary
     //
     //Future<Diary> postDiaries(String locationHistories, LanguageCode languageCode, BuiltList<MultipartFile> images) async

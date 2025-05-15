@@ -41,6 +41,7 @@ class TranslationsJa implements Translations {
 	@override late final _TranslationsOnboardingPermissionJa onboarding_permission = _TranslationsOnboardingPermissionJa._(_root);
 	@override late final _TranslationsOnboardingFinishJa onboarding_finish = _TranslationsOnboardingFinishJa._(_root);
 	@override late final _TranslationsHomeJa home = _TranslationsHomeJa._(_root);
+	@override late final _TranslationsSettingsJa settings = _TranslationsSettingsJa._(_root);
 }
 
 // Path: signup
@@ -106,6 +107,21 @@ class _TranslationsHomeJa implements TranslationsHomeEn {
 	@override late final _TranslationsHomeBtnJa btn = _TranslationsHomeBtnJa._(_root);
 	@override late final _TranslationsHomeLabelJa label = _TranslationsHomeLabelJa._(_root);
 	@override late final _TranslationsHomePlaceholderJa placeholder = _TranslationsHomePlaceholderJa._(_root);
+	@override late final _TranslationsHomeErrorJa error = _TranslationsHomeErrorJa._(_root);
+	@override late final _TranslationsHomeDialogJa dialog = _TranslationsHomeDialogJa._(_root);
+}
+
+// Path: settings
+class _TranslationsSettingsJa implements TranslationsSettingsEn {
+	_TranslationsSettingsJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => '設定';
+	@override late final _TranslationsSettingsBtnJa btn = _TranslationsSettingsBtnJa._(_root);
+	@override late final _TranslationsSettingsErrorJa error = _TranslationsSettingsErrorJa._(_root);
+	@override late final _TranslationsSettingsDialogJa dialog = _TranslationsSettingsDialogJa._(_root);
 }
 
 // Path: signup.btn
@@ -217,6 +233,9 @@ class _TranslationsHomeBtnJa implements TranslationsHomeBtnEn {
 	// Translations
 	@override String get add_photo => '写真を追加';
 	@override String get keep_diary => '日記をつける';
+	@override String get retry => '再試行';
+	@override String get regenerate => '再生成';
+	@override String get cancel => 'キャンセル';
 }
 
 // Path: home.label
@@ -239,6 +258,60 @@ class _TranslationsHomePlaceholderJa implements TranslationsHomePlaceholderEn {
 
 	// Translations
 	@override String get memo => '今日の気分は...';
+}
+
+// Path: home.error
+class _TranslationsHomeErrorJa implements TranslationsHomeErrorEn {
+	_TranslationsHomeErrorJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get failed_to_fetch_todays_diary => '今日の日記の取得に失敗しました';
+}
+
+// Path: home.dialog
+class _TranslationsHomeDialogJa implements TranslationsHomeDialogEn {
+	_TranslationsHomeDialogJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get regenerate_title => '日記を再生成してもよろしいですか？';
+	@override String get regenerate_content => 'この操作は元に戻せません。';
+}
+
+// Path: settings.btn
+class _TranslationsSettingsBtnJa implements TranslationsSettingsBtnEn {
+	_TranslationsSettingsBtnJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get sign_out => 'サインアウト';
+	@override String get terms => '利用規約';
+	@override String get privacy => 'プライバシーポリシー';
+	@override String get cancel => 'キャンセル';
+}
+
+// Path: settings.error
+class _TranslationsSettingsErrorJa implements TranslationsSettingsErrorEn {
+	_TranslationsSettingsErrorJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get failed_to_sign_out => 'サインアウトに失敗しました';
+}
+
+// Path: settings.dialog
+class _TranslationsSettingsDialogJa implements TranslationsSettingsDialogEn {
+	_TranslationsSettingsDialogJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get sign_out_title => 'ログアウトしますか？';
 }
 
 /// Flat map(s) containing all translations.
@@ -275,10 +348,23 @@ extension on TranslationsJa {
 			case 'home.bottom_nav.settings': return '設定';
 			case 'home.btn.add_photo': return '写真を追加';
 			case 'home.btn.keep_diary': return '日記をつける';
+			case 'home.btn.retry': return '再試行';
+			case 'home.btn.regenerate': return '再生成';
+			case 'home.btn.cancel': return 'キャンセル';
 			case 'home.label.photo': return '今日の写真';
 			case 'home.label.journey': return '今日の旅路';
 			case 'home.label.memo': return 'メモ';
 			case 'home.placeholder.memo': return '今日の気分は...';
+			case 'home.error.failed_to_fetch_todays_diary': return '今日の日記の取得に失敗しました';
+			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';
+			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';
+			case 'settings.title': return '設定';
+			case 'settings.btn.sign_out': return 'サインアウト';
+			case 'settings.btn.terms': return '利用規約';
+			case 'settings.btn.privacy': return 'プライバシーポリシー';
+			case 'settings.btn.cancel': return 'キャンセル';
+			case 'settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
+			case 'settings.dialog.sign_out_title': return 'ログアウトしますか？';
 			default: return null;
 		}
 	}

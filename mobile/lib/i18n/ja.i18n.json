@@ -55,7 +55,10 @@
     },
     "btn": {
       "add_photo": "写真を追加",
-      "keep_diary": "日記をつける"
+      "keep_diary": "日記をつける",
+      "retry": "再試行",
+      "regenerate": "再生成",
+      "cancel": "キャンセル"
     },
     "label": {
       "photo": "今日の写真",
@@ -64,6 +67,28 @@
     },
     "placeholder": {
       "memo": "今日の気分は..."
+    },
+    "error": {
+      "failed_to_fetch_todays_diary": "今日の日記の取得に失敗しました"
+    },
+    "dialog": {
+        "regenerate_title": "日記を再生成してもよろしいですか？",
+        "regenerate_content": "この操作は元に戻せません。"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "btn": {
+      "sign_out": "サインアウト",
+      "terms": "利用規約",
+      "privacy": "プライバシーポリシー",
+      "cancel": "キャンセル"
+    },
+    "error": {
+      "failed_to_sign_out": "サインアウトに失敗しました"
+    },
+    "dialog": {
+      "sign_out_title": "ログアウトしますか？"
     }
   }
 }
