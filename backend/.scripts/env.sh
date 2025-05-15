@@ -1,0 +1,3 @@
+echo "FIRE_SA=$FIRE_SA" > .env
+echo "GEMINI_API_KEY=$GEMINI_API_KEY" >> .env
+echo "GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY" >> .env
