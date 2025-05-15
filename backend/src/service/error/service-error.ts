@@ -70,7 +70,7 @@ export const toHTTPException = <T extends ServiceError>(err: T) =>
     message: err.message,
     res: new Response(
       JSON.stringify({
-          __brand: "ServiceError",
+        __brand: "ServiceError",
         status: err.status,
         code: err.code,
         message: err.message,
