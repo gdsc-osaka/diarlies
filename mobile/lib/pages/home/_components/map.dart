@@ -28,12 +28,11 @@ class JourneyMap extends StatelessWidget {
         child: GoogleMap(
             compassEnabled: false,
             mapToolbarEnabled: false,
-            zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: false,
             initialCameraPosition: CameraPosition(
           target: initialLocation,
-          zoom: 15,
+          zoom: 10,
         )),
       ),
     );

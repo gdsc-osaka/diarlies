@@ -54,16 +54,34 @@ class HomePage extends ConsumerWidget {
     }
 
     handleRegenerate(Diary diary) {
-      showDialog(context: context, builder: (context) => NBDialog(title: Text(t.home.dialog.regenerate_title), content: Text(t.home.dialog.regenerate_content), actions: [
-        NBButton(label: Text(t.home.btn.cancel), variant: Variant.secondary, onPressed: () => Navigator.of(context).pop()),
-        NBButton(label: Text(t.home.btn.regenerate), onPressed: () async {
-          await action.deleteDiary(diary, errorHandler: (message) {
-            showNBSnackBar(context, title: message, type: SnackBarType.error);
-          });
+      showDialog(
+        context: context,
+        builder:
+            (context) => NBDialog(
+              title: Text(t.home.dialog.regenerate_title),
+              content: Text(t.home.dialog.regenerate_content),
+              actions: [
+                NBButton(
+                  label: Text(t.home.btn.cancel),
+                  variant: Variant.secondary,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                NBButton(
+                  label: Text(t.home.btn.regenerate),
+                  onPressed: () async {
+                    await action.deleteDiary(
+                      diary,
+                      errorHandler: (message) {
+                        showNBSnackBar(context, title: message, type: SnackBarType.error);
+                      },
+                    );
 
-          if (context.mounted) Navigator.of(context).pop();
-        }),
-      ]));
+                    if (context.mounted) Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+      );
     }
 
     return Stack(
@@ -87,19 +105,30 @@ class HomePage extends ConsumerWidget {
                                 onWriteDiaryPressed: handleWriteDiary,
                               )
                               : DiaryDisplay(diary: diary, onRegeneratePressed: handleRegenerate),
-                  error: (e, s) => NBCard(
-                      color: styles.color.error,
-                      child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start
-                      , children: [
-                    Text(t.home.error.failed_to_fetch_todays_diary, style: styles.text.title.m.copyWith(color: styles.color.onError)),
-                    const SizedBox(height: 8),
-                    Text(e is ServiceError ? '[${e.code}] ${e.message}' : e.toString(), style: styles.text.body.m.copyWith(color: styles.color.onError)),
-                        Expanded(child: SizedBox()),
-                        NBButton(label: Text(t.home.btn.retry),
-                            variant: Variant.secondary,
-                            onPressed: action.retryFetchDiary)
-                  ])),
+                  error:
+                      (e, s) => NBCard(
+                        color: styles.color.error,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              t.home.error.failed_to_fetch_todays_diary,
+                              style: styles.text.title.m.copyWith(color: styles.color.onError),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              e is ServiceError ? '[${e.code}] ${e.message}' : e.toString(),
+                              style: styles.text.body.m.copyWith(color: styles.color.onError),
+                            ),
+                            Expanded(child: SizedBox()),
+                            NBButton(
+                              label: Text(t.home.btn.retry),
+                              variant: Variant.secondary,
+                              onPressed: action.retryFetchDiary,
+                            ),
+                          ],
+                        ),
+                      ),
                   loading: () => const Center(child: CircularProgressIndicator()),
                 ),
           ),
