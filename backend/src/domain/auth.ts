@@ -1,3 +1,3 @@
-import { getFirebaseToken } from "@hono/firebase-auth";
+import { DecodedIdToken } from "firebase-admin/auth";
 
-export type AuthUser = NonNullable<ReturnType<typeof getFirebaseToken>>;
+export type AuthUser = DecodedIdToken;
