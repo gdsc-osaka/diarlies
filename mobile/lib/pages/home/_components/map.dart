@@ -17,17 +17,25 @@ class JourneyMap extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: styles.color.greenPastel,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: styles.color.border,
           width: 4,
         ),
       ),
-      child: Text('Wip', style: styles.text.title.s),
-      // child: GoogleMap(initialCameraPosition: CameraPosition(
-      //   target: initialLocation,
-      //   zoom: 15,
-      // )),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: GoogleMap(
+            compassEnabled: false,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+            myLocationEnabled: false,
+            initialCameraPosition: CameraPosition(
+          target: initialLocation,
+          zoom: 15,
+        )),
+      ),
     );
   }
 }

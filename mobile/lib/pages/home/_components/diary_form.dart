@@ -72,7 +72,7 @@ class DiaryForm extends StatelessWidget {
         Text(t.home.label.journey, style: styles.text.title.m),
         const SizedBox(height: 8),
         JourneyMap(
-          initialLocation: LatLng(135, 75),
+          initialLocation: LatLng(35.6811398, 139.7644865),
         ),
         const SizedBox(height: 16),
         Text(t.home.label.memo, style: styles.text.title.m),

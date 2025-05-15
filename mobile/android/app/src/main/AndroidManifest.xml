@@ -15,6 +15,9 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:networkSecurityConfig="@xml/network_security_config">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_map_api_key"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -32,7 +35,6 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_map_api_key"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
