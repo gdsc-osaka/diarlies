@@ -13,27 +13,6 @@ export enum StatusCode {
   ServiceUnavailable = 503,
 }
 
-const toMessage = (status: StatusCode): string => {
-  switch (status) {
-    case StatusCode.BadRequest:
-      return "Bad Request";
-    case StatusCode.Unauthorized:
-      return "Unauthorized";
-    case StatusCode.Forbidden:
-      return "Forbidden";
-    case StatusCode.NotFound:
-      return "Not Found";
-    case StatusCode.TooManyRequests:
-      return "Too Many Requests";
-    case StatusCode.InternalServerError:
-      return "Internal Server Error";
-    case StatusCode.NotImplemented:
-      return "Not Implemented";
-    case StatusCode.ServiceUnavailable:
-      return "Service Unavailable";
-  }
-};
-
 export const ServiceError = z
   .object({
     status: z.number().int(),
