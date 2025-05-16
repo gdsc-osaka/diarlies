@@ -1,7 +1,7 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/ocarry-api:$COMMIT_SHA',
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/diarlies:$COMMIT_SHA',
             '--build-arg', 'FIRE_SA=$FIRE_SA',
             '--build-arg', 'GEMINI_API_KEY=$GEMINI_API_KEY',
             '--build-arg', 'GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY',
