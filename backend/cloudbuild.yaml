@@ -32,17 +32,9 @@ options:
   logging: 'CLOUD_LOGGING_ONLY'
 availableSecrets:
   secretManager:
-#    - versionName: projects/632351198383/secrets/DATABASE_URL/versions/latest
-#      env: 'DATABASE_URL'
-#    - versionName: projects/632351198383/secrets/GCP_SERVICE_ACCOUNT/versions/latest
-#      env: 'GCP_SERVICE_ACCOUNT'
-#    - versionName: projects/632351198383/secrets/FIRE_SERVICE_ACCOUNT/versions/latest
-#      env: 'FIRE_SERVICE_ACCOUNT'
-#    - versionName: projects/632351198383/secrets/GOOGLE_MAPS_API_KEY/versions/latest
-#      env: 'GOOGLE_MAPS_API_KEY'
-#    - versionName: projects/632351198383/secrets/STRIPE_API_KEY/versions/latest
-#      env: 'STRIPE_API_KEY'
-#    - versionName: projects/632351198383/secrets/STRIPE_WEBHOOK_SECRET/versions/latest
-#      env: 'STRIPE_WEBHOOK_SECRET'
-#    - versionName: projects/632351198383/secrets/EKISPERT_API_KEY/versions/latest
-#      env: 'EKISPERT_API_KEY'
+    - versionName: projects/223226992422/secrets/FIRE_SA/versions/latest
+      env: 'FIRE_SA'
+    - versionName: projects/223226992422/secrets/GEMINI_API_KEY/versions/latest
+      env: 'GEMINI_API_KEY'
+    - versionName: projects/223226992422/secrets/GOOGLE_MAPS_API_KEY/versions/latest
+      env: 'GOOGLE_MAPS_API_KEY'
