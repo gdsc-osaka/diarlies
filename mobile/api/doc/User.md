@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **uid** | **String** |  | 
 **visibility** | [**AccountVisibility**](AccountVisibility.md) |  | 
 **iconUrl** | **String** |  | [optional] 
+**name** | **String** |  | 
+**handle** | **String** |  | 
 **createdAt** | [**Timestamp**](Timestamp.md) |  | 
 **updatedAt** | [**Timestamp**](Timestamp.md) |  | 
 

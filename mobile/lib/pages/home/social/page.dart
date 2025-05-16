@@ -58,8 +58,8 @@ class HomeSocialPage extends ConsumerWidget {
                   child: diary != null ? DiaryDisplay(
                     diary: diary,
                     headerSuffix: DiaryUserSuffix(
-                      userName: diary.user.id,
-                      userHandle: diary.user.uid,
+                      userName: diary.user.name,
+                      userHandle: diary.user.handle,
                       iconUrl: diary.user.iconUrl,
                     ),
                   ) : const SizedBox(),

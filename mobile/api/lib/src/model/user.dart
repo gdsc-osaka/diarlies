@@ -17,6 +17,8 @@ part 'user.g.dart';
 /// * [uid] 
 /// * [visibility] 
 /// * [iconUrl] 
+/// * [name] 
+/// * [handle] 
 /// * [createdAt] 
 /// * [updatedAt] 
 @BuiltValue()
@@ -33,6 +35,12 @@ abstract class User implements Built<User, UserBuilder> {
 
   @BuiltValueField(wireName: r'iconUrl')
   String? get iconUrl;
+
+  @BuiltValueField(wireName: r'name')
+  String get name;
+
+  @BuiltValueField(wireName: r'handle')
+  String get handle;
 
   @BuiltValueField(wireName: r'createdAt')
   Timestamp get createdAt;
@@ -85,6 +93,16 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
         specifiedType: const FullType(String),
       );
     }
+    yield r'name';
+    yield serializers.serialize(
+      object.name,
+      specifiedType: const FullType(String),
+    );
+    yield r'handle';
+    yield serializers.serialize(
+      object.handle,
+      specifiedType: const FullType(String),
+    );
     yield r'createdAt';
     yield serializers.serialize(
       object.createdAt,
@@ -145,6 +163,20 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
             specifiedType: const FullType(String),
           ) as String;
           result.iconUrl = valueDes;
+          break;
+        case r'name':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.name = valueDes;
+          break;
+        case r'handle':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.handle = valueDes;
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
