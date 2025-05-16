@@ -34,6 +34,8 @@ availableSecrets:
   secretManager:
     - versionName: projects/223226992422/secrets/FIRE_SA/versions/latest
       env: 'FIRE_SA'
+    - versionName: projects/223226992422/secrets/DATABASE_URL/versions/latest
+      env: 'DATABASE_URL'
     - versionName: projects/223226992422/secrets/GEMINI_API_KEY/versions/latest
       env: 'GEMINI_API_KEY'
     - versionName: projects/223226992422/secrets/GOOGLE_MAPS_API_KEY/versions/latest
