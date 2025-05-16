@@ -6,7 +6,7 @@ import { Modality } from "@google/genai";
 
 interface GenerateContentStreamResponse {
   text: string;
-  image?: string;
+  image?: Buffer<ArrayBuffer>;
 }
 
 export type GenerateContent = (
@@ -49,12 +49,8 @@ export const generateContent =
 
         return {
           text,
-          image: image?.data
-            ? Buffer.from(image.data, "base64").toString()
-            : undefined,
+          image: image?.data ? Buffer.from(image?.data, "base64") : undefined,
         };
       })(),
       handleAIError,
-    )
-      // .andTee((res) => infraLogger.info(`AI response: ${JSON.stringify(res, null, 2)}`))
-      .orTee(infraLogger.error);
+    ).orTee(infraLogger.error);

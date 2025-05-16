@@ -15,6 +15,7 @@ import {
   StatusCode,
   toHTTPException,
 } from "../service/error/service-error";
+import { getDownloadUrl } from "../infra/storage-repository";
 
 const app = new Hono();
 const tags = ["Diaries"];
@@ -58,6 +59,7 @@ app.get(
         db(),
         fetchDBUserByUid,
         fetchDBDiaryByDate,
+        getDownloadUrl,
       )(getAUthUser(c), new Date(dateParam));
 
       if (res.isErr()) {

@@ -1,7 +1,7 @@
 import type { DBorTx } from "../db/db";
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { createDBError, DBError, handleDBError } from "./error/db-error";
-import { DBDiary, DBDiaryForCreate } from "../domain/diary";
+import { DBDiary, DBDiaryForCreate, DBDiaryWithDBUser } from "../domain/diary";
 import { diaries } from "../db/schema/diaries";
 import { infraLogger } from "../logger";
 import { and, eq } from "drizzle-orm";
@@ -87,7 +87,7 @@ export type FetchDBDiariesByDuration = (
 ) => (
   startDate: Date,
   endOrEqualDate: Date,
-) => ResultAsync<DBDiary[], DBError<"unknown">>;
+) => ResultAsync<DBDiaryWithDBUser[], DBError<"unknown">>;
 
 export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
   (db) => (startDate, endDate) =>
@@ -107,7 +107,13 @@ export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
       }),
       handleDBError,
     )
-      .map((records) => records.map((record) => record.diaries).flat())
+      .map((records) =>
+        records
+          .map(({ diaries, ...user }) =>
+            diaries.map((diary) => ({ ...diary, user })),
+          )
+          .flat(),
+      )
       .orTee(infraLogger.error);
 
 export type DeleteDBDiary = (

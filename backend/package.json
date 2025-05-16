@@ -29,6 +29,7 @@
   },
   "private": true,
   "dependencies": {
+    "@google-cloud/storage": "^7.16.0",
     "@google/genai": "^0.13.0",
     "@googlemaps/places": "^2.0.1",
     "@hono/node-server": "^1.14.1",

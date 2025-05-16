@@ -5,6 +5,7 @@ import { err, ok, Result } from "neverthrow";
 import { Timestamp, toTimestamp } from "./timestamp";
 import { AuthUser } from "./auth";
 import { ForUpdate } from "./shared/types";
+import { DBDiary } from "./diary";
 
 export const AccountVisibility = z
   .enum(["private", "public"])
@@ -26,6 +27,9 @@ export type User = z.infer<typeof User>;
 export type DBUser = typeof users.$inferSelect;
 export type DBUserForCreate = typeof users.$inferInsert;
 export type DBUserForUpdate = ForUpdate<DBUser>;
+export type DBUserWithDBDiaries = DBUser & {
+  diaries: DBDiary[];
+};
 
 export const convertToUser = (user: DBUser): Result<User, never> => {
   // TODO: validate user with zod

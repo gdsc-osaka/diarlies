@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
-import { Diary } from "../domain/diary";
+import { Diary, DiaryWithUser } from "../domain/diary";
 import {
   createDiary,
   CreateDiaryRequest,
@@ -29,6 +29,7 @@ import { createMapPlaceClient } from "../domain/map";
 import { createGenAI } from "../domain/ai";
 import env from "../env";
 import { getAUthUser } from "./middleware/authorize";
+import { getDownloadUrl, uploadFile } from "../infra/storage-repository";
 
 type Bindings = {
   GEMINI_API_KEY: string;
@@ -117,19 +118,25 @@ app.post(
       );
     }
 
-    const res = await createDiary(
-      db(),
-      fetchDBUserByUid,
-      fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
-      createDBDiary,
-      generateContent(createGenAI(env.GEMINI_API_KEY)),
-    )(getAUthUser(c), parseResult.data); // getFirebaseToken(c)!
+    try {
+      const res = await createDiary(
+          db(),
+          fetchDBUserByUid,
+          fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
+          createDBDiary,
+          generateContent(createGenAI(env.GEMINI_API_KEY)),
+          uploadFile,
+      )(getAUthUser(c), parseResult.data); // getFirebaseToken(c)!
 
-    if (res.isErr()) {
-      throw toHTTPException(res.error);
+      if (res.isErr()) {
+        throw toHTTPException(res.error);
+      }
+
+      return c.json(res.value, 201);
+    } catch (e) {
+      console.error(e);
+      throw e;
     }
-
-    return c.json(res.value, 201);
   },
 );
 
@@ -167,7 +174,7 @@ app.get(
         description: "Diaries retrieved successfully",
         content: {
           "application/json": {
-            schema: resolver(z.array(Diary)),
+            schema: resolver(z.array(DiaryWithUser)),
           },
         },
       },
@@ -191,11 +198,11 @@ app.get(
         );
       }
 
-      const res = await fetchDiariesByDuration(db(), fetchDBDiariesByDuration)(
-        getAUthUser(c),
-        startDate,
-        endDate,
-      );
+      const res = await fetchDiariesByDuration(
+        db(),
+        fetchDBDiariesByDuration,
+        getDownloadUrl,
+      )(getAUthUser(c), startDate, endDate);
 
       if (res.isErr()) {
         throw toHTTPException(res.error);

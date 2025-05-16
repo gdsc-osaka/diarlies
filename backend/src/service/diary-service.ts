@@ -21,12 +21,18 @@ import { AuthUser } from "../domain/auth";
 import { FetchDBUserByUid } from "../infra/user-repository";
 import {
   convertToDiary,
+  convertToDiaryWithUser,
   dbDiaryForCreate,
   Diary,
+  DiaryWithUser,
   isDBDiaryOwnedByUser,
 } from "../domain/diary";
 import { diaryGenerationPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
+import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
+import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
+import cuid2 from "@paralleldrive/cuid2";
+import {serviceLogger} from "../logger";
 
 export const Image = z
   .instanceof(File)
@@ -58,6 +64,7 @@ export const createDiary =
     fetchNearbyPlaces: FetchNearbyPlaces,
     createDBDiary: CreateDBDiary,
     generateContent: GenerateContent,
+    uploadFile: UploadFile,
   ): CreateDiary =>
   (
     authUser: AuthUser,
@@ -101,27 +108,48 @@ export const createDiary =
           );
         }
 
-        const res = await generateContent(
+        const generated = await generateContent(
           diaryGenerationPrompt(places.value, args.languageCode, ""),
           args.images,
         );
 
-        if (res.isErr()) {
+        if (generated.isErr()) {
           return errAsync(
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to generate content",
-              res.error.message,
+              generated.error.message,
+            ),
+          );
+        }
+
+        const thumbnailPath = cuid2.createId();
+        const thumbnailUrl = generated.value.image
+          ? await uploadFile(thumbnailStorageBucket())(
+              fileData(dbUser.value, thumbnailPath, generated.value.image),
+            )
+          : undefined;
+
+        if (thumbnailUrl?.isErr()) {
+          return errAsync(
+            createServiceError(
+              StatusCode.InternalServerError,
+              `Failed to upload thumbnail. ${thumbnailUrl.error.message}`,
             ),
           );
         }
 
         const now = new Date();
-        const diary = await dbDiaryForCreate(dbUser.value.id, res.value.text, {
-          year: now.getFullYear(),
-          month: now.getMonth() + 1,
-          day: now.getDate(),
-        }).asyncAndThen(createDBDiary(db));
+        const diary = await dbDiaryForCreate(
+          dbUser.value.id,
+          generated.value.text,
+          {
+            year: now.getFullYear(),
+            month: now.getMonth() + 1,
+            day: now.getDate(),
+          },
+          thumbnailPath,
+        ).asyncAndThen(createDBDiary(db));
 
         if (diary.isErr()) {
           return errAsync(
@@ -135,9 +163,13 @@ export const createDiary =
 
         console.log("Diary generation completed:", diary.value);
 
-        return convertToDiary(diary.value);
+        return convertToDiary(
+          diary.value,
+          thumbnailUrl && thumbnailUrl.isOk() ? thumbnailUrl.value : undefined,
+        );
       })(),
-    ).andThen((result) => result);
+    ).andThen((result) => result)
+        .orTee(serviceLogger.error);
 
 export type FetchDiaryByDate = (
   authUser: AuthUser,
@@ -149,6 +181,7 @@ export const fetchDiaryByDate =
     db: DBorTx,
     fetchDBUserByUid: FetchDBUserByUid,
     fetchDBDiaryByDate: FetchDBDiaryByDate,
+    getDownloadUrl: GetDownloadUrl,
   ): FetchDiaryByDate =>
   (authUser: AuthUser, date: Date) =>
     fetchDBUserByUid(db)(authUser.uid)
@@ -180,8 +213,16 @@ export const fetchDiaryByDate =
           )
           .exhaustive(),
       )
-      .andThen((dbUser) => fetchDBDiaryByDate(db)(dbUser.id, date))
-      .andThen(convertToDiary)
+      .andThen((dbUser) =>
+        fetchDBDiaryByDate(db)(dbUser.id, date).andThen((dbDiary) =>
+          getDownloadUrl(thumbnailStorageBucket())(
+            filePath(dbUser, dbDiary.thumbnailPath),
+          ).map((thumbnailUrl) => ({ dbDiary, thumbnailUrl })),
+        ),
+      )
+      .andThen(({ dbDiary, thumbnailUrl }) =>
+        convertToDiary(dbDiary, thumbnailUrl),
+      )
       .mapErr((err) =>
         match(err)
           .with(
@@ -208,6 +249,13 @@ export const fetchDiaryByDate =
                 e.message,
               ),
           )
+          .with({ __brand: "StorageError" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to fetch thumbnail",
+              e.message,
+            ),
+          )
           .with({ __brand: "ServiceError" }, (e) => e)
           .exhaustive(),
       );
@@ -216,17 +264,33 @@ export type FetchDiariesByDuration = (
   authUser: AuthUser,
   startDate: Date,
   endDate: Date,
-) => ResultAsync<Diary[], ServiceError>;
+) => ResultAsync<DiaryWithUser[], ServiceError>;
 
 export const fetchDiariesByDuration =
   (
     db: DBorTx,
     fetchDBDiariesByDuration: FetchDBDiariesByDuration,
+    getDownloadUrl: GetDownloadUrl,
   ): FetchDiariesByDuration =>
   // TODO: AuthUser がフォローしているユーザーの Diary を取得するようにする
   (_: AuthUser, startDate, endDate) =>
     fetchDBDiariesByDuration(db)(startDate, endDate)
-      .andThen((diaries) => Result.combine(diaries.map(convertToDiary)))
+      .andThen((dbDiaries) =>
+        ResultAsync.combine(
+          dbDiaries.map((dbDiary) =>
+            getDownloadUrl(thumbnailStorageBucket())(
+              filePath(dbDiary.user, dbDiary.thumbnailPath),
+            ).map((thumbnailUrl) => ({ dbDiary, thumbnailUrl })),
+          ),
+        ),
+      )
+      .andThen((diaries) =>
+        Result.combine(
+          diaries.map(({ dbDiary, thumbnailUrl }) =>
+            convertToDiaryWithUser(dbDiary, thumbnailUrl),
+          ),
+        ),
+      )
       .mapErr((err) =>
         match(err)
           .with(
@@ -240,6 +304,13 @@ export const fetchDiariesByDuration =
                 "Failed to fetch diary",
                 e.message,
               ),
+          )
+          .with({ __brand: "StorageError" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to fetch thumbnail",
+              e.message,
+            ),
           )
           .exhaustive(),
       );

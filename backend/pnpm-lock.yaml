@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@google-cloud/storage':
+        specifier: ^7.16.0
+        version: 7.16.0
       '@google/genai':
         specifier: ^0.13.0
         version: 0.13.0
@@ -3646,13 +3649,10 @@ snapshots:
     dependencies:
       arrify: 2.0.1
       extend: 3.0.2
-    optional: true
 
-  '@google-cloud/projectify@4.0.0':
-    optional: true
+  '@google-cloud/projectify@4.0.0': {}
 
-  '@google-cloud/promisify@4.0.0':
-    optional: true
+  '@google-cloud/promisify@4.0.0': {}
 
   '@google-cloud/storage@7.16.0':
     dependencies:
@@ -3674,7 +3674,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   '@google/genai@0.13.0':
     dependencies:
@@ -4261,8 +4260,7 @@ snapshots:
       '@ark/util': 0.46.0
     optional: true
 
-  arrify@2.0.1:
-    optional: true
+  arrify@2.0.1: {}
 
   as-table@1.0.55:
     dependencies:
@@ -4273,7 +4271,6 @@ snapshots:
   async-retry@1.3.3:
     dependencies:
       retry: 0.13.1
-    optional: true
 
   asynckit@0.4.0: {}
 
@@ -4776,7 +4773,6 @@ snapshots:
   fast-xml-parser@4.5.3:
     dependencies:
       strnum: 1.1.2
-    optional: true
 
   fastq@1.19.1:
     dependencies:
@@ -5098,8 +5094,7 @@ snapshots:
 
   hono@4.7.8: {}
 
-  html-entities@2.6.0:
-    optional: true
+  html-entities@2.6.0: {}
 
   html-escaper@2.0.2: {}
 
@@ -5645,7 +5640,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   retry-request@8.0.0:
     dependencies:
@@ -5655,8 +5649,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  retry@0.13.1:
-    optional: true
+  retry@0.13.1: {}
 
   reusify@1.1.0: {}
 
@@ -5883,8 +5876,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  strnum@1.1.2:
-    optional: true
+  strnum@1.1.2: {}
 
   stubs@3.0.0: {}
 
@@ -5917,7 +5909,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   test-exclude@7.0.1:
     dependencies:
@@ -6063,8 +6054,7 @@ snapshots:
 
   uuid@11.1.0: {}
 
-  uuid@8.3.2:
-    optional: true
+  uuid@8.3.2: {}
 
   uuid@9.0.1: {}
 
