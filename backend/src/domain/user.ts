@@ -16,6 +16,7 @@ export const User = z
     id: z.string(),
     uid: z.string(),
     visibility: AccountVisibility,
+    iconUrl: z.string().optional(),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -41,6 +42,7 @@ export const convertToUser = (user: DBUser): Result<User, never> => {
     id: user.id,
     uid: user.uid,
     visibility: user.visibility,
+    iconUrl: user.iconUrl ?? undefined,
     createdAt,
     updatedAt,
   }));
@@ -51,6 +53,7 @@ export const createDBUserForCreate = (
 ): Result<DBUserForCreate, never> => {
   return ok({
     uid: authUser.uid,
+    iconUrl: authUser.picture,
   });
 };
 

@@ -26,6 +26,7 @@ export const users = pgTable(
       .notNull(),
     uid: varchar("uid", { length: UID_LENGTH }).notNull().unique(),
     visibility: accountVisibility("visibility").default("private").notNull(),
+    iconUrl: varchar("icon_url", { length: 255 }),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())
