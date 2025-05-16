@@ -16,8 +16,9 @@ COPY tsconfig.* ./
 COPY *.ts ./
 COPY src ./src
 
-COPY .scripts/env.sh ./
-RUN bash .scripts/env.sh
+COPY .scripts ./.scripts
+RUN chmod +x ./.scripts/env.sh
+RUN .scripts/env.sh
 
 RUN npm run build
 
