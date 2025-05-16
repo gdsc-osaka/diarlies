@@ -15,6 +15,13 @@
       "when": 1747201520221,
       "tag": "0001_bitter_red_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1747396858814,
+      "tag": "0002_even_ultimatum",
+      "breakpoints": true
     }
   ]
 }

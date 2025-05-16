@@ -6,7 +6,7 @@ import {
   createDiary,
   CreateDiaryRequest,
   deleteDiary,
-  fetchDiaryByDate,
+  fetchDiariesByDuration,
 } from "../service/diary-service";
 import z from "zod";
 import {
@@ -20,7 +20,7 @@ import { fetchNearbyPlaces } from "../infra/map-repository";
 import {
   createDBDiary,
   deleteDBDiary,
-  fetchDBDiaryByDate,
+  fetchDBDiariesByDuration,
   fetchDBDiaryById,
 } from "../infra/diary-repository";
 import { fetchDBUserByUid } from "../infra/user-repository";
@@ -142,9 +142,19 @@ app.get(
     description: "Get diaries",
     parameters: [
       {
-        name: "date",
+        name: "startDate",
         in: "query",
-        description: "Date to filter diaries",
+        description: "Start date to filter diaries",
+        required: false,
+        schema: {
+          type: "string",
+          format: "date",
+        },
+      },
+      {
+        name: "endDate",
+        in: "query",
+        description: "End date to filter diaries",
         required: false,
         schema: {
           type: "string",
@@ -164,20 +174,34 @@ app.get(
     },
   }),
   async (c) => {
-    const dateParam = c.req.query("date");
+    const startDateParam = c.req.query("startDate");
+    const endDateParam = c.req.query("endDate");
 
-    if (dateParam) {
-      const res = await fetchDiaryByDate(
-        db(),
-        fetchDBUserByUid,
-        fetchDBDiaryByDate,
-      )(getAUthUser(c), new Date(dateParam));
+    if (startDateParam && endDateParam) {
+      const startDate = new Date(startDateParam);
+      const endDate = new Date(endDateParam);
+
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        throw toHTTPException(
+          createServiceError(
+            StatusCode.BadRequest,
+            "Invalid date format",
+            "invalid_request",
+          ),
+        );
+      }
+
+      const res = await fetchDiariesByDuration(db(), fetchDBDiariesByDuration)(
+        getAUthUser(c),
+        startDate,
+        endDate,
+      );
 
       if (res.isErr()) {
         throw toHTTPException(res.error);
       }
 
-      return c.json([res.value]);
+      return c.json(res.value);
     }
 
     throw toHTTPException(
