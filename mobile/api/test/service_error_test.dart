@@ -27,10 +27,5 @@ void main() {
       // TODO
     });
 
-    // String brand
-    test('to test the property `brand`', () async {
-      // TODO
-    });
-
   });
 }

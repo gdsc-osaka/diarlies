@@ -27,11 +27,6 @@ void main() {
       // TODO
     });
 
-    // String brand
-    test('to test the property `brand`', () async {
-      // TODO
-    });
-
     // User user
     test('to test the property `user`', () async {
       // TODO

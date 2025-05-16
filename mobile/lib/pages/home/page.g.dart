@@ -56,7 +56,7 @@ final diaryMemoProvider =
     );
 
 typedef _$DiaryMemo = AutoDisposeNotifier<String?>;
-String _$todaysDiaryHash() => r'0cb82152c5154179708489a05d012d3c3530626b';
+String _$todaysDiaryHash() => r'834537e5d89e01babfee33ae92249a955cafdf67';
 
 /// See also [TodaysDiary].
 @ProviderFor(TodaysDiary)

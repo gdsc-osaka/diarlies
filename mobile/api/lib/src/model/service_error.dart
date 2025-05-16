@@ -17,7 +17,6 @@ part 'service_error.g.dart';
 /// * [message] 
 /// * [code] 
 /// * [extra] 
-/// * [brand] 
 @BuiltValue()
 abstract class ServiceError implements Built<ServiceError, ServiceErrorBuilder> {
   @BuiltValueField(wireName: r'status')
@@ -31,10 +30,6 @@ abstract class ServiceError implements Built<ServiceError, ServiceErrorBuilder> 
 
   @BuiltValueField(wireName: r'extra')
   BuiltMap<String, JsonObject?>? get extra;
-
-  @BuiltValueField(wireName: r'__brand')
-  ServiceErrorBrandEnum get brand;
-  // enum brandEnum {  ServiceError,  };
 
   ServiceError._();
 
@@ -83,11 +78,6 @@ class _$ServiceErrorSerializer implements PrimitiveSerializer<ServiceError> {
         specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
       );
     }
-    yield r'__brand';
-    yield serializers.serialize(
-      object.brand,
-      specifiedType: const FullType(ServiceErrorBrandEnum),
-    );
   }
 
   @override
@@ -139,13 +129,6 @@ class _$ServiceErrorSerializer implements PrimitiveSerializer<ServiceError> {
           ) as BuiltMap<String, JsonObject?>;
           result.extra.replace(valueDes);
           break;
-        case r'__brand':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(ServiceErrorBrandEnum),
-          ) as ServiceErrorBrandEnum;
-          result.brand = valueDes;
-          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -173,18 +156,5 @@ class _$ServiceErrorSerializer implements PrimitiveSerializer<ServiceError> {
     );
     return result.build();
   }
-}
-
-class ServiceErrorBrandEnum extends EnumClass {
-
-  @BuiltValueEnumConst(wireName: r'ServiceError')
-  static const ServiceErrorBrandEnum serviceError = _$serviceErrorBrandEnum_serviceError;
-
-  static Serializer<ServiceErrorBrandEnum> get serializer => _$serviceErrorBrandEnumSerializer;
-
-  const ServiceErrorBrandEnum._(String name): super(name);
-
-  static BuiltSet<ServiceErrorBrandEnum> get values => _$serviceErrorBrandEnumValues;
-  static ServiceErrorBrandEnum valueOf(String name) => _$serviceErrorBrandEnumValueOf(name);
 }
 

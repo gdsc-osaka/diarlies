@@ -7,14 +7,14 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AccountVisibility.serializer)
+      ..add(ChangeUserVisibilityRequest.serializer)
       ..add(CreateUserServiceError.serializer)
-      ..add(CreateUserServiceErrorBrandEnum.serializer)
       ..add(CreateUserServiceErrorCodeEnum.serializer)
       ..add(Day.serializer)
       ..add(Diary.serializer)
       ..add(LanguageCode.serializer)
       ..add(ServiceError.serializer)
-      ..add(ServiceErrorBrandEnum.serializer)
       ..add(Timestamp.serializer)
       ..add(User.serializer)
       ..addBuilderFactory(

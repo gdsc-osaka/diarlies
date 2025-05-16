@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getUsers**](UsersApi.md#getusers) | **GET** /users | 
 [**postUsers**](UsersApi.md#postusers) | **POST** /users | 
+[**postUsersByUserIdChangeVisibility**](UsersApi.md#postusersbyuseridchangevisibility) | **POST** /users/{userId}/change-visibility | 
 
 
 # **getUsers**
@@ -87,6 +88,51 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **postUsersByUserIdChangeVisibility**
+> User postUsersByUserIdChangeVisibility(userId, changeUserVisibilityRequest)
+
+
+
+Change user visibility
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getUsersApi();
+final String userId = userId_example; // String | User ID to change visibility
+final ChangeUserVisibilityRequest changeUserVisibilityRequest = ; // ChangeUserVisibilityRequest | 
+
+try {
+    final response = api.postUsersByUserIdChangeVisibility(userId, changeUserVisibilityRequest);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->postUsersByUserIdChangeVisibility: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **String**| User ID to change visibility | 
+ **changeUserVisibilityRequest** | [**ChangeUserVisibilityRequest**](ChangeUserVisibilityRequest.md)|  | 
+
+### Return type
+
+[**User**](User.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**deleteDiariesByDiaryId**](DiariesApi.md#deletediariesbydiaryid) | **DELETE** /diaries/{diaryId} | 
 [**getDiaries**](DiariesApi.md#getdiaries) | **GET** /diaries | 
+[**getUsersByUserIdDiaries**](DiariesApi.md#getusersbyuseriddiaries) | **GET** /users/{userId}/diaries | 
 [**postDiaries**](DiariesApi.md#postdiaries) | **POST** /diaries | 
 
 
@@ -58,7 +59,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getDiaries**
-> BuiltList<Diary> getDiaries(date)
+> BuiltList<Diary> getDiaries(startDate, endDate)
 
 
 
@@ -69,10 +70,11 @@ Get diaries
 import 'package:api/api.dart';
 
 final api = Api().getDiariesApi();
-final Date date = 2013-10-20; // Date | Date to filter diaries
+final Date startDate = 2013-10-20; // Date | Start date to filter diaries
+final Date endDate = 2013-10-20; // Date | End date to filter diaries
 
 try {
-    final response = api.getDiaries(date);
+    final response = api.getDiaries(startDate, endDate);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling DiariesApi->getDiaries: $e\n');
@@ -83,7 +85,53 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **date** | **Date**| Date to filter diaries | [optional] 
+ **startDate** | **Date**| Start date to filter diaries | [optional] 
+ **endDate** | **Date**| End date to filter diaries | [optional] 
+
+### Return type
+
+[**BuiltList&lt;Diary&gt;**](Diary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getUsersByUserIdDiaries**
+> BuiltList<Diary> getUsersByUserIdDiaries(userId, date)
+
+
+
+Get diaries
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getDiariesApi();
+final String userId = userId_example; // String | 
+final Date date = 2013-10-20; // Date | Date to filter diaries. startDate and endDate will be ignored if this is provided
+
+try {
+    final response = api.getUsersByUserIdDiaries(userId, date);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling DiariesApi->getUsersByUserIdDiaries: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **String**|  | 
+ **date** | **Date**| Date to filter diaries. startDate and endDate will be ignored if this is provided | [optional] 
 
 ### Return type
 

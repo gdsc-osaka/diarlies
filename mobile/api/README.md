@@ -67,13 +67,17 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 [*DiariesApi*](doc/DiariesApi.md) | [**deleteDiariesByDiaryId**](doc/DiariesApi.md#deletediariesbydiaryid) | **DELETE** /diaries/{diaryId} | 
 [*DiariesApi*](doc/DiariesApi.md) | [**getDiaries**](doc/DiariesApi.md#getdiaries) | **GET** /diaries | 
+[*DiariesApi*](doc/DiariesApi.md) | [**getUsersByUserIdDiaries**](doc/DiariesApi.md#getusersbyuseriddiaries) | **GET** /users/{userId}/diaries | 
 [*DiariesApi*](doc/DiariesApi.md) | [**postDiaries**](doc/DiariesApi.md#postdiaries) | **POST** /diaries | 
 [*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
 [*UsersApi*](doc/UsersApi.md) | [**postUsers**](doc/UsersApi.md#postusers) | **POST** /users | 
+[*UsersApi*](doc/UsersApi.md) | [**postUsersByUserIdChangeVisibility**](doc/UsersApi.md#postusersbyuseridchangevisibility) | **POST** /users/{userId}/change-visibility | 
 
 
 ## Documentation For Models
 
+ - [AccountVisibility](doc/AccountVisibility.md)
+ - [ChangeUserVisibilityRequest](doc/ChangeUserVisibilityRequest.md)
  - [CreateUserServiceError](doc/CreateUserServiceError.md)
  - [Day](doc/Day.md)
  - [Diary](doc/Diary.md)

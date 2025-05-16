@@ -2,6 +2,8 @@
 .openapi-generator-ignore
 README.md
 analysis_options.yaml
+doc/AccountVisibility.md
+doc/ChangeUserVisibilityRequest.md
 doc/CreateUserServiceError.md
 doc/Day.md
 doc/DiariesApi.md
@@ -22,6 +24,8 @@ lib/src/auth/basic_auth.dart
 lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
+lib/src/model/account_visibility.dart
+lib/src/model/change_user_visibility_request.dart
 lib/src/model/create_user_service_error.dart
 lib/src/model/date.dart
 lib/src/model/day.dart
@@ -32,6 +36,8 @@ lib/src/model/timestamp.dart
 lib/src/model/user.dart
 lib/src/serializers.dart
 pubspec.yaml
+test/account_visibility_test.dart
+test/change_user_visibility_request_test.dart
 test/create_user_service_error_test.dart
 test/day_test.dart
 test/diaries_api_test.dart

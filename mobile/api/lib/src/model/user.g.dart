@@ -12,6 +12,10 @@ class _$User extends User {
   @override
   final String uid;
   @override
+  final AccountVisibility visibility;
+  @override
+  final String? iconUrl;
+  @override
   final Timestamp createdAt;
   @override
   final Timestamp updatedAt;
@@ -22,11 +26,14 @@ class _$User extends User {
   _$User._(
       {required this.id,
       required this.uid,
+      required this.visibility,
+      this.iconUrl,
       required this.createdAt,
       required this.updatedAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'User', 'id');
     BuiltValueNullFieldError.checkNotNull(uid, r'User', 'uid');
+    BuiltValueNullFieldError.checkNotNull(visibility, r'User', 'visibility');
     BuiltValueNullFieldError.checkNotNull(createdAt, r'User', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(updatedAt, r'User', 'updatedAt');
   }
@@ -44,6 +51,8 @@ class _$User extends User {
     return other is User &&
         id == other.id &&
         uid == other.uid &&
+        visibility == other.visibility &&
+        iconUrl == other.iconUrl &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt;
   }
@@ -53,6 +62,8 @@ class _$User extends User {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, uid.hashCode);
+    _$hash = $jc(_$hash, visibility.hashCode);
+    _$hash = $jc(_$hash, iconUrl.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jf(_$hash);
@@ -64,6 +75,8 @@ class _$User extends User {
     return (newBuiltValueToStringHelper(r'User')
           ..add('id', id)
           ..add('uid', uid)
+          ..add('visibility', visibility)
+          ..add('iconUrl', iconUrl)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt))
         .toString();
@@ -80,6 +93,15 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String? _uid;
   String? get uid => _$this._uid;
   set uid(String? uid) => _$this._uid = uid;
+
+  AccountVisibility? _visibility;
+  AccountVisibility? get visibility => _$this._visibility;
+  set visibility(AccountVisibility? visibility) =>
+      _$this._visibility = visibility;
+
+  String? _iconUrl;
+  String? get iconUrl => _$this._iconUrl;
+  set iconUrl(String? iconUrl) => _$this._iconUrl = iconUrl;
 
   TimestampBuilder? _createdAt;
   TimestampBuilder get createdAt =>
@@ -100,6 +122,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
     if ($v != null) {
       _id = $v.id;
       _uid = $v.uid;
+      _visibility = $v.visibility;
+      _iconUrl = $v.iconUrl;
       _createdAt = $v.createdAt.toBuilder();
       _updatedAt = $v.updatedAt.toBuilder();
       _$v = null;
@@ -128,6 +152,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
           new _$User._(
             id: BuiltValueNullFieldError.checkNotNull(id, r'User', 'id'),
             uid: BuiltValueNullFieldError.checkNotNull(uid, r'User', 'uid'),
+            visibility: BuiltValueNullFieldError.checkNotNull(
+                visibility, r'User', 'visibility'),
+            iconUrl: iconUrl,
             createdAt: createdAt.build(),
             updatedAt: updatedAt.build(),
           );

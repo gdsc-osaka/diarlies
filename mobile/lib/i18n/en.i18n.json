@@ -76,6 +76,9 @@
       "regenerate_content": "You can’t undo this action."
     }
   },
+  "home_social": {
+    "title": "Social"
+  },
   "settings": {
     "title": "Settings",
     "btn": {
@@ -83,6 +86,16 @@
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
       "cancel": "Cancel"
+    },
+    "label": {
+      "visibility": "Account visibility"
+    },
+    "select": {
+      "public": "Public",
+      "private": "Private"
+    },
+    "success": {
+      "change_visibility": "Visibility changed successfully"
     },
     "error": {
         "failed_to_sign_out": "Failed to sign out"

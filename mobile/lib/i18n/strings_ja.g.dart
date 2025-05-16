@@ -41,6 +41,7 @@ class TranslationsJa implements Translations {
 	@override late final _TranslationsOnboardingPermissionJa onboarding_permission = _TranslationsOnboardingPermissionJa._(_root);
 	@override late final _TranslationsOnboardingFinishJa onboarding_finish = _TranslationsOnboardingFinishJa._(_root);
 	@override late final _TranslationsHomeJa home = _TranslationsHomeJa._(_root);
+	@override late final _TranslationsHomeSocialJa home_social = _TranslationsHomeSocialJa._(_root);
 	@override late final _TranslationsSettingsJa settings = _TranslationsSettingsJa._(_root);
 }
 
@@ -111,6 +112,16 @@ class _TranslationsHomeJa implements TranslationsHomeEn {
 	@override late final _TranslationsHomeDialogJa dialog = _TranslationsHomeDialogJa._(_root);
 }
 
+// Path: home_social
+class _TranslationsHomeSocialJa implements TranslationsHomeSocialEn {
+	_TranslationsHomeSocialJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'ソーシャル';
+}
+
 // Path: settings
 class _TranslationsSettingsJa implements TranslationsSettingsEn {
 	_TranslationsSettingsJa._(this._root);
@@ -120,6 +131,9 @@ class _TranslationsSettingsJa implements TranslationsSettingsEn {
 	// Translations
 	@override String get title => '設定';
 	@override late final _TranslationsSettingsBtnJa btn = _TranslationsSettingsBtnJa._(_root);
+	@override late final _TranslationsSettingsLabelJa label = _TranslationsSettingsLabelJa._(_root);
+	@override late final _TranslationsSettingsSelectJa select = _TranslationsSettingsSelectJa._(_root);
+	@override late final _TranslationsSettingsSuccessJa success = _TranslationsSettingsSuccessJa._(_root);
 	@override late final _TranslationsSettingsErrorJa error = _TranslationsSettingsErrorJa._(_root);
 	@override late final _TranslationsSettingsDialogJa dialog = _TranslationsSettingsDialogJa._(_root);
 }
@@ -294,6 +308,37 @@ class _TranslationsSettingsBtnJa implements TranslationsSettingsBtnEn {
 	@override String get cancel => 'キャンセル';
 }
 
+// Path: settings.label
+class _TranslationsSettingsLabelJa implements TranslationsSettingsLabelEn {
+	_TranslationsSettingsLabelJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get visibility => 'アカウントの公開範囲';
+}
+
+// Path: settings.select
+class _TranslationsSettingsSelectJa implements TranslationsSettingsSelectEn {
+	_TranslationsSettingsSelectJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get public => '公開';
+	@override String get private => '非公開';
+}
+
+// Path: settings.success
+class _TranslationsSettingsSuccessJa implements TranslationsSettingsSuccessEn {
+	_TranslationsSettingsSuccessJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get change_visibility => '公開範囲が正常に変更されました';
+}
+
 // Path: settings.error
 class _TranslationsSettingsErrorJa implements TranslationsSettingsErrorEn {
 	_TranslationsSettingsErrorJa._(this._root);
@@ -358,11 +403,16 @@ extension on TranslationsJa {
 			case 'home.error.failed_to_fetch_todays_diary': return '今日の日記の取得に失敗しました';
 			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';
 			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';
+			case 'home_social.title': return 'ソーシャル';
 			case 'settings.title': return '設定';
 			case 'settings.btn.sign_out': return 'サインアウト';
 			case 'settings.btn.terms': return '利用規約';
 			case 'settings.btn.privacy': return 'プライバシーポリシー';
 			case 'settings.btn.cancel': return 'キャンセル';
+			case 'settings.label.visibility': return 'アカウントの公開範囲';
+			case 'settings.select.public': return '公開';
+			case 'settings.select.private': return '非公開';
+			case 'settings.success.change_visibility': return '公開範囲が正常に変更されました';
 			case 'settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
 			case 'settings.dialog.sign_out_title': return 'ログアウトしますか？';
 			default: return null;
