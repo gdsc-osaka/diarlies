@@ -3,7 +3,7 @@ part of 'page.dart';
 @Riverpod(keepAlive: true)
 class DiariesInTimeline extends _$DiariesInTimeline {
   @override
-  Future<List<Diary>> build() async {
+  Future<List<DiaryWithUser>> build() async {
     final diariesApi = ref.watch(diariesApiProvider);
 
     try {

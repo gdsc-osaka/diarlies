@@ -1,12 +1,17 @@
 import 'package:test/test.dart';
 import 'package:api/api.dart';
 
-// tests for Diary
+// tests for DiaryWithUser
 void main() {
-  //final instance = DiaryBuilder();
+  final instance = DiaryWithUserBuilder();
   // TODO add properties to the builder and call build()
 
-  group(Diary, () {
+  group(DiaryWithUser, () {
+    // User user
+    test('to test the property `user`', () async {
+      // TODO
+    });
+
     // String id
     test('to test the property `id`', () async {
       // TODO

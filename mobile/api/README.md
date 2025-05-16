@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
  - [CreateUserServiceError](doc/CreateUserServiceError.md)
  - [Day](doc/Day.md)
  - [Diary](doc/Diary.md)
+ - [DiaryWithUser](doc/DiaryWithUser.md)
  - [LanguageCode](doc/LanguageCode.md)
  - [ServiceError](doc/ServiceError.md)
  - [Timestamp](doc/Timestamp.md)

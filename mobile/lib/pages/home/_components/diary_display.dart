@@ -88,7 +88,7 @@ class DiaryDisplay extends StatelessWidget {
             ),
           ),
         ),
-        NBImage(image: Image.network('https://www.osaka-u.ac.jp/ja/international/files/38gzbc/@@images/image',
+        NBImage(image: Image.network(diary.thumbnailUrl,
           fit: BoxFit.cover,
           width: double.infinity,
           height: 130,

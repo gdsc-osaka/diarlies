@@ -7,12 +7,13 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add($Diary.serializer)
       ..add(AccountVisibility.serializer)
       ..add(ChangeUserVisibilityRequest.serializer)
       ..add(CreateUserServiceError.serializer)
       ..add(CreateUserServiceErrorCodeEnum.serializer)
       ..add(Day.serializer)
-      ..add(Diary.serializer)
+      ..add(DiaryWithUser.serializer)
       ..add(LanguageCode.serializer)
       ..add(ServiceError.serializer)
       ..add(Timestamp.serializer)

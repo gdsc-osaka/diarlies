@@ -51,18 +51,18 @@ class HomeSocialPage extends ConsumerWidget {
                 if (index == 0) return SizedBox(height: 123);
 
                 final diaries = ref.watch(diariesInTimelineProvider).valueOrNull;
-                final diary = diaries != null ? diaries[index - 1] : Diary();
+                final diary = diaries?.elementAtOrNull(index - 1);
 
                 return DiaryCard(
                   showPrevPage: false,
-                  child: DiaryDisplay(
+                  child: diary != null ? DiaryDisplay(
                     diary: diary,
                     headerSuffix: DiaryUserSuffix(
-                      userName: 'Yunineko',
-                      userHandle: '@yunineko',
-                      iconUrl: 'https://lh3.googleusercontent.com/ogw/AF2bZygOHPJqH6Gvx1s8825prFzAf_ua06fPd5hmf0vbnz0jR-4=s64-c-mo',
+                      userName: diary.user.id,
+                      userHandle: diary.user.uid,
+                      iconUrl: diary.user.iconUrl,
                     ),
-                  ),
+                  ) : const SizedBox(),
                 );
               },
               separatorBuilder: (_, __) => const SizedBox(height: 16),

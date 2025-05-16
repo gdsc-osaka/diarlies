@@ -18,6 +18,7 @@ export 'package:api/src/model/change_user_visibility_request.dart';
 export 'package:api/src/model/create_user_service_error.dart';
 export 'package:api/src/model/day.dart';
 export 'package:api/src/model/diary.dart';
+export 'package:api/src/model/diary_with_user.dart';
 export 'package:api/src/model/language_code.dart';
 export 'package:api/src/model/service_error.dart';
 export 'package:api/src/model/timestamp.dart';

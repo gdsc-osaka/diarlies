@@ -1,4 +1,4 @@
-# api.model.Diary
+# api.model.DiaryWithUser
 
 ## Load the model package
 ```dart
@@ -8,6 +8,7 @@ import 'package:api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**user** | [**User**](User.md) |  | 
 **id** | **String** |  | 
 **content** | **String** |  | 
 **diaryDate** | [**Day**](Day.md) |  | 

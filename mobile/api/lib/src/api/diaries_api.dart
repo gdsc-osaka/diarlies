@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:api/src/api_util.dart';
 import 'package:api/src/model/date.dart';
 import 'package:api/src/model/diary.dart';
+import 'package:api/src/model/diary_with_user.dart';
 import 'package:api/src/model/language_code.dart';
 import 'package:api/src/model/service_error.dart';
 import 'package:built_collection/built_collection.dart';
@@ -117,9 +118,9 @@ class DiariesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<Diary>] as data
+  /// Returns a [Future] containing a [Response] with a [BuiltList<DiaryWithUser>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<Diary>>> getDiaries({ 
+  Future<Response<BuiltList<DiaryWithUser>>> getDiaries({ 
     Date? startDate,
     Date? endDate,
     CancelToken? cancelToken,
@@ -162,14 +163,14 @@ class DiariesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<Diary>? _responseData;
+    BuiltList<DiaryWithUser>? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(BuiltList, [FullType(Diary)]),
-      ) as BuiltList<Diary>;
+        specifiedType: const FullType(BuiltList, [FullType(DiaryWithUser)]),
+      ) as BuiltList<DiaryWithUser>;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -181,7 +182,7 @@ class DiariesApi {
       );
     }
 
-    return Response<BuiltList<Diary>>(
+    return Response<BuiltList<DiaryWithUser>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

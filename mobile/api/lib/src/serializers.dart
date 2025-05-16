@@ -19,6 +19,7 @@ import 'package:api/src/model/change_user_visibility_request.dart';
 import 'package:api/src/model/create_user_service_error.dart';
 import 'package:api/src/model/day.dart';
 import 'package:api/src/model/diary.dart';
+import 'package:api/src/model/diary_with_user.dart';
 import 'package:api/src/model/language_code.dart';
 import 'package:api/src/model/service_error.dart';
 import 'package:api/src/model/timestamp.dart';
@@ -31,7 +32,8 @@ part 'serializers.g.dart';
   ChangeUserVisibilityRequest,
   CreateUserServiceError,
   Day,
-  Diary,
+  Diary,$Diary,
+  DiaryWithUser,
   LanguageCode,
   ServiceError,
   Timestamp,
@@ -42,6 +44,11 @@ Serializers serializers = (_$serializers.toBuilder()
         const FullType(BuiltList, [FullType(Diary)]),
         () => ListBuilder<Diary>(),
       )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(DiaryWithUser)]),
+        () => ListBuilder<DiaryWithUser>(),
+      )
+      ..add(Diary.serializer)
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())
       ..add(const DateSerializer())
