@@ -3,9 +3,10 @@ import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
 
 class DiaryCard extends StatelessWidget {
-  const DiaryCard({super.key, this.child});
+  const DiaryCard({super.key, this.child, this.showPrevPage = true});
 
   final Widget? child;
+  final bool showPrevPage;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +18,13 @@ class DiaryCard extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             // 隣のページ
-            Positioned(
-              left: -constraints.maxWidth + 6,
-              top: 0,
-              width: constraints.maxWidth,
-              child: AspectRatio(aspectRatio: 0.75, child: NBCard(color: styles.color.paper)),
-            ),
+            if (showPrevPage)
+              Positioned(
+                left: -constraints.maxWidth + 6,
+                top: 0,
+                width: constraints.maxWidth,
+                child: AspectRatio(aspectRatio: 0.75, child: NBCard(color: styles.color.paper)),
+              ),
             // 本体
             AspectRatio(
               aspectRatio: 0.75,

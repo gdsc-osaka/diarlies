@@ -21,5 +21,12 @@ void main() {
       // TODO
     });
 
+    // Change user visibility
+    //
+    //Future<User> postUsersByUserIdChangeVisibility(String userId, ChangeUserVisibilityRequest changeUserVisibilityRequest) async
+    test('test postUsersByUserIdChangeVisibility', () async {
+      // TODO
+    });
+
   });
 }

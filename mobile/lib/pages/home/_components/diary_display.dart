@@ -1,9 +1,5 @@
 import 'package:api/api.dart';
-import 'package:diarlies/components/nb_button.dart';
 import 'package:diarlies/components/nb_image.dart';
-import 'package:diarlies/components/variant.dart';
-import 'package:diarlies/i18n/strings.g.dart';
-import 'package:diarlies/shared/types.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -11,10 +7,10 @@ import 'package:shimmer/shimmer.dart';
 import '../../../styles/styles.dart';
 
 class DiaryDisplay extends StatelessWidget {
-  const DiaryDisplay({super.key, required this.diary, required this.onRegeneratePressed});
+  const DiaryDisplay({super.key, required this.diary, this.headerSuffix});
 
   final Diary diary;
-  final FutureOrValueChanged<void, Diary> onRegeneratePressed;
+  final Widget? headerSuffix;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +39,7 @@ class DiaryDisplay extends StatelessWidget {
               ],
             ),
             const Expanded(child: SizedBox()),
-            NBButton(label: Text(t.home.btn.regenerate),
-                icon: const Icon(Icons.delete_outline),
-                onPressed: () => onRegeneratePressed(diary), variant: Variant.secondary),
+            if (headerSuffix != null) headerSuffix!,
           ],
         ),
         Expanded(

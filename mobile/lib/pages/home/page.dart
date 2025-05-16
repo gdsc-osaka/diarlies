@@ -14,6 +14,7 @@ import 'package:diarlies/pages/home/_components/diary_display.dart';
 import 'package:diarlies/pages/home/_components/diary_form.dart';
 import 'package:diarlies/pages/onboarding/page.dart';
 import 'package:diarlies/providers/api_providers.dart';
+import 'package:diarlies/providers/auth_providers.dart';
 import 'package:diarlies/providers/location_providers.dart';
 import 'package:diarlies/services/api_adapter.dart';
 import 'package:diarlies/shared/error_handler.dart';
@@ -104,7 +105,11 @@ class HomePage extends ConsumerWidget {
                                 onMemoChanged: action.updateMemo,
                                 onWriteDiaryPressed: handleWriteDiary,
                               )
-                              : DiaryDisplay(diary: diary, onRegeneratePressed: handleRegenerate),
+                              : DiaryDisplay(diary: diary,
+                          headerSuffix: NBButton(label: Text(t.home.btn.regenerate),
+                              icon: const Icon(Icons.delete_outline),
+                              onPressed: () => handleRegenerate(diary), variant: Variant.secondary),
+                          ),
                   error:
                       (e, s) => NBCard(
                         color: styles.color.error,

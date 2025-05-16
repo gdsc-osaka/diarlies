@@ -76,6 +76,9 @@
         "regenerate_content": "この操作は元に戻せません。"
     }
   },
+  "home_social": {
+      "title": "ソーシャル"
+  },
   "settings": {
     "title": "設定",
     "btn": {
@@ -83,6 +86,16 @@
       "terms": "利用規約",
       "privacy": "プライバシーポリシー",
       "cancel": "キャンセル"
+    },
+    "label": {
+      "visibility": "アカウントの公開範囲"
+    },
+    "select": {
+      "public": "公開",
+      "private": "非公開"
+    },
+    "success": {
+      "change_visibility": "公開範囲が正常に変更されました"
     },
     "error": {
       "failed_to_sign_out": "サインアウトに失敗しました"

@@ -18,7 +18,6 @@ part 'create_user_service_error.g.dart';
 /// * [message] 
 /// * [code] 
 /// * [extra] 
-/// * [brand] 
 /// * [user] 
 @BuiltValue()
 abstract class CreateUserServiceError implements Built<CreateUserServiceError, CreateUserServiceErrorBuilder> {
@@ -34,10 +33,6 @@ abstract class CreateUserServiceError implements Built<CreateUserServiceError, C
 
   @BuiltValueField(wireName: r'extra')
   BuiltMap<String, JsonObject?>? get extra;
-
-  @BuiltValueField(wireName: r'__brand')
-  CreateUserServiceErrorBrandEnum get brand;
-  // enum brandEnum {  ServiceError,  };
 
   @BuiltValueField(wireName: r'user')
   User? get user;
@@ -89,11 +84,6 @@ class _$CreateUserServiceErrorSerializer implements PrimitiveSerializer<CreateUs
         specifiedType: const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
       );
     }
-    yield r'__brand';
-    yield serializers.serialize(
-      object.brand,
-      specifiedType: const FullType(CreateUserServiceErrorBrandEnum),
-    );
     if (object.user != null) {
       yield r'user';
       yield serializers.serialize(
@@ -152,13 +142,6 @@ class _$CreateUserServiceErrorSerializer implements PrimitiveSerializer<CreateUs
           ) as BuiltMap<String, JsonObject?>;
           result.extra.replace(valueDes);
           break;
-        case r'__brand':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(CreateUserServiceErrorBrandEnum),
-          ) as CreateUserServiceErrorBrandEnum;
-          result.brand = valueDes;
-          break;
         case r'user':
           final valueDes = serializers.deserialize(
             value,
@@ -208,18 +191,5 @@ class CreateUserServiceErrorCodeEnum extends EnumClass {
 
   static BuiltSet<CreateUserServiceErrorCodeEnum> get values => _$createUserServiceErrorCodeEnumValues;
   static CreateUserServiceErrorCodeEnum valueOf(String name) => _$createUserServiceErrorCodeEnumValueOf(name);
-}
-
-class CreateUserServiceErrorBrandEnum extends EnumClass {
-
-  @BuiltValueEnumConst(wireName: r'ServiceError')
-  static const CreateUserServiceErrorBrandEnum serviceError = _$createUserServiceErrorBrandEnum_serviceError;
-
-  static Serializer<CreateUserServiceErrorBrandEnum> get serializer => _$createUserServiceErrorBrandEnumSerializer;
-
-  const CreateUserServiceErrorBrandEnum._(String name): super(name);
-
-  static BuiltSet<CreateUserServiceErrorBrandEnum> get values => _$createUserServiceErrorBrandEnumValues;
-  static CreateUserServiceErrorBrandEnum valueOf(String name) => _$createUserServiceErrorBrandEnumValueOf(name);
 }
 

@@ -82,6 +82,34 @@ export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
     )
     .orTee(infraLogger.error);
 
+export type FetchDBDiariesByDuration = (
+  db: DBorTx,
+) => (
+  startDate: Date,
+  endOrEqualDate: Date,
+) => ResultAsync<DBDiary[], DBError<"unknown">>;
+
+export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
+  (db) => (startDate, endDate) =>
+    ResultAsync.fromPromise(
+      db.query.users.findMany({
+        where: (users, { eq }) => eq(users.visibility, "public"),
+        with: {
+          diaries: {
+            orderBy: (diaries, { desc }) => [desc(diaries.diaryDate)],
+            where: (diaries, { and, lte, gte }) =>
+              and(
+                lte(diaries.diaryDate, endDate),
+                gte(diaries.diaryDate, startDate),
+              ),
+          },
+        },
+      }),
+      handleDBError,
+    )
+      .map((records) => records.map((record) => record.diaries).flat())
+      .orTee(infraLogger.error);
+
 export type DeleteDBDiary = (
   db: DBorTx,
 ) => (

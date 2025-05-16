@@ -21,6 +21,7 @@ class ColorStyles {
     required this.link,
     required this.border,
     required this.paper,
+    required this.outline,
     required this.googleButton,
     required this.onGoogleButton,
     required this.appleButton,
@@ -90,6 +91,7 @@ class ColorStyles {
   final Color link;
   final Color border;
   final Color paper;
+  final Color outline;
 
   final Color googleButton;
   final Color onGoogleButton;
@@ -159,6 +161,7 @@ class ColorStyles {
     link: Color(0xFF1C7AE6),
     border: Color(0xFF000000),
     paper: Color(0xFFFAEECD),
+    outline: Color(0xFF292929),
 
     googleButton: Color(0xFFFFFFFF),
     onGoogleButton: Color(0xFF000000),
@@ -223,6 +226,7 @@ class ColorStyles {
     link: Color(0xFF0A3B75),
     border: Color(0xFFFFFFFF),
     paper: Color(0xFF636259),
+    outline: Color(0xFFE1E1E1),
 
     googleButton: Color(0xFFFFFFFF),
     onGoogleButton: Color(0xFF000000),

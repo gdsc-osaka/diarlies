@@ -13,6 +13,8 @@ export 'package:api/src/model/date.dart';
 export 'package:api/src/api/diaries_api.dart';
 export 'package:api/src/api/users_api.dart';
 
+export 'package:api/src/model/account_visibility.dart';
+export 'package:api/src/model/change_user_visibility_request.dart';
 export 'package:api/src/model/create_user_service_error.dart';
 export 'package:api/src/model/day.dart';
 export 'package:api/src/model/diary.dart';

@@ -2,7 +2,7 @@ import z from "zod";
 import { Timestamp, toDate } from "../domain/timestamp";
 import { LanguageCode } from "../domain/language";
 import { FetchNearbyPlaces } from "../infra/map-repository";
-import { errAsync, ResultAsync } from "neverthrow";
+import { errAsync, Result, ResultAsync } from "neverthrow";
 import { DBorTx } from "../db/db";
 import {
   createServiceError,
@@ -12,6 +12,7 @@ import {
 import {
   CreateDBDiary,
   DeleteDBDiary,
+  FetchDBDiariesByDuration,
   FetchDBDiaryByDate,
   FetchDBDiaryById,
 } from "../infra/diary-repository";
@@ -208,6 +209,38 @@ export const fetchDiaryByDate =
               ),
           )
           .with({ __brand: "ServiceError" }, (e) => e)
+          .exhaustive(),
+      );
+
+export type FetchDiariesByDuration = (
+  authUser: AuthUser,
+  startDate: Date,
+  endDate: Date,
+) => ResultAsync<Diary[], ServiceError>;
+
+export const fetchDiariesByDuration =
+  (
+    db: DBorTx,
+    fetchDBDiariesByDuration: FetchDBDiariesByDuration,
+  ): FetchDiariesByDuration =>
+  // TODO: AuthUser がフォローしているユーザーの Diary を取得するようにする
+  (_: AuthUser, startDate, endDate) =>
+    fetchDBDiariesByDuration(db)(startDate, endDate)
+      .andThen((diaries) => Result.combine(diaries.map(convertToDiary)))
+      .mapErr((err) =>
+        match(err)
+          .with(
+            {
+              __brand: "DBError",
+              code: "unknown",
+            },
+            (e) =>
+              createServiceError(
+                StatusCode.InternalServerError,
+                "Failed to fetch diary",
+                e.message,
+              ),
+          )
           .exhaustive(),
       );
 

@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "icon_url" varchar(255);

@@ -31,32 +31,9 @@ final BuiltSet<CreateUserServiceErrorCodeEnum>
   _$createUserServiceErrorCodeEnum_unknown,
 ]);
 
-const CreateUserServiceErrorBrandEnum
-    _$createUserServiceErrorBrandEnum_serviceError =
-    const CreateUserServiceErrorBrandEnum._('serviceError');
-
-CreateUserServiceErrorBrandEnum _$createUserServiceErrorBrandEnumValueOf(
-    String name) {
-  switch (name) {
-    case 'serviceError':
-      return _$createUserServiceErrorBrandEnum_serviceError;
-    default:
-      throw new ArgumentError(name);
-  }
-}
-
-final BuiltSet<CreateUserServiceErrorBrandEnum>
-    _$createUserServiceErrorBrandEnumValues = new BuiltSet<
-        CreateUserServiceErrorBrandEnum>(const <CreateUserServiceErrorBrandEnum>[
-  _$createUserServiceErrorBrandEnum_serviceError,
-]);
-
 Serializer<CreateUserServiceErrorCodeEnum>
     _$createUserServiceErrorCodeEnumSerializer =
     new _$CreateUserServiceErrorCodeEnumSerializer();
-Serializer<CreateUserServiceErrorBrandEnum>
-    _$createUserServiceErrorBrandEnumSerializer =
-    new _$CreateUserServiceErrorBrandEnumSerializer();
 
 class _$CreateUserServiceErrorCodeEnumSerializer
     implements PrimitiveSerializer<CreateUserServiceErrorCodeEnum> {
@@ -88,34 +65,6 @@ class _$CreateUserServiceErrorCodeEnumSerializer
           _fromWire[serialized] ?? (serialized is String ? serialized : ''));
 }
 
-class _$CreateUserServiceErrorBrandEnumSerializer
-    implements PrimitiveSerializer<CreateUserServiceErrorBrandEnum> {
-  static const Map<String, Object> _toWire = const <String, Object>{
-    'serviceError': 'ServiceError',
-  };
-  static const Map<Object, String> _fromWire = const <Object, String>{
-    'ServiceError': 'serviceError',
-  };
-
-  @override
-  final Iterable<Type> types = const <Type>[CreateUserServiceErrorBrandEnum];
-  @override
-  final String wireName = 'CreateUserServiceErrorBrandEnum';
-
-  @override
-  Object serialize(
-          Serializers serializers, CreateUserServiceErrorBrandEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
-
-  @override
-  CreateUserServiceErrorBrandEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      CreateUserServiceErrorBrandEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
-}
-
 class _$CreateUserServiceError extends CreateUserServiceError {
   @override
   final int status;
@@ -125,8 +74,6 @@ class _$CreateUserServiceError extends CreateUserServiceError {
   final CreateUserServiceErrorCodeEnum? code;
   @override
   final BuiltMap<String, JsonObject?>? extra;
-  @override
-  final CreateUserServiceErrorBrandEnum brand;
   @override
   final User? user;
 
@@ -139,15 +86,12 @@ class _$CreateUserServiceError extends CreateUserServiceError {
       required this.message,
       this.code,
       this.extra,
-      required this.brand,
       this.user})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         status, r'CreateUserServiceError', 'status');
     BuiltValueNullFieldError.checkNotNull(
         message, r'CreateUserServiceError', 'message');
-    BuiltValueNullFieldError.checkNotNull(
-        brand, r'CreateUserServiceError', 'brand');
   }
 
   @override
@@ -167,7 +111,6 @@ class _$CreateUserServiceError extends CreateUserServiceError {
         message == other.message &&
         code == other.code &&
         extra == other.extra &&
-        brand == other.brand &&
         user == other.user;
   }
 
@@ -178,7 +121,6 @@ class _$CreateUserServiceError extends CreateUserServiceError {
     _$hash = $jc(_$hash, message.hashCode);
     _$hash = $jc(_$hash, code.hashCode);
     _$hash = $jc(_$hash, extra.hashCode);
-    _$hash = $jc(_$hash, brand.hashCode);
     _$hash = $jc(_$hash, user.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -191,7 +133,6 @@ class _$CreateUserServiceError extends CreateUserServiceError {
           ..add('message', message)
           ..add('code', code)
           ..add('extra', extra)
-          ..add('brand', brand)
           ..add('user', user))
         .toString();
   }
@@ -218,10 +159,6 @@ class CreateUserServiceErrorBuilder
       _$this._extra ??= new MapBuilder<String, JsonObject?>();
   set extra(MapBuilder<String, JsonObject?>? extra) => _$this._extra = extra;
 
-  CreateUserServiceErrorBrandEnum? _brand;
-  CreateUserServiceErrorBrandEnum? get brand => _$this._brand;
-  set brand(CreateUserServiceErrorBrandEnum? brand) => _$this._brand = brand;
-
   UserBuilder? _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder? user) => _$this._user = user;
@@ -237,7 +174,6 @@ class CreateUserServiceErrorBuilder
       _message = $v.message;
       _code = $v.code;
       _extra = $v.extra?.toBuilder();
-      _brand = $v.brand;
       _user = $v.user?.toBuilder();
       _$v = null;
     }
@@ -269,8 +205,6 @@ class CreateUserServiceErrorBuilder
                 message, r'CreateUserServiceError', 'message'),
             code: code,
             extra: _extra?.build(),
-            brand: BuiltValueNullFieldError.checkNotNull(
-                brand, r'CreateUserServiceError', 'brand'),
             user: _user?.build(),
           );
     } catch (_) {
@@ -278,7 +212,6 @@ class CreateUserServiceErrorBuilder
       try {
         _$failedField = 'extra';
         _extra?.build();
-
         _$failedField = 'user';
         _user?.build();
       } catch (e) {

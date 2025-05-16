@@ -3,7 +3,7 @@ import { users } from "../db/schema/users";
 import { eq } from "drizzle-orm";
 import { createDBError, DBError, handleDBError } from "./error/db-error";
 import type { DBorTx } from "../db/db";
-import { DBUser, DBUserForCreate } from "../domain/user";
+import { DBUser, DBUserForCreate, DBUserForUpdate } from "../domain/user";
 import { infraLogger } from "../logger";
 
 export type FetchDBUserByUid = (
@@ -54,6 +54,33 @@ export const createDBUser: CreateDBUser = (db) => (user) =>
             createDBError(
               "unknown",
               `User with uid ${user.uid} not created`,
+              undefined,
+            ),
+          ),
+    )
+    .orTee(infraLogger.error);
+
+export type UpdateDBUser = (
+  db: DBorTx,
+) => (user: DBUserForUpdate) => ResultAsync<DBUser, DBError<"unknown">>;
+
+export const updateDBUser: UpdateDBUser = (db) => (user) =>
+  ResultAsync.fromPromise(
+    db
+      .update(users)
+      .set(user)
+      .where(eq(users.id, user.id))
+      .returning()
+      .execute(),
+    handleDBError,
+  )
+    .andThen((records) =>
+      records.length > 0
+        ? okAsync(records[0])
+        : errAsync(
+            createDBError(
+              "unknown",
+              `User with id ${user.id} not updated`,
               undefined,
             ),
           ),

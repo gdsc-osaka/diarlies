@@ -31,7 +31,8 @@ class TodaysDiary extends _$TodaysDiary {
     final diariesApi = ref.watch(diariesApiProvider);
 
     try {
-      final diary = await diariesApi.getDiaries(
+      final diary = await diariesApi.getUsersByUserIdDiaries(
+        userId: ref.watch(currentUserProvider).valueOrNull?.id ?? '',
         date: DateTime.now().toDate(),
       );
 

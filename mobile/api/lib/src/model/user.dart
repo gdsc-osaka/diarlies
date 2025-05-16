@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:api/src/model/account_visibility.dart';
 import 'package:api/src/model/timestamp.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -14,6 +15,8 @@ part 'user.g.dart';
 /// Properties:
 /// * [id] 
 /// * [uid] 
+/// * [visibility] 
+/// * [iconUrl] 
 /// * [createdAt] 
 /// * [updatedAt] 
 @BuiltValue()
@@ -23,6 +26,13 @@ abstract class User implements Built<User, UserBuilder> {
 
   @BuiltValueField(wireName: r'uid')
   String get uid;
+
+  @BuiltValueField(wireName: r'visibility')
+  AccountVisibility get visibility;
+  // enum visibilityEnum {  private,  public,  };
+
+  @BuiltValueField(wireName: r'iconUrl')
+  String? get iconUrl;
 
   @BuiltValueField(wireName: r'createdAt')
   Timestamp get createdAt;
@@ -63,6 +73,18 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
       object.uid,
       specifiedType: const FullType(String),
     );
+    yield r'visibility';
+    yield serializers.serialize(
+      object.visibility,
+      specifiedType: const FullType(AccountVisibility),
+    );
+    if (object.iconUrl != null) {
+      yield r'iconUrl';
+      yield serializers.serialize(
+        object.iconUrl,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'createdAt';
     yield serializers.serialize(
       object.createdAt,
@@ -109,6 +131,20 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
             specifiedType: const FullType(String),
           ) as String;
           result.uid = valueDes;
+          break;
+        case r'visibility':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(AccountVisibility),
+          ) as AccountVisibility;
+          result.visibility = valueDes;
+          break;
+        case r'iconUrl':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.iconUrl = valueDes;
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(

@@ -1,6 +1,17 @@
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
-import { convertToUser, createDBUserForCreate, User } from "../domain/user";
-import { CreateDBUser, FetchDBUserByUid } from "../infra/user-repository";
+import {
+  AccountVisibility,
+  convertToUser,
+  createDBUserForCreate,
+  isSameUser,
+  updateDBUserVisibility,
+  User,
+} from "../domain/user";
+import {
+  CreateDBUser,
+  FetchDBUserByUid,
+  UpdateDBUser,
+} from "../infra/user-repository";
 import { match } from "ts-pattern";
 import {
   createServiceError,
@@ -9,7 +20,7 @@ import {
 } from "./error/service-error";
 import { AuthUser } from "../domain/auth";
 import z from "zod";
-import { DB } from "../db/db";
+import { DB, DBorTx } from "../db/db";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
@@ -83,6 +94,49 @@ export const createUser =
                 .with("unknown", () => StatusCode.InternalServerError)
                 .exhaustive(),
               e.message,
+            ),
+          )
+          .exhaustive(),
+      );
+
+export type UpdateUserVisibility = (
+  authUser: AuthUser,
+  id: string,
+  visibility: AccountVisibility,
+) => ResultAsync<User, ServiceError>;
+
+export const updateUserVisibility =
+  (
+    db: DBorTx,
+    fetchDBUserByUid: FetchDBUserByUid,
+    updateDBUser: UpdateDBUser,
+  ): UpdateUserVisibility =>
+  (
+    authUser: AuthUser,
+    id: string,
+    visibility: AccountVisibility,
+  ): ResultAsync<User, ServiceError> =>
+    fetchDBUserByUid(db)(authUser.uid)
+      .andThen((user) => isSameUser(user, authUser))
+      .andThen((user) => updateDBUserVisibility(user, visibility))
+      .andThen(updateDBUser(db))
+      .andThen(convertToUser)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "DBError" }, (e) =>
+            createServiceError(
+              match(e.code)
+                .with("not-found", () => StatusCode.NotFound)
+                .with("unknown", () => StatusCode.InternalServerError)
+                .exhaustive(),
+              e.message,
+            ),
+          )
+          .with("wrong-user", () =>
+            createServiceError(
+              StatusCode.Forbidden,
+              "Wrong user",
+              "wrong-user",
             ),
           )
           .exhaustive(),

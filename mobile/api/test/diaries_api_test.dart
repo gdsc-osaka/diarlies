@@ -16,8 +16,15 @@ void main() {
 
     // Get diaries
     //
-    //Future<BuiltList<Diary>> getDiaries({ Date date }) async
+    //Future<BuiltList<Diary>> getDiaries({ Date startDate, Date endDate }) async
     test('test getDiaries', () async {
+      // TODO
+    });
+
+    // Get diaries
+    //
+    //Future<BuiltList<Diary>> getUsersByUserIdDiaries(String userId, { Date date }) async
+    test('test getUsersByUserIdDiaries', () async {
       // TODO
     });
 

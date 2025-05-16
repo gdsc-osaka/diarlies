@@ -14,6 +14,8 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:api/src/date_serializer.dart';
 import 'package:api/src/model/date.dart';
 
+import 'package:api/src/model/account_visibility.dart';
+import 'package:api/src/model/change_user_visibility_request.dart';
 import 'package:api/src/model/create_user_service_error.dart';
 import 'package:api/src/model/day.dart';
 import 'package:api/src/model/diary.dart';
@@ -25,6 +27,8 @@ import 'package:api/src/model/user.dart';
 part 'serializers.g.dart';
 
 @SerializersFor([
+  AccountVisibility,
+  ChangeUserVisibilityRequest,
   CreateUserServiceError,
   Day,
   Diary,

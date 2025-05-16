@@ -17,6 +17,16 @@ void main() {
       // TODO
     });
 
+    // AccountVisibility visibility
+    test('to test the property `visibility`', () async {
+      // TODO
+    });
+
+    // String iconUrl
+    test('to test the property `iconUrl`', () async {
+      // TODO
+    });
+
     // Timestamp createdAt
     test('to test the property `createdAt`', () async {
       // TODO

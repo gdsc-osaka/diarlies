@@ -75,7 +75,7 @@ class OnboardingPage extends ConsumerWidget {
                         const SizedBox(height: 20),
                         NBButton(
                           label: Text(t.onboarding.btn.next),
-                          onPressed: ref.watch(diaryLanguageProvider) == null ? null : action.next,
+                          onPressed: ref.watch(diaryLanguageProvider).valueOrNull == null ? null : action.next,
                         ),
                       ],
                     ),

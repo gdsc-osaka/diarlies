@@ -44,6 +44,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsOnboardingPermissionEn onboarding_permission = TranslationsOnboardingPermissionEn._(_root);
 	late final TranslationsOnboardingFinishEn onboarding_finish = TranslationsOnboardingFinishEn._(_root);
 	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
+	late final TranslationsHomeSocialEn home_social = TranslationsHomeSocialEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
 }
 
@@ -114,6 +115,16 @@ class TranslationsHomeEn {
 	late final TranslationsHomeDialogEn dialog = TranslationsHomeDialogEn._(_root);
 }
 
+// Path: home_social
+class TranslationsHomeSocialEn {
+	TranslationsHomeSocialEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Social';
+}
+
 // Path: settings
 class TranslationsSettingsEn {
 	TranslationsSettingsEn._(this._root);
@@ -123,6 +134,9 @@ class TranslationsSettingsEn {
 	// Translations
 	String get title => 'Settings';
 	late final TranslationsSettingsBtnEn btn = TranslationsSettingsBtnEn._(_root);
+	late final TranslationsSettingsLabelEn label = TranslationsSettingsLabelEn._(_root);
+	late final TranslationsSettingsSelectEn select = TranslationsSettingsSelectEn._(_root);
+	late final TranslationsSettingsSuccessEn success = TranslationsSettingsSuccessEn._(_root);
 	late final TranslationsSettingsErrorEn error = TranslationsSettingsErrorEn._(_root);
 	late final TranslationsSettingsDialogEn dialog = TranslationsSettingsDialogEn._(_root);
 }
@@ -297,6 +311,37 @@ class TranslationsSettingsBtnEn {
 	String get cancel => 'Cancel';
 }
 
+// Path: settings.label
+class TranslationsSettingsLabelEn {
+	TranslationsSettingsLabelEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get visibility => 'Account visibility';
+}
+
+// Path: settings.select
+class TranslationsSettingsSelectEn {
+	TranslationsSettingsSelectEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get public => 'Public';
+	String get private => 'Private';
+}
+
+// Path: settings.success
+class TranslationsSettingsSuccessEn {
+	TranslationsSettingsSuccessEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get change_visibility => 'Visibility changed successfully';
+}
+
 // Path: settings.error
 class TranslationsSettingsErrorEn {
 	TranslationsSettingsErrorEn._(this._root);
@@ -361,11 +406,16 @@ extension on Translations {
 			case 'home.error.failed_to_fetch_todays_diary': return 'Failed to fetch today’s diary';
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';
 			case 'home.dialog.regenerate_content': return 'You can’t undo this action.';
+			case 'home_social.title': return 'Social';
 			case 'settings.title': return 'Settings';
 			case 'settings.btn.sign_out': return 'Sign out';
 			case 'settings.btn.terms': return 'Terms of Service';
 			case 'settings.btn.privacy': return 'Privacy Policy';
 			case 'settings.btn.cancel': return 'Cancel';
+			case 'settings.label.visibility': return 'Account visibility';
+			case 'settings.select.public': return 'Public';
+			case 'settings.select.private': return 'Private';
+			case 'settings.success.change_visibility': return 'Visibility changed successfully';
 			case 'settings.error.failed_to_sign_out': return 'Failed to sign out';
 			case 'settings.dialog.sign_out_title': return 'Are you sure you want to sign out?';
 			default: return null;
