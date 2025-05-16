@@ -1,4 +1,4 @@
-import { date, index, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import {date, index, pgTable, timestamp, varchar} from "drizzle-orm/pg-core";
 import { CUID_LENGTH } from "../constants";
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm/relations";
