@@ -5,6 +5,7 @@ steps:
             '--build-arg', 'FIRE_SA=$FIRE_SA',
             '--build-arg', 'GEMINI_API_KEY=$GEMINI_API_KEY',
             '--build-arg', 'GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY',
+            '--build-arg', 'DATABASE_URL=$DATABASE_URL',
             '.'
     ]
     secretEnv: [
