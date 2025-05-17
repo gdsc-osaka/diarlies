@@ -12,7 +12,14 @@ function getDBUrl(): string {
   return "postgres://user:password@localhost:6543/db";
 }
 
-const db = () => drizzle(postgres(getDBUrl()), { schema });
+const db = () =>
+  drizzle(
+    postgres(getDBUrl(), {
+      ssl:
+        env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+    }),
+    { schema },
+  );
 
 type TransactionClient = PgTransaction<
   PostgresJsQueryResultHKT,
