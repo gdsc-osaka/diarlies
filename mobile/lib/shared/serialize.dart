@@ -3,7 +3,7 @@ import 'package:built_value/serializer.dart';
 import 'package:diarlies/shared/result.dart';
 import 'package:dio/dio.dart';
 
-Result<ServiceError, Exception> safeSerializeServiceError(DioException e) {
+Result<ServiceError, Exception> safeDeserializeServiceError(DioException e) {
   try {
     final serviceError = standardSerializers.deserialize(
       e.response?.data,

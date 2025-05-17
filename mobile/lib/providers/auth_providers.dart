@@ -47,6 +47,10 @@ class CurrentUser extends _$CurrentUser {
   void setUser(User user) {
     state = AsyncValue.data(user);
   }
+
+  void clearUser() {
+    state = const AsyncValue<User?>.loading();
+  }
 }
 
 enum AuthEvent { signedIn, signedOut, reloaded, signedInWithAnotherAccount, unauthenticated, uninitialized }

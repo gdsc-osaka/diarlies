@@ -79,13 +79,15 @@
   "home_social": {
       "title": "ソーシャル"
   },
-  "settings": {
+  "home_settings": {
     "title": "設定",
     "btn": {
       "sign_out": "サインアウト",
       "terms": "利用規約",
       "privacy": "プライバシーポリシー",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "delete_account": "アカウントを削除",
+      "privacy_policy": "プライバシーポリシー"
     },
     "label": {
       "visibility": "アカウントの公開範囲"
@@ -95,13 +97,17 @@
       "private": "非公開"
     },
     "success": {
-      "change_visibility": "公開範囲が正常に変更されました"
+      "change_visibility": "公開範囲が変更されました",
+      "delete_account": "アカウントが削除されました"
     },
     "error": {
-      "failed_to_sign_out": "サインアウトに失敗しました"
+      "failed_to_sign_out": "サインアウトに失敗しました",
+    "failed_to_delete_account": "アカウントの削除に失敗しました"
     },
     "dialog": {
-      "sign_out_title": "ログアウトしますか？"
+      "sign_out_title": "ログアウトしますか？",
+      "delete_account_title": "アカウントを削除しますか？",
+        "delete_account_content": "この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。"
     }
   }
 }
