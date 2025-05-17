@@ -1,5 +1,8 @@
 #!/bin/sh
 
+bash ./env.sh
+
+# iOS dart defines setup
 XCCONFIG_FILE=ios/Flutter/DartDefine.xcconfig
 
 ENV_DEV=dart_defines/.env.dev

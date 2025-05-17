@@ -64,9 +64,8 @@ jobs:
 #          echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
 #          echo "keyAlias=androiddebugkey" >> ${{ github.workspace }}/mobile/android/key.properties
 #          echo "storeFile=${{ github.workspace }}/debug.keystore" >> ${{ github.workspace }}/mobile/android/key.properties
-      - name: Copy .env file
-        shell: bash
-        run: cp ${{ github.workspace }}/dart_defines/.env.sample ${{ github.workspace }}/dart_defines/.env.dev
+      - name: Run cicd_pre_build.sh
+        run: (cd .scripts && bash cicd_pre_build.sh)
       - name: Build App Bundle
         run: flutter build appbundle --debug --dart-define-from-file=dart_defines/.env.dev
   build-ios:
@@ -82,9 +81,6 @@ jobs:
         with:
           working-directory: mobile
       - name: Run cicd_pre_build.sh
-        run: bash ${{ github.workspace }}/.scripts/cicd_pre_build.sh
-      - name: Copy .env file
-        shell: bash
-        run: cp ${{ github.workspace }}/dart_defines/.env.sample ${{ github.workspace }}/dart_defines/.env.dev
+        run: (cd .scripts && bash cicd_pre_build.sh)
       - name: Build iOS
         run: flutter build ios --release --no-codesign --dart-define-from-file=dart_defines/.env.dev

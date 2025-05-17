@@ -1,1 +1,1 @@
-(cd mobile && bash ./upload_dsym.sh)
+bash ./upload_dsym.sh
