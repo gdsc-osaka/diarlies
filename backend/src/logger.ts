@@ -64,13 +64,21 @@ const gcloudLogger =
 
     return {
       debug: (message: unknown, ...args: unknown[]) =>
-        console.debug(formatGCloudMessage(category, "DEBUG", label, message, ...args)),
+        console.debug(
+          formatGCloudMessage(category, "DEBUG", label, message, ...args),
+        ),
       info: (message: unknown, ...args: unknown[]) =>
-        console.info(formatGCloudMessage(category, "INFO", label, message, ...args)),
+        console.info(
+          formatGCloudMessage(category, "INFO", label, message, ...args),
+        ),
       warn: (message: unknown, ...args: unknown[]) =>
-        console.warn(formatGCloudMessage(category, "WARNING", label, message, ...args)),
+        console.warn(
+          formatGCloudMessage(category, "WARNING", label, message, ...args),
+        ),
       error: (message: unknown, ...args: unknown[]) =>
-        console.error(formatGCloudMessage(category, "ERROR", label, message, ...args)),
+        console.error(
+          formatGCloudMessage(category, "ERROR", label, message, ...args),
+        ),
     };
   };
 
