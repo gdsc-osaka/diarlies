@@ -6,7 +6,7 @@ import users from "./routes/users";
 import diaries from "./routes/diaries";
 import usersDiaries from "./routes/users-diaries";
 import env from "./env";
-import {logger} from "./routes/middleware/logger";
+import { logger } from "./routes/middleware/logger";
 
 const app = new Hono();
 

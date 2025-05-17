@@ -11,7 +11,7 @@ export const logger = createMiddleware(async (c, next) => {
 
   const status = c.res.status;
 
-  accessLogger('-->').info(`${method}#${path} ${status} ${end - start}ms`, {
+  accessLogger("-->").info(`${method}#${path} ${status} ${end - start}ms`, {
     req: c.req,
     res: c.res,
   });
