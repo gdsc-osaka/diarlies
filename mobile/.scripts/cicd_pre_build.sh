@@ -5,8 +5,8 @@ bash ./env.sh
 # iOS dart defines setup
 XCCONFIG_FILE=../ios/Flutter/DartDefine.xcconfig
 
-ENV_DEV=dart_defines/.env.dev
-ENV_PROD=dart_defines/.env.prod
+ENV_DEV=../dart_defines/.env.dev
+ENV_PROD=../dart_defines/.env.prod
 
 if [ -f "$ENV_DEV" ]; then
   cat "$ENV_DEV" > "$XCCONFIG_FILE"
