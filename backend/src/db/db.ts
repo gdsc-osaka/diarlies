@@ -16,7 +16,7 @@ const db = () =>
   drizzle(
     postgres(getDBUrl(), {
       ssl:
-        env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+        env.NODE_ENV === "production" ? { rejectUnauthorized: false, ca: env.DATABASE_SSL_CERT?.replaceAll('\\n', '\n')} : false,
     }),
     { schema },
   );
