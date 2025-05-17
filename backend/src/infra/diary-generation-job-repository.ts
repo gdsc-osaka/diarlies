@@ -33,7 +33,7 @@ export const createDBDiaryGenerationJob: CreateDBDiaryGenerationJob =
               ),
             ),
       )
-      .orTee(infraLogger.error);
+      .orTee(infraLogger("createDBDiaryGenerationJob").error);
 
 export type UpdateDBDiaryGenerationJob = (
   db: DBorTx,
@@ -63,4 +63,4 @@ export const updateDBDiaryGenerationJob: UpdateDBDiaryGenerationJob =
               ),
             ),
       )
-      .orTee(infraLogger.error);
+      .orTee(infraLogger("updateDBDiaryGenerationJob").error);

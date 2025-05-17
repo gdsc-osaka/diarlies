@@ -26,7 +26,7 @@ export const fetchDBUserByUid: FetchDBUserByUid = (db) => (uid) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .orTee(infraLogger("fetchDBUserByUid").error);
 
 export type FetchIfDBUserExists = (
   db: DBorTx,
@@ -58,7 +58,8 @@ export const createDBUser: CreateDBUser = (db) => (user) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .andTee(infraLogger("createDBUser").info)
+    .orTee(infraLogger("createDBUser").error);
 
 export type UpdateDBUser = (
   db: DBorTx,
@@ -85,7 +86,8 @@ export const updateDBUser: UpdateDBUser = (db) => (user) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .andTee(infraLogger("updateDBUser").info)
+    .orTee(infraLogger("updateDBUser").error);
 
 export type DeleteDBUser = (
   db: DBorTx,
@@ -107,4 +109,5 @@ export const deleteDBUser: DeleteDBUser = (db) => (user) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .andTee(infraLogger("deleteDBUser").info)
+    .orTee(infraLogger("deleteDBUser").error);

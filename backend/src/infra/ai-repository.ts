@@ -53,4 +53,6 @@ export const generateContent =
         };
       })(),
       handleAIError,
-    ).orTee(infraLogger.error);
+    )
+      .andTee(infraLogger("generateContent").info)
+      .orTee(infraLogger("generateContent").error);

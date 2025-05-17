@@ -17,16 +17,16 @@ const log4jsConfig: Configuration = {
       keepFileExt: true,
       numBackups: 5,
     },
-    application: {
+    access: {
       type: "dateFile",
-      filename: "log/application.log",
+      filename: "log/access.log",
       pattern: ".yyyyMMdd-hhmmss",
       keepFileExt: true,
       numBackups: 5,
     },
-    access: {
+    service: {
       type: "dateFile",
-      filename: "log/access.log",
+      filename: "log/application.log",
       pattern: ".yyyyMMdd-hhmmss",
       keepFileExt: true,
       numBackups: 5,
@@ -61,27 +61,20 @@ type Severity =
   | "ALERT"
   | "EMERGENCY";
 
-class GCloudLogger {
-  readonly category: string;
+const formatGCloudMessage = (
+  category: string,
+  severity: Severity,
+  label: string,
+  message: unknown,
+  ...args: unknown[]
+): string => {
+  const msg =
+    `[${category}] ${label} - ${message} ${args.filter((arg) => typeof arg !== "object").join(" ")}`.trimEnd();
 
-  constructor(category: string) {
-    this.category = category.toUpperCase();
-  }
-
-  private isObject(value: unknown): value is object {
-    return typeof value === "object";
-  }
-
-  private format(
-    severity: Severity,
-    message: unknown,
-    ...args: unknown[]
-  ): string {
-    const msg =
-      `[${this.category}] ${message} ${args.filter((arg) => !this.isObject(arg)).join(" ")}`.trimEnd();
-
-    // args is like [{error: new Error(), user: {id: 1, name: "John Doe"}}]
-    const entries = args.filter(this.isObject).reduce(
+  // args is like [{error: new Error(), user: {id: 1, name: "John Doe"}}]
+  const entries = args
+    .filter((arg) => typeof arg === "object" && arg !== null)
+    .reduce(
       (acc, arg) => ({
         ...acc,
         ...Object.entries(arg).reduce(
@@ -104,57 +97,50 @@ class GCloudLogger {
       { message: msg, severity },
     );
 
-    return JSON.stringify(entries);
-  }
+  return JSON.stringify(entries);
+};
 
-  debug(message: unknown, ...args: unknown[]): void {
-    console.debug(this.format("DEBUG", message, ...args));
-  }
+type Logger = {
+  debug: (message: unknown, ...args: unknown[]) => void;
+  info: (message: unknown, ...args: unknown[]) => void;
+  warn: (message: unknown, ...args: unknown[]) => void;
+  error: (message: unknown, ...args: unknown[]) => void;
+};
+type LoggerBuilder = (label: string) => Logger;
 
-  info(message: unknown, ...args: unknown[]): void {
-    console.info(this.format("INFO", message, ...args));
-  }
+const gcloudLogger =
+  (category: string): LoggerBuilder =>
+  (label: string) => ({
+    debug: (message: unknown, ...args: unknown[]) =>
+      formatGCloudMessage(category, "DEBUG", label, message, ...args),
+    info: (message: unknown, ...args: unknown[]) =>
+      formatGCloudMessage(category, "INFO", label, message, ...args),
+    warn: (message: unknown, ...args: unknown[]) =>
+      formatGCloudMessage(category, "WARNING", label, message, ...args),
+    error: (message: unknown, ...args: unknown[]) =>
+      formatGCloudMessage(category, "ERROR", label, message, ...args),
+  });
 
-  warn(message: unknown, ...args: unknown[]): void {
-    console.warn(this.format("WARNING", message, ...args));
-  }
-
-  error(message: unknown, ...args: unknown[]): void {
-    const _args =
-      message instanceof Error
-        ? [...args, { error: message, callstack: new Stacktrace().stack }]
-        : [...args];
-    console.error(this.format("ERROR", message, ..._args));
-  }
-
-  trace(message: unknown, ...args: unknown[]): void {
-    console.trace(this.format("DEBUG", message, ...args));
-  }
-
-  fatal(message: unknown, ...args: unknown[]): void {
-    console.error(this.format("CRITICAL", message, ...args));
-  }
-
-  mark(message: unknown, ...args: unknown[]): void {
-    console.log(this.format("INFO", message, ...args));
-  }
-}
-
-class Stacktrace extends Error {
-  static {
-    this.prototype.name = "Stacktrace";
-  }
-}
+const localLogger =
+  (category: string): LoggerBuilder =>
+  (label: string) => ({
+    debug: (message: unknown, ...args: unknown[]) =>
+      getLogger(category).debug(label, message, ...args),
+    info: (message: unknown, ...args: unknown[]) =>
+      getLogger(category).info(label, message, ...args),
+    warn: (message: unknown, ...args: unknown[]) =>
+      getLogger(category).warn(label, message, ...args),
+    error: (message: unknown, ...args: unknown[]) =>
+      getLogger(category).error(label, message, ...args),
+  });
 
 configure(log4jsConfig);
 
-const isProduction = env.NODE_ENV === "production";
-export const infraLogger = isProduction
-  ? new GCloudLogger("infra")
-  : getLogger("infra");
-export const accessLogger = isProduction
-  ? new GCloudLogger("access")
-  : getLogger("access");
-export const serviceLogger = isProduction
-  ? new GCloudLogger("service")
-  : getLogger("service");
+const logger = (category: string) =>
+  env.NODE_ENV === "production"
+    ? gcloudLogger(category)
+    : localLogger(category);
+
+export const infraLogger = logger("INFRA");
+export const accessLogger = logger("ACCESS");
+export const serviceLogger = logger("SERVICE");

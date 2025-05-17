@@ -52,6 +52,6 @@ export const fetchNearbyPlaces =
             address: place.formattedAddress!,
           })),
       )
-      .orTee(infraLogger.error);
+      .orTee(infraLogger("fetchNearbyPlaces").error);
 
 export const fakeFetchNearbyPlaces: FetchNearbyPlaces = () => okAsync([]);

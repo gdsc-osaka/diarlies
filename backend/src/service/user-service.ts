@@ -23,6 +23,7 @@ import { AuthUser } from "../domain/auth";
 import z from "zod";
 import { DB, DBorTx } from "../db/db";
 import { DeleteAuthUser } from "../infra/authenticator";
+import { serviceLogger } from "../logger";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
@@ -56,6 +57,8 @@ export type CreateUserServiceError = z.infer<typeof CreateUserServiceError>;
 export type CreateUser = (
   authUser: AuthUser,
 ) => ResultAsync<User, CreateUserServiceError>;
+
+export const createUserLogger = serviceLogger("createUser");
 
 export const createUser =
   (
@@ -99,13 +102,16 @@ export const createUser =
             ),
           )
           .exhaustive(),
-      );
+      )
+      .orTee(createUserLogger.error);
 
 export type UpdateUserVisibility = (
   authUser: AuthUser,
   id: string,
   visibility: AccountVisibility,
 ) => ResultAsync<User, ServiceError>;
+
+export const updateUserVisibilityLogger = serviceLogger("updateUserVisibility");
 
 export const updateUserVisibility =
   (
@@ -142,11 +148,14 @@ export const updateUserVisibility =
             ),
           )
           .exhaustive(),
-      );
+      )
+      .orTee(updateUserVisibilityLogger.error);
 
 export type DeleteUser = (
   authUser: AuthUser,
 ) => ResultAsync<User, ServiceError>;
+
+export const deleteUserLogger = serviceLogger("deleteUser");
 
 export const deleteUser =
   (
@@ -183,4 +192,5 @@ export const deleteUser =
             ),
           )
           .exhaustive(),
-      );
+      )
+      .orTee(deleteUserLogger.error);

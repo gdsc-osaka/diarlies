@@ -21,7 +21,9 @@ export const uploadFile: UploadFile =
         return url;
       })(),
       handleStorageError,
-    ).orTee(infraLogger.error);
+    )
+      .andTee((url) => infraLogger("uploadFile").info({ url }))
+      .orTee(infraLogger("uploadFile").error);
 
 export type GetDownloadUrl = (
   bucket: FileBucket,
@@ -39,4 +41,4 @@ export const getDownloadUrl = (bucket: FileBucket) => (filePath: FilePath) =>
       return url;
     })(),
     handleStorageError,
-  ).orTee(infraLogger.error);
+  ).orTee(infraLogger("getDownloadUrl").error);

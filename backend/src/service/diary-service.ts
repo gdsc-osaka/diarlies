@@ -57,6 +57,7 @@ export type CreateDiary = (
   args: CreateDiaryRequest,
 ) => ResultAsync<Diary, ServiceError>;
 
+const createDiaryLogger = serviceLogger("createDiary");
 export const createDiary =
   (
     db: DBorTx,
@@ -170,7 +171,7 @@ export const createDiary =
       })(),
     )
       .andThen((result) => result)
-      .orTee(serviceLogger.error);
+      .orTee(createDiaryLogger.error);
 
 export type FetchDiaryByDate = (
   authUser: AuthUser,

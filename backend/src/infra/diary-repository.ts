@@ -26,7 +26,8 @@ export const createDBDiary: CreateDBDiary = (db) => (diary) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .andTee(infraLogger("createDBDiary").info)
+    .orTee(infraLogger("createDBDiary").error);
 
 export type FetchDBDiaryById = (
   db: DBorTx,
@@ -50,7 +51,7 @@ export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .orTee(infraLogger("fetchDBDiaryById").error);
 
 export type FetchDBDiaryByDate = (
   db: DBorTx,
@@ -80,7 +81,7 @@ export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .orTee(infraLogger("fetchDBDiaryByDate").error);
 
 export type FetchDBDiariesByDuration = (
   db: DBorTx,
@@ -114,7 +115,7 @@ export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
           )
           .flat(),
       )
-      .orTee(infraLogger.error);
+      .orTee(infraLogger("fetchDBDiariesByDuration").error);
 
 export type DeleteDBDiary = (
   db: DBorTx,
@@ -138,4 +139,5 @@ export const deleteDBDiary: DeleteDBDiary = (db) => (diaryId) =>
             ),
           ),
     )
-    .orTee(infraLogger.error);
+    .andTee(infraLogger("deleteDBDiary").info)
+    .orTee(infraLogger("deleteDBDiary").error);
