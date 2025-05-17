@@ -75,52 +75,52 @@ const gcloudLogger =
   };
 
 const localLogger = (category: string): LoggerBuilder => {
-    const log4jsConfig: Configuration = {
-        appenders: {
-            console: {
-                type: "console",
-                layout: {
-                    // 本番環境は Cloud Run のためそのまま出力
-                    type: "colored",
-                },
-            },
-            access: {
-                type: "dateFile",
-                filename: "log/access.log",
-                pattern: ".yyyyMMdd-hhmmss",
-                keepFileExt: true,
-                numBackups: 5,
-            },
-            application: {
-                type: "dateFile",
-                filename: "log/application.log",
-                pattern: ".yyyyMMdd-hhmmss",
-                keepFileExt: true,
-                numBackups: 5,
-            },
+  const log4jsConfig: Configuration = {
+    appenders: {
+      console: {
+        type: "console",
+        layout: {
+          // 本番環境は Cloud Run のためそのまま出力
+          type: "colored",
         },
-        categories: {
-            default: {
-                appenders: ["console"],
-                level: "DEBUG",
-            },
-            INFRA: {
-                appenders: ["console", "application"],
-                level: "DEBUG",
-                enableCallStack: true,
-            },
-            ACCESS: {
-                appenders: ["console", "access"],
-                level: "DEBUG",
-                enableCallStack: true,
-            },
-            SERVICE: {
-                appenders: ["console", "application"],
-                level: "DEBUG",
-                enableCallStack: true,
-            },
-        },
-    };
+      },
+      access: {
+        type: "dateFile",
+        filename: "log/access.log",
+        pattern: ".yyyyMMdd-hhmmss",
+        keepFileExt: true,
+        numBackups: 5,
+      },
+      application: {
+        type: "dateFile",
+        filename: "log/application.log",
+        pattern: ".yyyyMMdd-hhmmss",
+        keepFileExt: true,
+        numBackups: 5,
+      },
+    },
+    categories: {
+      default: {
+        appenders: ["console"],
+        level: "DEBUG",
+      },
+      INFRA: {
+        appenders: ["console", "application"],
+        level: "DEBUG",
+        enableCallStack: true,
+      },
+      ACCESS: {
+        appenders: ["console", "access"],
+        level: "DEBUG",
+        enableCallStack: true,
+      },
+      SERVICE: {
+        appenders: ["console", "application"],
+        level: "DEBUG",
+        enableCallStack: true,
+      },
+    },
+  };
   configure(log4jsConfig);
 
   return (label: string) => ({
