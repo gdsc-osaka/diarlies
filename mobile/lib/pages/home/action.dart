@@ -72,7 +72,7 @@ class HomeAction extends FluxAction {
 
   Future<void> deleteDiary(Diary diary, {required ErrorHandler errorHandler}) async {
     try {
-      final res = await ref.watch(diariesApiProvider).deleteDiariesByDiaryId(diaryId: diary.id);
+      final res = await ref.watch(diariesApiProvider).deleteDiary(diaryId: diary.id);
 
       if (res.data == null) {
         errorHandler('Failed to regenerate diary');

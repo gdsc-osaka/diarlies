@@ -24,7 +24,115 @@ class DiariesApi {
 
   const DiariesApi(this._dio, this._serializers);
 
-  /// deleteDiariesByDiaryId
+  /// createDiary
+  /// Create a new diary
+  ///
+  /// Parameters:
+  /// * [locationHistories] - Location histories for diary generation
+  /// * [languageCode] 
+  /// * [images] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [Diary] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<Diary>> createDiary({ 
+    required String locationHistories,
+    required LanguageCode languageCode,
+    required BuiltList<MultipartFile> images,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/diaries';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'multipart/form-data',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = FormData.fromMap(<String, dynamic>{
+        r'locationHistories': encodeFormParameter(_serializers, locationHistories, const FullType(String)),
+        r'languageCode': encodeFormParameter(_serializers, languageCode, const FullType(LanguageCode)),
+        r'images': images.toList(),
+      });
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    Diary? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(Diary),
+      ) as Diary;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<Diary>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// deleteDiary
   /// Delete a diary
   ///
   /// Parameters:
@@ -38,7 +146,7 @@ class DiariesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [Diary] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<Diary>> deleteDiariesByDiaryId({ 
+  Future<Response<Diary>> deleteDiary({ 
     required String diaryId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -47,7 +155,7 @@ class DiariesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/diaries/{diaryId}'.replaceAll('{' r'diaryId' '}', encodeQueryParameter(_serializers, diaryId, const FullType(String)).toString());
+    final _path = r'/api/diaries/{diaryId}'.replaceAll('{' r'diaryId' '}', encodeQueryParameter(_serializers, diaryId, const FullType(String)).toString());
     final _options = Options(
       method: r'DELETE',
       headers: <String, dynamic>{
@@ -130,7 +238,7 @@ class DiariesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/diaries';
+    final _path = r'/api/diaries';
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -194,7 +302,7 @@ class DiariesApi {
     );
   }
 
-  /// getUsersByUserIdDiaries
+  /// getDiariesByUser
   /// Get diaries
   ///
   /// Parameters:
@@ -209,7 +317,7 @@ class DiariesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<Diary>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<Diary>>> getUsersByUserIdDiaries({ 
+  Future<Response<BuiltList<Diary>>> getDiariesByUser({ 
     required String userId,
     Date? date,
     CancelToken? cancelToken,
@@ -219,7 +327,7 @@ class DiariesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/users/{userId}/diaries'.replaceAll('{' r'userId' '}', encodeQueryParameter(_serializers, userId, const FullType(String)).toString());
+    final _path = r'/api/users/{userId}/diaries'.replaceAll('{' r'userId' '}', encodeQueryParameter(_serializers, userId, const FullType(String)).toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -271,114 +379,6 @@ class DiariesApi {
     }
 
     return Response<BuiltList<Diary>>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// postDiaries
-  /// Create a new diary
-  ///
-  /// Parameters:
-  /// * [locationHistories] - Location histories for diary generation
-  /// * [languageCode] 
-  /// * [images] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [Diary] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<Diary>> postDiaries({ 
-    required String locationHistories,
-    required LanguageCode languageCode,
-    required BuiltList<MultipartFile> images,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/diaries';
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'bearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'multipart/form-data',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = FormData.fromMap(<String, dynamic>{
-        r'locationHistories': encodeFormParameter(_serializers, locationHistories, const FullType(String)),
-        r'languageCode': encodeFormParameter(_serializers, languageCode, const FullType(LanguageCode)),
-        r'images': images.toList(),
-      });
-
-    } catch(error, stackTrace) {
-      throw DioException(
-         requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    Diary? _responseData;
-
-    try {
-      final rawResponse = _response.data;
-      _responseData = rawResponse == null ? null : _serializers.deserialize(
-        rawResponse,
-        specifiedType: const FullType(Diary),
-      ) as Diary;
-
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<Diary>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

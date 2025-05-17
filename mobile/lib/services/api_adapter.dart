@@ -43,7 +43,7 @@ PostDiarlies postDiaries(DiariesApi diariesApi) =>
       ValidateStatus? validateStatus,
       ProgressCallback? onSendProgress,
       ProgressCallback? onReceiveProgress,
-    }) => diariesApi.postDiaries(
+    }) => diariesApi.createDiary(
       locationHistories: jsonEncode(locationHistories.map((hist) => hist.toJson()).toList()),
       images: images,
       languageCode: languageCode,

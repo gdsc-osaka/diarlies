@@ -32,7 +32,7 @@ class SignupAction extends FluxAction {
     await Future.delayed(const Duration(milliseconds: 10));
 
     try {
-      final res = await usersApi.postUsers();
+      final res = await usersApi.createUser();
       final user = res.data;
 
       if (user == null) {
