@@ -173,7 +173,7 @@ app.delete(
     tags,
     operationId: "deleteUser",
     description: "Delete user",
-  validateResponse: true,
+    validateResponse: true,
     parameters: [
       {
         name: "userId",
