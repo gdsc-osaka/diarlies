@@ -29,7 +29,7 @@ class HomeSettingsAction extends FluxAction {
     requestBuilder.visibility = visibility;
 
     try {
-      final res = await usersApi.postUsersByUserIdChangeVisibility(userId: userId, changeUserVisibilityRequest: requestBuilder.build());
+      final res = await usersApi.changeUserVisibility(userId: userId, changeUserVisibilityRequest: requestBuilder.build());
       final user = res.data;
 
       if (user == null) {

@@ -7,24 +7,24 @@ void main() {
   final instance = Api().getUsersApi();
 
   group(UsersApi, () {
-    // Get user information
+    // Change user visibility
     //
-    //Future<User> getUsers() async
-    test('test getUsers', () async {
+    //Future<User> changeUserVisibility(String userId, ChangeUserVisibilityRequest changeUserVisibilityRequest) async
+    test('test changeUserVisibility', () async {
       // TODO
     });
 
     // Create a new user
     //
-    //Future<User> postUsers() async
-    test('test postUsers', () async {
+    //Future<User> createUser() async
+    test('test createUser', () async {
       // TODO
     });
 
-    // Change user visibility
+    // Get user information
     //
-    //Future<User> postUsersByUserIdChangeVisibility(String userId, ChangeUserVisibilityRequest changeUserVisibilityRequest) async
-    test('test postUsersByUserIdChangeVisibility', () async {
+    //Future<User> getUser() async
+    test('test getUser', () async {
       // TODO
     });
 

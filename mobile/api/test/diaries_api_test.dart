@@ -7,10 +7,17 @@ void main() {
   final instance = Api().getDiariesApi();
 
   group(DiariesApi, () {
+    // Create a new diary
+    //
+    //Future<Diary> createDiary(String locationHistories, LanguageCode languageCode, BuiltList<MultipartFile> images) async
+    test('test createDiary', () async {
+      // TODO
+    });
+
     // Delete a diary
     //
-    //Future<Diary> deleteDiariesByDiaryId(String diaryId) async
-    test('test deleteDiariesByDiaryId', () async {
+    //Future<Diary> deleteDiary(String diaryId) async
+    test('test deleteDiary', () async {
       // TODO
     });
 
@@ -23,15 +30,8 @@ void main() {
 
     // Get diaries
     //
-    //Future<BuiltList<Diary>> getUsersByUserIdDiaries(String userId, { Date date }) async
-    test('test getUsersByUserIdDiaries', () async {
-      // TODO
-    });
-
-    // Create a new diary
-    //
-    //Future<Diary> postDiaries(String locationHistories, LanguageCode languageCode, BuiltList<MultipartFile> images) async
-    test('test postDiaries', () async {
+    //Future<BuiltList<Diary>> getDiariesByUser(String userId, { Date date }) async
+    test('test getDiariesByUser', () async {
       // TODO
     });
 

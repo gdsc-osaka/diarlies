@@ -48,13 +48,15 @@ import 'package:api/api.dart';
 
 
 final api = Api().getDiariesApi();
-final String diaryId = diaryId_example; // String | Diary ID to delete
+final String locationHistories = locationHistories_example; // String | Location histories for diary generation
+final LanguageCode languageCode = ; // LanguageCode | 
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = await api.deleteDiariesByDiaryId(diaryId);
+    final response = await api.createDiary(locationHistories, languageCode, images);
     print(response);
 } catch on DioException (e) {
-    print("Exception when calling DiariesApi->deleteDiariesByDiaryId: $e\n");
+    print("Exception when calling DiariesApi->createDiary: $e\n");
 }
 
 ```
@@ -65,13 +67,13 @@ All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*DiariesApi*](doc/DiariesApi.md) | [**deleteDiariesByDiaryId**](doc/DiariesApi.md#deletediariesbydiaryid) | **DELETE** /diaries/{diaryId} | 
-[*DiariesApi*](doc/DiariesApi.md) | [**getDiaries**](doc/DiariesApi.md#getdiaries) | **GET** /diaries | 
-[*DiariesApi*](doc/DiariesApi.md) | [**getUsersByUserIdDiaries**](doc/DiariesApi.md#getusersbyuseriddiaries) | **GET** /users/{userId}/diaries | 
-[*DiariesApi*](doc/DiariesApi.md) | [**postDiaries**](doc/DiariesApi.md#postdiaries) | **POST** /diaries | 
-[*UsersApi*](doc/UsersApi.md) | [**getUsers**](doc/UsersApi.md#getusers) | **GET** /users | 
-[*UsersApi*](doc/UsersApi.md) | [**postUsers**](doc/UsersApi.md#postusers) | **POST** /users | 
-[*UsersApi*](doc/UsersApi.md) | [**postUsersByUserIdChangeVisibility**](doc/UsersApi.md#postusersbyuseridchangevisibility) | **POST** /users/{userId}/change-visibility | 
+[*DiariesApi*](doc/DiariesApi.md) | [**createDiary**](doc/DiariesApi.md#creatediary) | **POST** /api/diaries | 
+[*DiariesApi*](doc/DiariesApi.md) | [**deleteDiary**](doc/DiariesApi.md#deletediary) | **DELETE** /api/diaries/{diaryId} | 
+[*DiariesApi*](doc/DiariesApi.md) | [**getDiaries**](doc/DiariesApi.md#getdiaries) | **GET** /api/diaries | 
+[*DiariesApi*](doc/DiariesApi.md) | [**getDiariesByUser**](doc/DiariesApi.md#getdiariesbyuser) | **GET** /api/users/{userId}/diaries | 
+[*UsersApi*](doc/UsersApi.md) | [**changeUserVisibility**](doc/UsersApi.md#changeuservisibility) | **POST** /api/users/{userId}/change-visibility | 
+[*UsersApi*](doc/UsersApi.md) | [**createUser**](doc/UsersApi.md#createuser) | **POST** /api/users | 
+[*UsersApi*](doc/UsersApi.md) | [**getUser**](doc/UsersApi.md#getuser) | **GET** /api/users | 
 
 
 ## Documentation For Models
