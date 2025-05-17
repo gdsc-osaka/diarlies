@@ -13,11 +13,11 @@ export const openApiSpec = (app: Hono) =>
         description: "Greeting API",
       },
       servers: [
-        { url: "http://localhost:8080", description: "Local Server" },
         {
-          url: "https://diarlies.harineko0927.workers.dev",
+          url: "https://diarlies.web.app",
           description: "Production Server",
         },
+        { url: "http://localhost:8080", description: "Local Server" },
       ],
       security: [
         {

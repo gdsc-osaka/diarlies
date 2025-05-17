@@ -63,7 +63,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://diarlies.web.app*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

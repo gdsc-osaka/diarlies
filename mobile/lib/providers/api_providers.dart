@@ -16,8 +16,8 @@ Api api(Ref ref) {
   final api = Api(
     dio: Dio(BaseOptions(
       baseUrl: switch (kDebugMode) {
-        true => Platform.isAndroid ? 'http://10.0.2.2:8080' : Api.basePath,
-        false => 'https://diarlies.harineko0927.workers.dev:443',
+        true => Platform.isAndroid ? 'http://10.0.2.2:8080' : 'http://localhost:8080',
+        false => Api.basePath,
       },
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 15000),
