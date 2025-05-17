@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー - Diarlies</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .lang-switcher {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .lang-switcher a {
+            margin-left: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .lang-switcher a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        a {
+            color: #3498db; /* Default link color */
+        }
+        a:not(.lang-switcher a) { /* Apply default styling only to non-lang-switcher links */
+            text-decoration: none;
+        }
+        a:not(.lang-switcher a):hover {
+            text-decoration: underline;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .user-note {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="lang-switcher">
+        <a href="index.html" style="text-decoration: underline;">日本語</a> | <a href="index_en.html">English</a>
+    </div>
+
+    <h1>プライバシーポリシー</h1>
+    <p>制定日：2025年05月17日</p>
+    <p>最終改定日：2025年05月17日</p>
+
+<!--    <div class="user-note">-->
+<!--        <p><strong>【ご確認ください】</strong></p>-->
+<!--        <ul>-->
+<!--            <li>上記のDiarlies、GDG on Campus Osakaの部分を実際の情報に書き換えてください。</li>-->
+<!--            <li>以下の内容で、特に<strong>「【ユーザー様への再確認・検討いただきたい点】」</strong>として前回お伝えした事項について、最終的な判断を反映させてください。</li>-->
+<!--        </ul>-->
+<!--    </div>-->
+
+    <h2>1. はじめに</h2>
+    <p>本プライバシーポリシー（以下「本ポリシー」といいます。）は、GDG on Campus Osaka（以下「当方」といいます。）が提供するアプリケーション「Diarlies」（以下「本アプリ」といいます。）におけるユーザーの個人情報の取り扱いについて定めるものです。</p>
+    <p>本ポリシーは、ユーザーが本アプリを利用する際に適用されます。</p>
+
+    <h2>2. 収集する情報とその利用目的</h2>
+    <p>当方は、本アプリの提供にあたり、以下の情報を収集し、それぞれの目的のために利用します。</p>
+
+    <h3>ユーザーが提供する情報</h3>
+    <ul>
+        <li><strong>写真データ、動画データ、音声データ、テキスト情報（日記の元となる情報やLLMへの指示等）：</strong>
+            <ul>
+                <li>利用目的：LLM（Google Gemini API）を用いて日記の文章および絵を生成するため。</li>
+                <li>備考：これらの情報は、日記生成処理のためにLLMに送信されますが、当方のバックエンドサーバーに直接保存されることはありません。
+                </li>
+            </ul>
+        </li>
+        <li><strong>位置情報（15分ごとのバックグラウンド取得を含みます）：</strong>
+            <ul>
+                <li>利用目的：日記生成における場所の情報の反映、および位置情報の推移に基づいた日記内容の生成のため。</li>
+            </ul>
+        </li>
+        <li><strong>運動データ（Google FitまたはApple Fitness APIから取得した歩数等）：</strong>
+            <ul>
+                <li>利用目的：日記生成における活動量の情報の反映のため。</li>
+                <li></li>
+            </ul>
+        </li>
+        <li><strong>アカウント情報（ユーザー名、メールアドレス等、アカウント作成に必要な場合）：</strong>
+            <ul>
+                <li>利用目的：ユーザーアカウントの管理、お問い合わせ対応のため。</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>LLMによって生成された情報</h3>
+    <ul>
+        <li><strong>日記の文章および絵データ：</strong>
+            <ul>
+                <li>利用目的：ユーザーが本アプリ上で日記を閲覧・管理するため、ソーシャル機能を通じて他のユーザーに公開するため（ユーザーが公開設定にした場合）。</li>
+                <li>備考：これらの生成されたデータは、当方のサーバーに保存されます。</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>アプリの利用により自動的に取得する情報</h3>
+    <ul>
+        <li><strong>アプリの利用状況に関する情報（Firebase Analyticsを利用）：</strong>
+            <ul>
+                <li>例：利用機能、利用頻度、クラッシュレポートなど。</li>
+                <li>利用目的：本アプリのサービス改善、利用状況の分析、不具合の修正のため。</li>
+            </ul>
+        </li>
+        <li><strong>端末情報（Firebase Crashlyticsを利用）：</strong>
+            <ul>
+                <li>例：OSの種類・バージョン、機種名、デバイスID（個人を特定できない形式に加工されたもの）。</li>
+                <li>利用目的：クラッシュ発生時の原因究明、本アプリのサービス改善のため。</li>
+            </ul>
+        </li>
+    </ul>
+    <p>ユーザーは、本アプリの設定またはOSの設定により、一部の情報の収集・提供を拒否することができます。ただし、その場合、本アプリの一部機能が利用できなくなることがあります。</p>
+    <h2>3. 情報の第三者提供</h2>
+    <p>当方は、以下の場合を除き、ユーザーの個人情報を第三者に提供することはありません。</p>
+    <ul>
+        <li><strong>LLM（Google Gemini API）への提供：</strong>
+            <ul>
+                <li>日記の文章および絵を生成する目的で、ユーザーが提供する情報（写真、動画、音声、テキスト情報、位置情報、運動データ等）をGoogle LLCが提供するGemini APIに送信します。</li>
+                <li>Gemini APIにおける情報の取り扱いについては、Google LLCのプライバシーポリシーおよび利用規約をご確認ください。
+                </li>
+            </ul>
+        </li>
+        <li><strong>他のユーザーへの公開（ソーシャル機能）：</strong>
+            <ul>
+                <li>ユーザーが自身のアカウントおよび日記を「公開」設定にしている場合、生成された日記の文章および絵は、本アプリを利用する他のユーザーによって閲覧可能な状態になります。公開設定はユーザー自身でいつでも変更できます。
+                </li>
+            </ul>
+        </li>
+        <li><strong>情報収集モジュール提供元への提供：</strong>
+            <ul>
+                <li>Firebase AnalyticsおよびFirebase Crashlyticsの利用に伴い、Google LLCに対し、個人を特定できない形でアプリの利用状況に関する情報および端末情報が提供されます。</li>
+            </ul>
+        </li>
+        <li>ユーザーの同意がある場合</li>
+        <li>法令に基づく場合</li>
+        <li>人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき</li>
+        <li>公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、本人の同意を得ることが困難であるとき</li>
+        <li>国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき</li>
+    </ul>
+
+    <h2>4. 情報の管理・保護</h2>
+    <p>当方は、ユーザーから収集した情報の紛失、盗難、漏洩、改ざん、不正アクセス等を防ぐため、適切なセキュリティ対策を講じます。</p>
+    <p>ユーザーのデータをLLMに送信する際、およびサーバーとの通信時には、HTTPSによる暗号化通信を行います。</p>
+    <p>サーバーに保存される生成された日記データについても、不正アクセス等から保護するための適切な措置を講じます。</p>
+
+    <h2>5. ユーザーの権利</h2>
+    <h3>情報の開示、訂正、追加、削除、利用停止等：</h3>
+    <p>ユーザーは、当方が保有する自己の個人情報について、開示、訂正、追加、削除、利用停止、消去（以下「開示等」といいます。）を請求することができます。</p>
+    <p>本アプリ内でユーザー自身が操作できる範囲（例：日記の削除、アカウント情報の編集・削除）については、アプリ内の機能をご利用ください。アカウントを削除した場合、関連する日記データも全て削除されます。</p>
+    <p>上記以外の開示等の請求については、「8. お問い合わせ窓口」までご連絡ください。ご本人様確認を行った上で、合理的な範囲で速やかに対応いたします。</p>
+
+    <h3>同意の撤回：</h3>
+    <p>ユーザーは、いつでも個人情報の利用に関する同意の一部または全部を撤回することができます。同意を撤回した場合、本アプリの一部機能が利用できなくなることがあります。</p>
+
+    <h2>6. 未成年者の利用について</h2>
+    <p>本アプリは16歳以上の利用者を対象としています。</p>
+    <p>16歳未満の方が本アプリを利用する場合、親権者等の法定代理人の同意を得た上でご利用ください。法定代理人の同意なく18歳未満のユーザーによる利用が発覚した場合、当方は当該ユーザーのアカウントおよび関連情報を削除することがあります。</p>
+
+    <h2>7. プライバシーポリシーの変更</h2>
+    <p>当方は、法令の変更や本アプリのサービス内容の変更等に伴い、本ポリシーを改定することがあります。</p>
+    <p>本ポリシーを変更する場合、変更後のポリシーの内容および効力発生日を、本アプリ内での通知その他当方が適切と判断する方法によりユーザーに通知します。</p>
+    <p>変更後のプライバシーポリシーは、通知された効力発生日（通知から1ヶ月後を目安としますが、変更内容により調整する場合があります）より効力を生じるものとします。</p>
+    <h2>8. お問い合わせ窓口</h2>
+    <p>本ポリシーに関するご質問、苦情、その他個人情報の取り扱いに関するお問い合わせは、以下の窓口までお願いいたします。</p>
+    <p>メールアドレス: <a href="mailto:gdsc.osaka@gmail.com">gdsc.osaka@gmail.com</a></p>
+
+    <h2>9. 準拠法</h2>
+    <p>本ポリシーの解釈にあたっては、日本法を準拠法とします。</p>
+
+    <div class="footer">
+        <p>&copy; 2025 GDG on Campus Osaka. All Rights Reserved.</p>
+    </div>
+</div>
+</body>
+</html>
