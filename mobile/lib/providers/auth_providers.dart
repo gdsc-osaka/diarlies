@@ -40,7 +40,7 @@ class CurrentUser extends _$CurrentUser {
   Future<User?> build() async {
     if (Firebase.apps.isEmpty) return Future.error('uninitialized');
 
-    final res = await ref.watch(usersApiProvider).getUsers();
+    final res = await ref.watch(usersApiProvider).getUser();
     return res.data;
   }
 

@@ -9,91 +9,13 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUsers**](UsersApi.md#getusers) | **GET** /users | 
-[**postUsers**](UsersApi.md#postusers) | **POST** /users | 
-[**postUsersByUserIdChangeVisibility**](UsersApi.md#postusersbyuseridchangevisibility) | **POST** /users/{userId}/change-visibility | 
+[**changeUserVisibility**](UsersApi.md#changeuservisibility) | **POST** /api/users/{userId}/change-visibility | 
+[**createUser**](UsersApi.md#createuser) | **POST** /api/users | 
+[**getUser**](UsersApi.md#getuser) | **GET** /api/users | 
 
 
-# **getUsers**
-> User getUsers()
-
-
-
-Get user information
-
-### Example
-```dart
-import 'package:api/api.dart';
-
-final api = Api().getUsersApi();
-
-try {
-    final response = api.getUsers();
-    print(response);
-} catch on DioException (e) {
-    print('Exception when calling UsersApi->getUsers: $e\n');
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**User**](User.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **postUsers**
-> User postUsers()
-
-
-
-Create a new user
-
-### Example
-```dart
-import 'package:api/api.dart';
-
-final api = Api().getUsersApi();
-
-try {
-    final response = api.postUsers();
-    print(response);
-} catch on DioException (e) {
-    print('Exception when calling UsersApi->postUsers: $e\n');
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**User**](User.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **postUsersByUserIdChangeVisibility**
-> User postUsersByUserIdChangeVisibility(userId, changeUserVisibilityRequest)
+# **changeUserVisibility**
+> User changeUserVisibility(userId, changeUserVisibilityRequest)
 
 
 
@@ -108,10 +30,10 @@ final String userId = userId_example; // String | User ID to change visibility
 final ChangeUserVisibilityRequest changeUserVisibilityRequest = ; // ChangeUserVisibilityRequest | 
 
 try {
-    final response = api.postUsersByUserIdChangeVisibility(userId, changeUserVisibilityRequest);
+    final response = api.changeUserVisibility(userId, changeUserVisibilityRequest);
     print(response);
 } catch on DioException (e) {
-    print('Exception when calling UsersApi->postUsersByUserIdChangeVisibility: $e\n');
+    print('Exception when calling UsersApi->changeUserVisibility: $e\n');
 }
 ```
 
@@ -133,6 +55,84 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createUser**
+> User createUser()
+
+
+
+Create a new user
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getUsersApi();
+
+try {
+    final response = api.createUser();
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->createUser: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**User**](User.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getUser**
+> User getUser()
+
+
+
+Get user information
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getUsersApi();
+
+try {
+    final response = api.getUser();
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->getUser: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**User**](User.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

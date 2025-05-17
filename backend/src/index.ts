@@ -10,23 +10,14 @@ import env from "./env";
 
 const app = new Hono();
 
-// Production 環境では Firebase Hosting で /api/** のパスを受け取るが, Firebase Hosting は
-// プレフィックスを削除できないので, ここでプレフィックスを削除する
-app.use((c, next) => {
-  if (c.req.path.startsWith("/api/")) {
-    c.req.path = c.req.path.replace("/api", "");
-  }
-
-  return next();
-});
-
-app.get("/openapi", openApiSpec(app));
+// Production 環境では Firebase Hosting で /api/** のパスを受け取る
 
 app.use(logger());
-app.use(authorize);
-app.route("/users", users);
-app.route("/users/:userId/diaries", usersDiaries);
-app.route("/diaries", diaries);
+app.get("/api/openapi", openApiSpec(app));
+app.use("/api/*", authorize);
+app.route("/api/users", users);
+app.route("/api/users/:userId/diaries", usersDiaries);
+app.route("/api/diaries", diaries);
 
 serve({
   fetch: app.fetch,

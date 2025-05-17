@@ -9,14 +9,61 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteDiariesByDiaryId**](DiariesApi.md#deletediariesbydiaryid) | **DELETE** /diaries/{diaryId} | 
-[**getDiaries**](DiariesApi.md#getdiaries) | **GET** /diaries | 
-[**getUsersByUserIdDiaries**](DiariesApi.md#getusersbyuseriddiaries) | **GET** /users/{userId}/diaries | 
-[**postDiaries**](DiariesApi.md#postdiaries) | **POST** /diaries | 
+[**createDiary**](DiariesApi.md#creatediary) | **POST** /api/diaries | 
+[**deleteDiary**](DiariesApi.md#deletediary) | **DELETE** /api/diaries/{diaryId} | 
+[**getDiaries**](DiariesApi.md#getdiaries) | **GET** /api/diaries | 
+[**getDiariesByUser**](DiariesApi.md#getdiariesbyuser) | **GET** /api/users/{userId}/diaries | 
 
 
-# **deleteDiariesByDiaryId**
-> Diary deleteDiariesByDiaryId(diaryId)
+# **createDiary**
+> Diary createDiary(locationHistories, languageCode, images)
+
+
+
+Create a new diary
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getDiariesApi();
+final String locationHistories = locationHistories_example; // String | Location histories for diary generation
+final LanguageCode languageCode = ; // LanguageCode | 
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
+
+try {
+    final response = api.createDiary(locationHistories, languageCode, images);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling DiariesApi->createDiary: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **locationHistories** | **String**| Location histories for diary generation | 
+ **languageCode** | [**LanguageCode**](LanguageCode.md)|  | 
+ **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | 
+
+### Return type
+
+[**Diary**](Diary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deleteDiary**
+> Diary deleteDiary(diaryId)
 
 
 
@@ -30,10 +77,10 @@ final api = Api().getDiariesApi();
 final String diaryId = diaryId_example; // String | Diary ID to delete
 
 try {
-    final response = api.deleteDiariesByDiaryId(diaryId);
+    final response = api.deleteDiary(diaryId);
     print(response);
 } catch on DioException (e) {
-    print('Exception when calling DiariesApi->deleteDiariesByDiaryId: $e\n');
+    print('Exception when calling DiariesApi->deleteDiary: $e\n');
 }
 ```
 
@@ -103,8 +150,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getUsersByUserIdDiaries**
-> BuiltList<Diary> getUsersByUserIdDiaries(userId, date)
+# **getDiariesByUser**
+> BuiltList<Diary> getDiariesByUser(userId, date)
 
 
 
@@ -119,10 +166,10 @@ final String userId = userId_example; // String |
 final Date date = 2013-10-20; // Date | Date to filter diaries. startDate and endDate will be ignored if this is provided
 
 try {
-    final response = api.getUsersByUserIdDiaries(userId, date);
+    final response = api.getDiariesByUser(userId, date);
     print(response);
 } catch on DioException (e) {
-    print('Exception when calling DiariesApi->getUsersByUserIdDiaries: $e\n');
+    print('Exception when calling DiariesApi->getDiariesByUser: $e\n');
 }
 ```
 
@@ -144,53 +191,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **postDiaries**
-> Diary postDiaries(locationHistories, languageCode, images)
-
-
-
-Create a new diary
-
-### Example
-```dart
-import 'package:api/api.dart';
-
-final api = Api().getDiariesApi();
-final String locationHistories = locationHistories_example; // String | Location histories for diary generation
-final LanguageCode languageCode = ; // LanguageCode | 
-final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
-
-try {
-    final response = api.postDiaries(locationHistories, languageCode, images);
-    print(response);
-} catch on DioException (e) {
-    print('Exception when calling DiariesApi->postDiaries: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **locationHistories** | **String**| Location histories for diary generation | 
- **languageCode** | [**LanguageCode**](LanguageCode.md)|  | 
- **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | 
-
-### Return type
-
-[**Diary**](Diary.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
