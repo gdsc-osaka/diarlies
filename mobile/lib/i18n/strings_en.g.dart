@@ -45,7 +45,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsOnboardingFinishEn onboarding_finish = TranslationsOnboardingFinishEn._(_root);
 	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
 	late final TranslationsHomeSocialEn home_social = TranslationsHomeSocialEn._(_root);
-	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
+	late final TranslationsHomeSettingsEn home_settings = TranslationsHomeSettingsEn._(_root);
 }
 
 // Path: signup
@@ -125,20 +125,20 @@ class TranslationsHomeSocialEn {
 	String get title => 'Social';
 }
 
-// Path: settings
-class TranslationsSettingsEn {
-	TranslationsSettingsEn._(this._root);
+// Path: home_settings
+class TranslationsHomeSettingsEn {
+	TranslationsHomeSettingsEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Settings';
-	late final TranslationsSettingsBtnEn btn = TranslationsSettingsBtnEn._(_root);
-	late final TranslationsSettingsLabelEn label = TranslationsSettingsLabelEn._(_root);
-	late final TranslationsSettingsSelectEn select = TranslationsSettingsSelectEn._(_root);
-	late final TranslationsSettingsSuccessEn success = TranslationsSettingsSuccessEn._(_root);
-	late final TranslationsSettingsErrorEn error = TranslationsSettingsErrorEn._(_root);
-	late final TranslationsSettingsDialogEn dialog = TranslationsSettingsDialogEn._(_root);
+	late final TranslationsHomeSettingsBtnEn btn = TranslationsHomeSettingsBtnEn._(_root);
+	late final TranslationsHomeSettingsLabelEn label = TranslationsHomeSettingsLabelEn._(_root);
+	late final TranslationsHomeSettingsSelectEn select = TranslationsHomeSettingsSelectEn._(_root);
+	late final TranslationsHomeSettingsSuccessEn success = TranslationsHomeSettingsSuccessEn._(_root);
+	late final TranslationsHomeSettingsErrorEn error = TranslationsHomeSettingsErrorEn._(_root);
+	late final TranslationsHomeSettingsDialogEn dialog = TranslationsHomeSettingsDialogEn._(_root);
 }
 
 // Path: signup.btn
@@ -298,9 +298,9 @@ class TranslationsHomeDialogEn {
 	String get regenerate_content => 'You can’t undo this action.';
 }
 
-// Path: settings.btn
-class TranslationsSettingsBtnEn {
-	TranslationsSettingsBtnEn._(this._root);
+// Path: home_settings.btn
+class TranslationsHomeSettingsBtnEn {
+	TranslationsHomeSettingsBtnEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -309,11 +309,13 @@ class TranslationsSettingsBtnEn {
 	String get terms => 'Terms of Service';
 	String get privacy => 'Privacy Policy';
 	String get cancel => 'Cancel';
+	String get delete_account => 'Delete account';
+	String get privacy_policy => 'Privacy Policy';
 }
 
-// Path: settings.label
-class TranslationsSettingsLabelEn {
-	TranslationsSettingsLabelEn._(this._root);
+// Path: home_settings.label
+class TranslationsHomeSettingsLabelEn {
+	TranslationsHomeSettingsLabelEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -321,9 +323,9 @@ class TranslationsSettingsLabelEn {
 	String get visibility => 'Account visibility';
 }
 
-// Path: settings.select
-class TranslationsSettingsSelectEn {
-	TranslationsSettingsSelectEn._(this._root);
+// Path: home_settings.select
+class TranslationsHomeSettingsSelectEn {
+	TranslationsHomeSettingsSelectEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -332,34 +334,38 @@ class TranslationsSettingsSelectEn {
 	String get private => 'Private';
 }
 
-// Path: settings.success
-class TranslationsSettingsSuccessEn {
-	TranslationsSettingsSuccessEn._(this._root);
+// Path: home_settings.success
+class TranslationsHomeSettingsSuccessEn {
+	TranslationsHomeSettingsSuccessEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get change_visibility => 'Visibility changed successfully';
+	String get delete_account => 'Account deleted successfully';
 }
 
-// Path: settings.error
-class TranslationsSettingsErrorEn {
-	TranslationsSettingsErrorEn._(this._root);
+// Path: home_settings.error
+class TranslationsHomeSettingsErrorEn {
+	TranslationsHomeSettingsErrorEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get failed_to_sign_out => 'Failed to sign out';
+	String get failed_to_delete_account => 'Failed to delete account';
 }
 
-// Path: settings.dialog
-class TranslationsSettingsDialogEn {
-	TranslationsSettingsDialogEn._(this._root);
+// Path: home_settings.dialog
+class TranslationsHomeSettingsDialogEn {
+	TranslationsHomeSettingsDialogEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get sign_out_title => 'Are you sure you want to sign out?';
+	String get delete_account_title => 'Are you sure you want to delete your account?';
+	String get delete_account_content => 'This action is irreversible. All your data will be deleted.';
 }
 
 /// Flat map(s) containing all translations.
@@ -407,17 +413,23 @@ extension on Translations {
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';
 			case 'home.dialog.regenerate_content': return 'You can’t undo this action.';
 			case 'home_social.title': return 'Social';
-			case 'settings.title': return 'Settings';
-			case 'settings.btn.sign_out': return 'Sign out';
-			case 'settings.btn.terms': return 'Terms of Service';
-			case 'settings.btn.privacy': return 'Privacy Policy';
-			case 'settings.btn.cancel': return 'Cancel';
-			case 'settings.label.visibility': return 'Account visibility';
-			case 'settings.select.public': return 'Public';
-			case 'settings.select.private': return 'Private';
-			case 'settings.success.change_visibility': return 'Visibility changed successfully';
-			case 'settings.error.failed_to_sign_out': return 'Failed to sign out';
-			case 'settings.dialog.sign_out_title': return 'Are you sure you want to sign out?';
+			case 'home_settings.title': return 'Settings';
+			case 'home_settings.btn.sign_out': return 'Sign out';
+			case 'home_settings.btn.terms': return 'Terms of Service';
+			case 'home_settings.btn.privacy': return 'Privacy Policy';
+			case 'home_settings.btn.cancel': return 'Cancel';
+			case 'home_settings.btn.delete_account': return 'Delete account';
+			case 'home_settings.btn.privacy_policy': return 'Privacy Policy';
+			case 'home_settings.label.visibility': return 'Account visibility';
+			case 'home_settings.select.public': return 'Public';
+			case 'home_settings.select.private': return 'Private';
+			case 'home_settings.success.change_visibility': return 'Visibility changed successfully';
+			case 'home_settings.success.delete_account': return 'Account deleted successfully';
+			case 'home_settings.error.failed_to_sign_out': return 'Failed to sign out';
+			case 'home_settings.error.failed_to_delete_account': return 'Failed to delete account';
+			case 'home_settings.dialog.sign_out_title': return 'Are you sure you want to sign out?';
+			case 'home_settings.dialog.delete_account_title': return 'Are you sure you want to delete your account?';
+			case 'home_settings.dialog.delete_account_content': return 'This action is irreversible. All your data will be deleted.';
 			default: return null;
 		}
 	}

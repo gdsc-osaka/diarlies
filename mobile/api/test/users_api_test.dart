@@ -21,6 +21,13 @@ void main() {
       // TODO
     });
 
+    // Delete user
+    //
+    //Future deleteUser(String userId) async
+    test('test deleteUser', () async {
+      // TODO
+    });
+
     // Get user information
     //
     //Future<User> getUser() async

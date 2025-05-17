@@ -4,11 +4,13 @@ import { AccountVisibility, User } from "../domain/user";
 import {
   createUser,
   CreateUserServiceError,
+  deleteUser,
   fetchUser,
   updateUserVisibility,
 } from "../service/user-service";
 import {
   createDBUser,
+  deleteDBUser,
   fetchDBUserByUid,
   updateDBUser,
 } from "../infra/user-repository";
@@ -18,6 +20,7 @@ import db from "../db/db";
 import { getAUthUser } from "./middleware/authorize";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
+import { deleteAuthUser } from "../infra/authenticator";
 
 const app = new Hono();
 const tags = ["Users"];
@@ -161,6 +164,53 @@ app.post(
     }
 
     return c.json(res.value);
+  },
+);
+
+app.delete(
+  "/:userId",
+  describeRoute({
+    tags,
+    operationId: "deleteUser",
+    description: "Delete user",
+    validateResponse: true,
+    parameters: [
+      {
+        name: "userId",
+        in: "path",
+        description: "User ID to delete",
+        required: true,
+        schema: {
+          type: "string",
+          minLength: 1,
+        },
+      },
+    ],
+    responses: {
+      204: {
+        description: "User deleted successfully",
+      },
+    },
+  }),
+  zValidator(
+    "param",
+    z.object({
+      userId: z.string().min(1),
+    }),
+  ),
+  async (c) => {
+    const res = await deleteUser(
+      db(),
+      fetchDBUserByUid,
+      deleteDBUser,
+      deleteAuthUser,
+    )(getAUthUser(c));
+
+    if (res.isErr()) {
+      throw toHTTPException(res.error);
+    }
+
+    return c.json(null, 200);
   },
 );
 

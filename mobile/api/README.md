@@ -73,6 +73,7 @@ Class | Method | HTTP request | Description
 [*DiariesApi*](doc/DiariesApi.md) | [**getDiariesByUser**](doc/DiariesApi.md#getdiariesbyuser) | **GET** /api/users/{userId}/diaries | 
 [*UsersApi*](doc/UsersApi.md) | [**changeUserVisibility**](doc/UsersApi.md#changeuservisibility) | **POST** /api/users/{userId}/change-visibility | 
 [*UsersApi*](doc/UsersApi.md) | [**createUser**](doc/UsersApi.md#createuser) | **POST** /api/users | 
+[*UsersApi*](doc/UsersApi.md) | [**deleteUser**](doc/UsersApi.md#deleteuser) | **DELETE** /api/users/{userId} | 
 [*UsersApi*](doc/UsersApi.md) | [**getUser**](doc/UsersApi.md#getuser) | **GET** /api/users | 
 
 

@@ -24,7 +24,7 @@ class DiaryMemo extends _$DiaryMemo {
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class TodaysDiary extends _$TodaysDiary {
   @override
   Future<Diary?> build() async {

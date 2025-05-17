@@ -79,13 +79,15 @@
   "home_social": {
     "title": "Social"
   },
-  "settings": {
+  "home_settings": {
     "title": "Settings",
     "btn": {
       "sign_out": "Sign out",
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "delete_account": "Delete account",
+      "privacy_policy": "Privacy Policy"
     },
     "label": {
       "visibility": "Account visibility"
@@ -95,13 +97,17 @@
       "private": "Private"
     },
     "success": {
-      "change_visibility": "Visibility changed successfully"
+      "change_visibility": "Visibility changed successfully",
+      "delete_account": "Account deleted successfully"
     },
     "error": {
-        "failed_to_sign_out": "Failed to sign out"
+      "failed_to_sign_out": "Failed to sign out",
+      "failed_to_delete_account": "Failed to delete account"
     },
     "dialog": {
-      "sign_out_title": "Are you sure you want to sign out?"
+      "sign_out_title": "Are you sure you want to sign out?",
+      "delete_account_title": "Are you sure you want to delete your account?",
+      "delete_account_content": "This action is irreversible. All your data will be deleted."
     }
   }
 }

@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**changeUserVisibility**](UsersApi.md#changeuservisibility) | **POST** /api/users/{userId}/change-visibility | 
 [**createUser**](UsersApi.md#createuser) | **POST** /api/users | 
+[**deleteUser**](UsersApi.md#deleteuser) | **DELETE** /api/users/{userId} | 
 [**getUser**](UsersApi.md#getuser) | **GET** /api/users | 
 
 
@@ -95,6 +96,48 @@ This endpoint does not need any parameter.
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deleteUser**
+> deleteUser(userId)
+
+
+
+Delete user
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getUsersApi();
+final String userId = userId_example; // String | User ID to delete
+
+try {
+    api.deleteUser(userId);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->deleteUser: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **String**| User ID to delete | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

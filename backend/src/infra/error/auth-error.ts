@@ -1,6 +1,10 @@
 import { FirebaseAuthError } from "firebase-admin/auth";
 
-type AUthErrorCode = "token-revoked" | "user-disabled" | "unknown";
+type AUthErrorCode =
+  | "token-revoked"
+  | "user-disabled"
+  | "unknown"
+  | "not-found";
 
 export interface AuthError<T extends AUthErrorCode = AUthErrorCode> {
   readonly __brand: "AuthError";
@@ -23,6 +27,7 @@ export const createAuthError = <T extends AUthErrorCode>(
 const errorCodes = new Map<string, AUthErrorCode>([
   ["auth/user-disabled", "user-disabled"],
   ["auth/id-token-revoked", "token-revoked"],
+  ["auth/user-not-found", "not-found"],
 ]);
 
 export const handleAuthError = (error: unknown): AuthError => {

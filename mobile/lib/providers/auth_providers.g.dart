@@ -39,7 +39,7 @@ final currentAuthUserProvider =
     );
 
 typedef _$CurrentAuthUser = StreamNotifier<AuthUser?>;
-String _$currentUserHash() => r'a50b618e1db16bc8efe6fe79eeea243f10105ca1';
+String _$currentUserHash() => r'e9ea8e8ab4a67a74d9751b84529e7ba5b5bd69ff';
 
 /// See also [CurrentUser].
 @ProviderFor(CurrentUser)

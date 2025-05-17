@@ -42,7 +42,7 @@ class TranslationsJa implements Translations {
 	@override late final _TranslationsOnboardingFinishJa onboarding_finish = _TranslationsOnboardingFinishJa._(_root);
 	@override late final _TranslationsHomeJa home = _TranslationsHomeJa._(_root);
 	@override late final _TranslationsHomeSocialJa home_social = _TranslationsHomeSocialJa._(_root);
-	@override late final _TranslationsSettingsJa settings = _TranslationsSettingsJa._(_root);
+	@override late final _TranslationsHomeSettingsJa home_settings = _TranslationsHomeSettingsJa._(_root);
 }
 
 // Path: signup
@@ -122,20 +122,20 @@ class _TranslationsHomeSocialJa implements TranslationsHomeSocialEn {
 	@override String get title => 'ソーシャル';
 }
 
-// Path: settings
-class _TranslationsSettingsJa implements TranslationsSettingsEn {
-	_TranslationsSettingsJa._(this._root);
+// Path: home_settings
+class _TranslationsHomeSettingsJa implements TranslationsHomeSettingsEn {
+	_TranslationsHomeSettingsJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => '設定';
-	@override late final _TranslationsSettingsBtnJa btn = _TranslationsSettingsBtnJa._(_root);
-	@override late final _TranslationsSettingsLabelJa label = _TranslationsSettingsLabelJa._(_root);
-	@override late final _TranslationsSettingsSelectJa select = _TranslationsSettingsSelectJa._(_root);
-	@override late final _TranslationsSettingsSuccessJa success = _TranslationsSettingsSuccessJa._(_root);
-	@override late final _TranslationsSettingsErrorJa error = _TranslationsSettingsErrorJa._(_root);
-	@override late final _TranslationsSettingsDialogJa dialog = _TranslationsSettingsDialogJa._(_root);
+	@override late final _TranslationsHomeSettingsBtnJa btn = _TranslationsHomeSettingsBtnJa._(_root);
+	@override late final _TranslationsHomeSettingsLabelJa label = _TranslationsHomeSettingsLabelJa._(_root);
+	@override late final _TranslationsHomeSettingsSelectJa select = _TranslationsHomeSettingsSelectJa._(_root);
+	@override late final _TranslationsHomeSettingsSuccessJa success = _TranslationsHomeSettingsSuccessJa._(_root);
+	@override late final _TranslationsHomeSettingsErrorJa error = _TranslationsHomeSettingsErrorJa._(_root);
+	@override late final _TranslationsHomeSettingsDialogJa dialog = _TranslationsHomeSettingsDialogJa._(_root);
 }
 
 // Path: signup.btn
@@ -295,9 +295,9 @@ class _TranslationsHomeDialogJa implements TranslationsHomeDialogEn {
 	@override String get regenerate_content => 'この操作は元に戻せません。';
 }
 
-// Path: settings.btn
-class _TranslationsSettingsBtnJa implements TranslationsSettingsBtnEn {
-	_TranslationsSettingsBtnJa._(this._root);
+// Path: home_settings.btn
+class _TranslationsHomeSettingsBtnJa implements TranslationsHomeSettingsBtnEn {
+	_TranslationsHomeSettingsBtnJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -306,11 +306,13 @@ class _TranslationsSettingsBtnJa implements TranslationsSettingsBtnEn {
 	@override String get terms => '利用規約';
 	@override String get privacy => 'プライバシーポリシー';
 	@override String get cancel => 'キャンセル';
+	@override String get delete_account => 'アカウントを削除';
+	@override String get privacy_policy => 'プライバシーポリシー';
 }
 
-// Path: settings.label
-class _TranslationsSettingsLabelJa implements TranslationsSettingsLabelEn {
-	_TranslationsSettingsLabelJa._(this._root);
+// Path: home_settings.label
+class _TranslationsHomeSettingsLabelJa implements TranslationsHomeSettingsLabelEn {
+	_TranslationsHomeSettingsLabelJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -318,9 +320,9 @@ class _TranslationsSettingsLabelJa implements TranslationsSettingsLabelEn {
 	@override String get visibility => 'アカウントの公開範囲';
 }
 
-// Path: settings.select
-class _TranslationsSettingsSelectJa implements TranslationsSettingsSelectEn {
-	_TranslationsSettingsSelectJa._(this._root);
+// Path: home_settings.select
+class _TranslationsHomeSettingsSelectJa implements TranslationsHomeSettingsSelectEn {
+	_TranslationsHomeSettingsSelectJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -329,34 +331,38 @@ class _TranslationsSettingsSelectJa implements TranslationsSettingsSelectEn {
 	@override String get private => '非公開';
 }
 
-// Path: settings.success
-class _TranslationsSettingsSuccessJa implements TranslationsSettingsSuccessEn {
-	_TranslationsSettingsSuccessJa._(this._root);
+// Path: home_settings.success
+class _TranslationsHomeSettingsSuccessJa implements TranslationsHomeSettingsSuccessEn {
+	_TranslationsHomeSettingsSuccessJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get change_visibility => '公開範囲が正常に変更されました';
+	@override String get change_visibility => '公開範囲が変更されました';
+	@override String get delete_account => 'アカウントが削除されました';
 }
 
-// Path: settings.error
-class _TranslationsSettingsErrorJa implements TranslationsSettingsErrorEn {
-	_TranslationsSettingsErrorJa._(this._root);
+// Path: home_settings.error
+class _TranslationsHomeSettingsErrorJa implements TranslationsHomeSettingsErrorEn {
+	_TranslationsHomeSettingsErrorJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
 	@override String get failed_to_sign_out => 'サインアウトに失敗しました';
+	@override String get failed_to_delete_account => 'アカウントの削除に失敗しました';
 }
 
-// Path: settings.dialog
-class _TranslationsSettingsDialogJa implements TranslationsSettingsDialogEn {
-	_TranslationsSettingsDialogJa._(this._root);
+// Path: home_settings.dialog
+class _TranslationsHomeSettingsDialogJa implements TranslationsHomeSettingsDialogEn {
+	_TranslationsHomeSettingsDialogJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
 	@override String get sign_out_title => 'ログアウトしますか？';
+	@override String get delete_account_title => 'アカウントを削除しますか？';
+	@override String get delete_account_content => 'この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。';
 }
 
 /// Flat map(s) containing all translations.
@@ -404,17 +410,23 @@ extension on TranslationsJa {
 			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';
 			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';
 			case 'home_social.title': return 'ソーシャル';
-			case 'settings.title': return '設定';
-			case 'settings.btn.sign_out': return 'サインアウト';
-			case 'settings.btn.terms': return '利用規約';
-			case 'settings.btn.privacy': return 'プライバシーポリシー';
-			case 'settings.btn.cancel': return 'キャンセル';
-			case 'settings.label.visibility': return 'アカウントの公開範囲';
-			case 'settings.select.public': return '公開';
-			case 'settings.select.private': return '非公開';
-			case 'settings.success.change_visibility': return '公開範囲が正常に変更されました';
-			case 'settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
-			case 'settings.dialog.sign_out_title': return 'ログアウトしますか？';
+			case 'home_settings.title': return '設定';
+			case 'home_settings.btn.sign_out': return 'サインアウト';
+			case 'home_settings.btn.terms': return '利用規約';
+			case 'home_settings.btn.privacy': return 'プライバシーポリシー';
+			case 'home_settings.btn.cancel': return 'キャンセル';
+			case 'home_settings.btn.delete_account': return 'アカウントを削除';
+			case 'home_settings.btn.privacy_policy': return 'プライバシーポリシー';
+			case 'home_settings.label.visibility': return 'アカウントの公開範囲';
+			case 'home_settings.select.public': return '公開';
+			case 'home_settings.select.private': return '非公開';
+			case 'home_settings.success.change_visibility': return '公開範囲が変更されました';
+			case 'home_settings.success.delete_account': return 'アカウントが削除されました';
+			case 'home_settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
+			case 'home_settings.error.failed_to_delete_account': return 'アカウントの削除に失敗しました';
+			case 'home_settings.dialog.sign_out_title': return 'ログアウトしますか？';
+			case 'home_settings.dialog.delete_account_title': return 'アカウントを削除しますか？';
+			case 'home_settings.dialog.delete_account_content': return 'この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。';
 			default: return null;
 		}
 	}

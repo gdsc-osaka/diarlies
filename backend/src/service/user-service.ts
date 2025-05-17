@@ -9,6 +9,7 @@ import {
 } from "../domain/user";
 import {
   CreateDBUser,
+  DeleteDBUser,
   FetchDBUserByUid,
   UpdateDBUser,
 } from "../infra/user-repository";
@@ -21,6 +22,7 @@ import {
 import { AuthUser } from "../domain/auth";
 import z from "zod";
 import { DB, DBorTx } from "../db/db";
+import { DeleteAuthUser } from "../infra/authenticator";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
@@ -137,6 +139,47 @@ export const updateUserVisibility =
               StatusCode.Forbidden,
               "Wrong user",
               "wrong-user",
+            ),
+          )
+          .exhaustive(),
+      );
+
+export type DeleteUser = (
+  authUser: AuthUser,
+) => ResultAsync<User, ServiceError>;
+
+export const deleteUser =
+  (
+    db: DBorTx,
+    fetchDBUserByUid: FetchDBUserByUid,
+    deleteDBUser: DeleteDBUser,
+    deleteAuthUser: DeleteAuthUser,
+  ): DeleteUser =>
+  (authUser: AuthUser): ResultAsync<User, ServiceError> =>
+    fetchDBUserByUid(db)(authUser.uid)
+      .andThen((user) => isSameUser(user, authUser))
+      .andThen(deleteDBUser(db))
+      .andThen((dbUser) => deleteAuthUser(dbUser.uid).map(() => dbUser))
+      .andThen(convertToUser)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "DBError", code: "not-found" }, (e) =>
+            createServiceError(StatusCode.NotFound, e.message),
+          )
+          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+            createServiceError(StatusCode.InternalServerError, e.message),
+          )
+          .with({ __brand: "AuthError", code: "not-found" }, (e) =>
+            createServiceError(StatusCode.NotFound, e.message),
+          )
+          .with({ __brand: "AuthError" }, (e) =>
+            createServiceError(StatusCode.InternalServerError, e.message),
+          )
+          .with("wrong-user", () =>
+            createServiceError(
+              StatusCode.Forbidden,
+              "Permission denied",
+              "permission-denied",
             ),
           )
           .exhaustive(),

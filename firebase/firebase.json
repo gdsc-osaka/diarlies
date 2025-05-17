@@ -12,6 +12,12 @@
     "singleProjectMode": true
   },
   "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "/api/**",
@@ -19,6 +25,10 @@
           "serviceId": "diarlies",
           "region": "asia-northeast1"
         }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }

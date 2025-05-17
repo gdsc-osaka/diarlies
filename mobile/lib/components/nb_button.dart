@@ -137,7 +137,7 @@ class NBButton<T> extends HookWidget {
       };
     }
 
-    final padding = EdgeInsets.only(left: icon == null ? 14 : 18, right: 18.0, top: 12.0, bottom: 12.0);
+    final padding = EdgeInsets.only(left: icon == null ? 12 : 16, right: 18.0, top: 12.0, bottom: 12.0);
 
     return GestureDetector(
       onTapDown: canInteract ? onTapDown : null,

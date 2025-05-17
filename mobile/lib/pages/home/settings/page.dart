@@ -6,9 +6,11 @@ import 'package:diarlies/components/nb_select.dart';
 import 'package:diarlies/components/nb_snackbar.dart';
 import 'package:diarlies/components/variant.dart';
 import 'package:diarlies/i18n/strings.g.dart';
+import 'package:diarlies/pages/signup/page.dart';
 import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';
 import 'package:diarlies/providers/firebase_providers.dart';
+import 'package:diarlies/router.dart';
 import 'package:diarlies/shared/error_handler.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:diarlies/shared/serialize.dart';
@@ -16,9 +18,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../logger.dart';
-import '../../../shared/result.dart';
+import '../../../shared/urls.dart';
 import '../../../styles/styles.dart';
 
 part 'action.dart';
@@ -39,19 +42,19 @@ class HomeSettingsPage extends ConsumerWidget {
     final action = ref.watch(_homeSettingsActionProvider);
 
     handleSignOut() {
-      showDialog(
+      return showDialog(
         context: context,
         builder:
             (context) => NBDialog(
-              title: Text(t.settings.dialog.sign_out_title),
+              title: Text(t.home_settings.dialog.sign_out_title),
               actions: [
                 NBButton(
-                  label: Text(t.settings.btn.cancel),
+                  label: Text(t.home_settings.btn.cancel),
                   variant: Variant.secondary,
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 NBButton(
-                  label: Text(t.settings.btn.sign_out),
+                  label: Text(t.home_settings.btn.sign_out),
                   onPressed: () async {
                     await action.signOut();
                     if (context.mounted) Navigator.of(context).pop();
@@ -62,10 +65,43 @@ class HomeSettingsPage extends ConsumerWidget {
       );
     }
 
+    handleDeleteAccount() {
+      return showDialog(
+        context: context,
+        builder:
+            (context) => NBDialog(
+              title: Text(t.home_settings.dialog.delete_account_title),
+              content: Text(t.home_settings.dialog.delete_account_content),
+              actions: [
+                NBButton(
+                  label: Text(t.home_settings.btn.cancel),
+                  variant: Variant.secondary,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                NBButton(
+                  label: Text(t.home_settings.btn.delete_account),
+                  onPressed: () async {
+                    action.deleteAccount(
+                      successHandler: (message) {
+                        if (context.mounted) Navigator.of(context).pop();
+
+                        showNBSnackBar(context, title: message, type: SnackBarType.success);
+                      },
+                      errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+                    );
+                  },
+                ),
+              ],
+            ),
+      );
+    }
+
     handleChangeAccountVisibility(AccountVisibility? visibility) {
-      return action.changeAccountVisibility(visibility,
-          successHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.success),
-          errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error));
+      return action.changeAccountVisibility(
+        visibility,
+        successHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.success),
+        errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+      );
     }
 
     return Padding(
@@ -76,7 +112,7 @@ class HomeSettingsPage extends ConsumerWidget {
           NBCard(
             child: Column(
               children: [
-                Text(t.settings.title, style: styles.text.headline.m),
+                Text(t.home_settings.title, style: styles.text.headline.m),
                 const SizedBox(height: 16),
                 NBSelect<AccountVisibility>(
                   value: ref.watch(_currentAccountVisibilityProvider).valueOrNull,
@@ -87,15 +123,33 @@ class HomeSettingsPage extends ConsumerWidget {
                         children: [
                           Icon(val == AccountVisibility.private ? Icons.lock_outline : Icons.public_outlined),
                           const SizedBox(width: 8),
-                          Text(val == AccountVisibility.private ? t.settings.select.private : t.settings.select.public),
+                          Text(
+                            val == AccountVisibility.private
+                                ? t.home_settings.select.private
+                                : t.home_settings.select.public,
+                          ),
                         ],
                       ),
                 ),
                 const SizedBox(height: 16),
                 NBButton(
-                  label: Text(t.settings.btn.sign_out),
-                  icon: const Icon(Icons.logout),
+                  label: Text(t.home_settings.btn.privacy_policy),
+                  icon: const Icon(Icons.privacy_tip_outlined),
                   variant: Variant.secondary,
+                  onPressed: action.openPrivacyPolicyPage,
+                ),
+                const SizedBox(height: 8),
+                NBButton(
+                  label: Text(t.home_settings.btn.delete_account),
+                  icon: const Icon(Icons.delete_outline),
+                  variant: Variant.secondary,
+                  onPressed: handleDeleteAccount,
+                ),
+                const SizedBox(height: 8),
+                NBButton(
+                  label: Text(t.home_settings.btn.sign_out),
+                  icon: const Icon(Icons.logout_outlined),
+                  variant: Variant.primary,
                   onPressed: handleSignOut,
                 ),
               ],

@@ -86,3 +86,25 @@ export const updateDBUser: UpdateDBUser = (db) => (user) =>
           ),
     )
     .orTee(infraLogger.error);
+
+export type DeleteDBUser = (
+  db: DBorTx,
+) => (dbUser: DBUser) => ResultAsync<DBUser, DBError<"unknown">>;
+
+export const deleteDBUser: DeleteDBUser = (db) => (user) =>
+  ResultAsync.fromPromise(
+    db.delete(users).where(eq(users.id, user.id)).returning().execute(),
+    handleDBError,
+  )
+    .andThen((records) =>
+      records.length > 0
+        ? okAsync(records[0])
+        : errAsync(
+            createDBError(
+              "unknown",
+              `User with id ${user.id} not deleted`,
+              undefined,
+            ),
+          ),
+    )
+    .orTee(infraLogger.error);
