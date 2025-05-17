@@ -7,7 +7,10 @@
 # Diarlies
 Diarlies is a diary generation app based on your multimedia information, such as photos, locations, etc.
 
-## Contribute
+## Demo video
+[![demo](http://img.youtube.com/vi/pn3OrKXGx1Y/0.jpg)](https://www.youtube.com/watch?v=pn3OrKXGx1Y)
+
+## Contributing
 
 ### Getting started
 * .env ファイルを設置
