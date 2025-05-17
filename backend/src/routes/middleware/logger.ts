@@ -1,4 +1,4 @@
-import { createMiddleware } from "hono/dist/types/helper/factory";
+import { createMiddleware } from "hono/factory";
 import { accessLogger } from "../../logger";
 
 export const logger = createMiddleware(async (c, next) => {
