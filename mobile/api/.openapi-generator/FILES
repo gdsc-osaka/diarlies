@@ -8,6 +8,7 @@ doc/CreateUserServiceError.md
 doc/Day.md
 doc/DiariesApi.md
 doc/Diary.md
+doc/DiaryWithUser.md
 doc/LanguageCode.md
 doc/ServiceError.md
 doc/Timestamp.md
@@ -30,6 +31,7 @@ lib/src/model/create_user_service_error.dart
 lib/src/model/date.dart
 lib/src/model/day.dart
 lib/src/model/diary.dart
+lib/src/model/diary_with_user.dart
 lib/src/model/language_code.dart
 lib/src/model/service_error.dart
 lib/src/model/timestamp.dart
@@ -42,6 +44,7 @@ test/create_user_service_error_test.dart
 test/day_test.dart
 test/diaries_api_test.dart
 test/diary_test.dart
+test/diary_with_user_test.dart
 test/language_code_test.dart
 test/service_error_test.dart
 test/timestamp_test.dart

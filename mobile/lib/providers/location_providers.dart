@@ -11,9 +11,16 @@ LocationStorageService locationStorageService(Ref ref) => LocationStorageService
 
 @riverpod
 List<LocationHistory> storedLocationHistories(Ref ref) {
-  final service = ref.watch(locationStorageServiceProvider);
-  final locationPoints = service.getAllLocationPoints();
-  return locationPoints
-      .map((point) => LocationHistory(visitedAt: point.createdAt, lat: point.lat, lng: point.lng))
-      .toList();
+  return [
+    // LocationHistory(
+    //   lat: 34.8039885,
+    //     lng: 135.4530827
+    //
+    // )
+  ];
+  // final service = ref.watch(locationStorageServiceProvider);
+  // final locationPoints = service.getAllLocationPoints();
+  // return locationPoints
+  //     .map((point) => LocationHistory(visitedAt: point.createdAt, lat: point.lat, lng: point.lng))
+  //     .toList();
 }

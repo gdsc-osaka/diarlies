@@ -29,6 +29,20 @@
       "when": 1747402489170,
       "tag": "0003_lucky_triton",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1747410223274,
+      "tag": "0004_simple_leech",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1747412113413,
+      "tag": "0005_flashy_nextwave",
+      "breakpoints": true
     }
   ]
 }

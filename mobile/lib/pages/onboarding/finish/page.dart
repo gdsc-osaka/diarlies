@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../components/images.dart';
 import '../../../styles/styles.dart';
 
 part 'action.dart';
@@ -30,6 +31,7 @@ class OnboardingFinishPage extends ConsumerWidget {
       body: SafeArea(
         child: Stack(
           children: [
+            Align(alignment: Alignment.center, child: ImageAdapter(image: Images.book, size: Size(220, 220))),
             OnboardingPositioned(
               child: Column(
                 children: [

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **id** | **String** |  | 
 **content** | **String** |  | 
 **diaryDate** | [**Day**](Day.md) |  | 
+**thumbnailUrl** | **String** |  | 
 **createdAt** | [**Timestamp**](Timestamp.md) |  | 
 **updatedAt** | [**Timestamp**](Timestamp.md) |  | 
 

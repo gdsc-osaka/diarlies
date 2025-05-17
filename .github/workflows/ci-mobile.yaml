@@ -64,8 +64,10 @@ jobs:
 #          echo "keyPassword=android" >> ${{ github.workspace }}/mobile/android/key.properties
 #          echo "keyAlias=androiddebugkey" >> ${{ github.workspace }}/mobile/android/key.properties
 #          echo "storeFile=${{ github.workspace }}/debug.keystore" >> ${{ github.workspace }}/mobile/android/key.properties
+      - name: Run cicd_pre_build.sh
+        run: (cd .scripts && bash cicd_pre_build.sh)
       - name: Build App Bundle
-        run: flutter build appbundle --debug
+        run: flutter build appbundle --debug --dart-define-from-file=dart_defines/.env.prod
   build-ios:
     timeout-minutes: 15
     runs-on: macos-latest
@@ -78,5 +80,7 @@ jobs:
         uses: ./.github/actions/install-flutter
         with:
           working-directory: mobile
+      - name: Run cicd_pre_build.sh
+        run: (cd .scripts && bash cicd_pre_build.sh)
       - name: Build iOS
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign --dart-define-from-file=dart_defines/.env.prod

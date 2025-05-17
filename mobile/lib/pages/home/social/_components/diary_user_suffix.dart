@@ -19,7 +19,7 @@ class DiaryUserSuffix extends StatelessWidget {
       children: [
         if (iconUrl != null)
           NBImage(
-            image: Image.network(iconUrl!, width: 40, height: 40),
+            image: Image.network(iconUrl!, width: 50, height: 50),
           ),
         if (iconUrl == null)
           Container(
@@ -37,7 +37,7 @@ class DiaryUserSuffix extends StatelessWidget {
           style: styles.text.title.m,
         ),
         Text(
-          userHandle,
+          '@$userHandle',
           style: styles.text.body.s.copyWith(color: styles.color.outline),
         ),
       ],

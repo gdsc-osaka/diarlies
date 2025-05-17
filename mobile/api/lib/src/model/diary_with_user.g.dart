@@ -1,34 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'diary.dart';
+part of 'diary_with_user.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-abstract class DiaryBuilder {
-  void replace(Diary other);
-  void update(void Function(DiaryBuilder) updates);
-  String? get id;
-  set id(String? id);
-
-  String? get content;
-  set content(String? content);
-
-  DayBuilder get diaryDate;
-  set diaryDate(DayBuilder? diaryDate);
-
-  String? get thumbnailUrl;
-  set thumbnailUrl(String? thumbnailUrl);
-
-  TimestampBuilder get createdAt;
-  set createdAt(TimestampBuilder? createdAt);
-
-  TimestampBuilder get updatedAt;
-  set updatedAt(TimestampBuilder? updatedAt);
-}
-
-class _$$Diary extends $Diary {
+class _$DiaryWithUser extends DiaryWithUser {
+  @override
+  final User user;
   @override
   final String id;
   @override
@@ -42,37 +22,43 @@ class _$$Diary extends $Diary {
   @override
   final Timestamp updatedAt;
 
-  factory _$$Diary([void Function($DiaryBuilder)? updates]) =>
-      (new $DiaryBuilder()..update(updates))._build();
+  factory _$DiaryWithUser([void Function(DiaryWithUserBuilder)? updates]) =>
+      (new DiaryWithUserBuilder()..update(updates))._build();
 
-  _$$Diary._(
-      {required this.id,
+  _$DiaryWithUser._(
+      {required this.user,
+      required this.id,
       required this.content,
       required this.diaryDate,
       required this.thumbnailUrl,
       required this.createdAt,
       required this.updatedAt})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'$Diary', 'id');
-    BuiltValueNullFieldError.checkNotNull(content, r'$Diary', 'content');
-    BuiltValueNullFieldError.checkNotNull(diaryDate, r'$Diary', 'diaryDate');
+    BuiltValueNullFieldError.checkNotNull(user, r'DiaryWithUser', 'user');
+    BuiltValueNullFieldError.checkNotNull(id, r'DiaryWithUser', 'id');
+    BuiltValueNullFieldError.checkNotNull(content, r'DiaryWithUser', 'content');
     BuiltValueNullFieldError.checkNotNull(
-        thumbnailUrl, r'$Diary', 'thumbnailUrl');
-    BuiltValueNullFieldError.checkNotNull(createdAt, r'$Diary', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(updatedAt, r'$Diary', 'updatedAt');
+        diaryDate, r'DiaryWithUser', 'diaryDate');
+    BuiltValueNullFieldError.checkNotNull(
+        thumbnailUrl, r'DiaryWithUser', 'thumbnailUrl');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'DiaryWithUser', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'DiaryWithUser', 'updatedAt');
   }
 
   @override
-  $Diary rebuild(void Function($DiaryBuilder) updates) =>
+  DiaryWithUser rebuild(void Function(DiaryWithUserBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  $DiaryBuilder toBuilder() => new $DiaryBuilder()..replace(this);
+  DiaryWithUserBuilder toBuilder() => new DiaryWithUserBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is $Diary &&
+    return other is DiaryWithUser &&
+        user == other.user &&
         id == other.id &&
         content == other.content &&
         diaryDate == other.diaryDate &&
@@ -84,6 +70,7 @@ class _$$Diary extends $Diary {
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, user.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, diaryDate.hashCode);
@@ -96,7 +83,8 @@ class _$$Diary extends $Diary {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'$Diary')
+    return (newBuiltValueToStringHelper(r'DiaryWithUser')
+          ..add('user', user)
           ..add('id', id)
           ..add('content', content)
           ..add('diaryDate', diaryDate)
@@ -107,8 +95,13 @@ class _$$Diary extends $Diary {
   }
 }
 
-class $DiaryBuilder implements Builder<$Diary, $DiaryBuilder>, DiaryBuilder {
-  _$$Diary? _$v;
+class DiaryWithUserBuilder
+    implements Builder<DiaryWithUser, DiaryWithUserBuilder>, DiaryBuilder {
+  _$DiaryWithUser? _$v;
+
+  UserBuilder? _user;
+  UserBuilder get user => _$this._user ??= new UserBuilder();
+  set user(covariant UserBuilder? user) => _$this._user = user;
 
   String? _id;
   String? get id => _$this._id;
@@ -140,13 +133,14 @@ class $DiaryBuilder implements Builder<$Diary, $DiaryBuilder>, DiaryBuilder {
   set updatedAt(covariant TimestampBuilder? updatedAt) =>
       _$this._updatedAt = updatedAt;
 
-  $DiaryBuilder() {
-    $Diary._defaults(this);
+  DiaryWithUserBuilder() {
+    DiaryWithUser._defaults(this);
   }
 
-  $DiaryBuilder get _$this {
+  DiaryWithUserBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _user = $v.user.toBuilder();
       _id = $v.id;
       _content = $v.content;
       _diaryDate = $v.diaryDate.toBuilder();
@@ -159,36 +153,41 @@ class $DiaryBuilder implements Builder<$Diary, $DiaryBuilder>, DiaryBuilder {
   }
 
   @override
-  void replace(covariant $Diary other) {
+  void replace(covariant DiaryWithUser other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$$Diary;
+    _$v = other as _$DiaryWithUser;
   }
 
   @override
-  void update(void Function($DiaryBuilder)? updates) {
+  void update(void Function(DiaryWithUserBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  $Diary build() => _build();
+  DiaryWithUser build() => _build();
 
-  _$$Diary _build() {
-    _$$Diary _$result;
+  _$DiaryWithUser _build() {
+    _$DiaryWithUser _$result;
     try {
       _$result = _$v ??
-          new _$$Diary._(
-            id: BuiltValueNullFieldError.checkNotNull(id, r'$Diary', 'id'),
+          new _$DiaryWithUser._(
+            user: user.build(),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'DiaryWithUser', 'id'),
             content: BuiltValueNullFieldError.checkNotNull(
-                content, r'$Diary', 'content'),
+                content, r'DiaryWithUser', 'content'),
             diaryDate: diaryDate.build(),
             thumbnailUrl: BuiltValueNullFieldError.checkNotNull(
-                thumbnailUrl, r'$Diary', 'thumbnailUrl'),
+                thumbnailUrl, r'DiaryWithUser', 'thumbnailUrl'),
             createdAt: createdAt.build(),
             updatedAt: updatedAt.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'user';
+        user.build();
+
         _$failedField = 'diaryDate';
         diaryDate.build();
 
@@ -198,7 +197,7 @@ class $DiaryBuilder implements Builder<$Diary, $DiaryBuilder>, DiaryBuilder {
         updatedAt.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'$Diary', _$failedField, e.toString());
+            r'DiaryWithUser', _$failedField, e.toString());
       }
       rethrow;
     }

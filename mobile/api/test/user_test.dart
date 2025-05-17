@@ -27,6 +27,16 @@ void main() {
       // TODO
     });
 
+    // String name
+    test('to test the property `name`', () async {
+      // TODO
+    });
+
+    // String handle
+    test('to test the property `handle`', () async {
+      // TODO
+    });
+
     // Timestamp createdAt
     test('to test the property `createdAt`', () async {
       // TODO

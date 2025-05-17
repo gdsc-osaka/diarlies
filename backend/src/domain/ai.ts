@@ -19,12 +19,13 @@ interface LocationHistory {
   visitedAt: Date;
 }
 
+// 3. 文字列の出力は日記の内容のみとしてください。
 export const diaryGenerationPrompt = (
   locationHistories: LocationHistory[],
   languageCode: LanguageCode,
   memo: string,
 ): string => {
-  return `あなたは私の"日記生成アシスタント"です。ステップバイステップで実行してください。
+  return `あなたは私の"日記生成アシスタント"です。
 1. 以下の情報を基に、今日1日を振り返る日記を作成してください。
 2. 日記の言語: ${languageCode}
 3. 日記の内容に合わせて, 色鉛筆で描いた絵を生成してください。ただし, 文字を絵の中に含むことは禁止します。

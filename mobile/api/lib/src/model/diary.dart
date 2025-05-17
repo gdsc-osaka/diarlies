@@ -16,10 +16,11 @@ part 'diary.g.dart';
 /// * [id] 
 /// * [content] 
 /// * [diaryDate] 
+/// * [thumbnailUrl] 
 /// * [createdAt] 
 /// * [updatedAt] 
-@BuiltValue()
-abstract class Diary implements Built<Diary, DiaryBuilder> {
+@BuiltValue(instantiable: false)
+abstract class Diary  {
   @BuiltValueField(wireName: r'id')
   String get id;
 
@@ -29,18 +30,14 @@ abstract class Diary implements Built<Diary, DiaryBuilder> {
   @BuiltValueField(wireName: r'diaryDate')
   Day get diaryDate;
 
+  @BuiltValueField(wireName: r'thumbnailUrl')
+  String get thumbnailUrl;
+
   @BuiltValueField(wireName: r'createdAt')
   Timestamp get createdAt;
 
   @BuiltValueField(wireName: r'updatedAt')
   Timestamp get updatedAt;
-
-  Diary._();
-
-  factory Diary([void updates(DiaryBuilder b)]) = _$Diary;
-
-  @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(DiaryBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
   static Serializer<Diary> get serializer => _$DiarySerializer();
@@ -48,7 +45,7 @@ abstract class Diary implements Built<Diary, DiaryBuilder> {
 
 class _$DiarySerializer implements PrimitiveSerializer<Diary> {
   @override
-  final Iterable<Type> types = const [Diary, _$Diary];
+  final Iterable<Type> types = const [Diary];
 
   @override
   final String wireName = r'Diary';
@@ -73,6 +70,11 @@ class _$DiarySerializer implements PrimitiveSerializer<Diary> {
       object.diaryDate,
       specifiedType: const FullType(Day),
     );
+    yield r'thumbnailUrl';
+    yield serializers.serialize(
+      object.thumbnailUrl,
+      specifiedType: const FullType(String),
+    );
     yield r'createdAt';
     yield serializers.serialize(
       object.createdAt,
@@ -92,6 +94,46 @@ class _$DiarySerializer implements PrimitiveSerializer<Diary> {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
+
+  @override
+  Diary deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return serializers.deserialize(serialized, specifiedType: FullType($Diary)) as $Diary;
+  }
+}
+
+/// a concrete implementation of [Diary], since [Diary] is not instantiable
+@BuiltValue(instantiable: true)
+abstract class $Diary implements Diary, Built<$Diary, $DiaryBuilder> {
+  $Diary._();
+
+  factory $Diary([void Function($DiaryBuilder)? updates]) = _$$Diary;
+
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults($DiaryBuilder b) => b;
+
+  @BuiltValueSerializer(custom: true)
+  static Serializer<$Diary> get serializer => _$$DiarySerializer();
+}
+
+class _$$DiarySerializer implements PrimitiveSerializer<$Diary> {
+  @override
+  final Iterable<Type> types = const [$Diary, _$$Diary];
+
+  @override
+  final String wireName = r'$Diary';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    $Diary object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return serializers.serialize(object, specifiedType: FullType(Diary))!;
   }
 
   void _deserializeProperties(
@@ -127,6 +169,13 @@ class _$DiarySerializer implements PrimitiveSerializer<Diary> {
           ) as Day;
           result.diaryDate.replace(valueDes);
           break;
+        case r'thumbnailUrl':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.thumbnailUrl = valueDes;
+          break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
             value,
@@ -150,12 +199,12 @@ class _$DiarySerializer implements PrimitiveSerializer<Diary> {
   }
 
   @override
-  Diary deserialize(
+  $Diary deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = DiaryBuilder();
+    final result = $DiaryBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

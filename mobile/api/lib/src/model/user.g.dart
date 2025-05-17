@@ -16,6 +16,10 @@ class _$User extends User {
   @override
   final String? iconUrl;
   @override
+  final String name;
+  @override
+  final String handle;
+  @override
   final Timestamp createdAt;
   @override
   final Timestamp updatedAt;
@@ -28,12 +32,16 @@ class _$User extends User {
       required this.uid,
       required this.visibility,
       this.iconUrl,
+      required this.name,
+      required this.handle,
       required this.createdAt,
       required this.updatedAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'User', 'id');
     BuiltValueNullFieldError.checkNotNull(uid, r'User', 'uid');
     BuiltValueNullFieldError.checkNotNull(visibility, r'User', 'visibility');
+    BuiltValueNullFieldError.checkNotNull(name, r'User', 'name');
+    BuiltValueNullFieldError.checkNotNull(handle, r'User', 'handle');
     BuiltValueNullFieldError.checkNotNull(createdAt, r'User', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(updatedAt, r'User', 'updatedAt');
   }
@@ -53,6 +61,8 @@ class _$User extends User {
         uid == other.uid &&
         visibility == other.visibility &&
         iconUrl == other.iconUrl &&
+        name == other.name &&
+        handle == other.handle &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt;
   }
@@ -64,6 +74,8 @@ class _$User extends User {
     _$hash = $jc(_$hash, uid.hashCode);
     _$hash = $jc(_$hash, visibility.hashCode);
     _$hash = $jc(_$hash, iconUrl.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, handle.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jf(_$hash);
@@ -77,6 +89,8 @@ class _$User extends User {
           ..add('uid', uid)
           ..add('visibility', visibility)
           ..add('iconUrl', iconUrl)
+          ..add('name', name)
+          ..add('handle', handle)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt))
         .toString();
@@ -103,6 +117,14 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String? get iconUrl => _$this._iconUrl;
   set iconUrl(String? iconUrl) => _$this._iconUrl = iconUrl;
 
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _handle;
+  String? get handle => _$this._handle;
+  set handle(String? handle) => _$this._handle = handle;
+
   TimestampBuilder? _createdAt;
   TimestampBuilder get createdAt =>
       _$this._createdAt ??= new TimestampBuilder();
@@ -124,6 +146,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _uid = $v.uid;
       _visibility = $v.visibility;
       _iconUrl = $v.iconUrl;
+      _name = $v.name;
+      _handle = $v.handle;
       _createdAt = $v.createdAt.toBuilder();
       _updatedAt = $v.updatedAt.toBuilder();
       _$v = null;
@@ -155,6 +179,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
             visibility: BuiltValueNullFieldError.checkNotNull(
                 visibility, r'User', 'visibility'),
             iconUrl: iconUrl,
+            name: BuiltValueNullFieldError.checkNotNull(name, r'User', 'name'),
+            handle: BuiltValueNullFieldError.checkNotNull(
+                handle, r'User', 'handle'),
             createdAt: createdAt.build(),
             updatedAt: updatedAt.build(),
           );

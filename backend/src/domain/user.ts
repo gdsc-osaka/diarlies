@@ -5,6 +5,7 @@ import { err, ok, Result } from "neverthrow";
 import { Timestamp, toTimestamp } from "./timestamp";
 import { AuthUser } from "./auth";
 import { ForUpdate } from "./shared/types";
+import { DBDiary } from "./diary";
 
 export const AccountVisibility = z
   .enum(["private", "public"])
@@ -17,6 +18,8 @@ export const User = z
     uid: z.string(),
     visibility: AccountVisibility,
     iconUrl: z.string().optional(),
+    name: z.string(),
+    handle: z.string(),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -26,6 +29,9 @@ export type User = z.infer<typeof User>;
 export type DBUser = typeof users.$inferSelect;
 export type DBUserForCreate = typeof users.$inferInsert;
 export type DBUserForUpdate = ForUpdate<DBUser>;
+export type DBUserWithDBDiaries = DBUser & {
+  diaries: DBDiary[];
+};
 
 export const convertToUser = (user: DBUser): Result<User, never> => {
   // TODO: validate user with zod
@@ -43,6 +49,8 @@ export const convertToUser = (user: DBUser): Result<User, never> => {
     uid: user.uid,
     visibility: user.visibility,
     iconUrl: user.iconUrl ?? undefined,
+    name: user.name,
+    handle: user.handle,
     createdAt,
     updatedAt,
   }));
@@ -54,6 +62,8 @@ export const createDBUserForCreate = (
   return ok({
     uid: authUser.uid,
     iconUrl: authUser.picture,
+    name: authUser.name,
+    handle: authUser.email?.substring(0, 10) ?? "unknown",
   });
 };
 

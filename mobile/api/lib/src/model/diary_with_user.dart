@@ -3,110 +3,82 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:api/src/model/account_visibility.dart';
+import 'package:api/src/model/diary.dart';
+import 'package:api/src/model/day.dart';
 import 'package:api/src/model/timestamp.dart';
+import 'package:api/src/model/user.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'user.g.dart';
+part 'diary_with_user.g.dart';
 
-/// User
+/// DiaryWithUser
 ///
 /// Properties:
+/// * [user] 
 /// * [id] 
-/// * [uid] 
-/// * [visibility] 
-/// * [iconUrl] 
-/// * [name] 
-/// * [handle] 
+/// * [content] 
+/// * [diaryDate] 
+/// * [thumbnailUrl] 
 /// * [createdAt] 
 /// * [updatedAt] 
 @BuiltValue()
-abstract class User implements Built<User, UserBuilder> {
-  @BuiltValueField(wireName: r'id')
-  String get id;
+abstract class DiaryWithUser implements Diary, Built<DiaryWithUser, DiaryWithUserBuilder> {
+  @BuiltValueField(wireName: r'user')
+  User get user;
 
-  @BuiltValueField(wireName: r'uid')
-  String get uid;
+  DiaryWithUser._();
 
-  @BuiltValueField(wireName: r'visibility')
-  AccountVisibility get visibility;
-  // enum visibilityEnum {  private,  public,  };
-
-  @BuiltValueField(wireName: r'iconUrl')
-  String? get iconUrl;
-
-  @BuiltValueField(wireName: r'name')
-  String get name;
-
-  @BuiltValueField(wireName: r'handle')
-  String get handle;
-
-  @BuiltValueField(wireName: r'createdAt')
-  Timestamp get createdAt;
-
-  @BuiltValueField(wireName: r'updatedAt')
-  Timestamp get updatedAt;
-
-  User._();
-
-  factory User([void updates(UserBuilder b)]) = _$User;
+  factory DiaryWithUser([void updates(DiaryWithUserBuilder b)]) = _$DiaryWithUser;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(UserBuilder b) => b;
+  static void _defaults(DiaryWithUserBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<User> get serializer => _$UserSerializer();
+  static Serializer<DiaryWithUser> get serializer => _$DiaryWithUserSerializer();
 }
 
-class _$UserSerializer implements PrimitiveSerializer<User> {
+class _$DiaryWithUserSerializer implements PrimitiveSerializer<DiaryWithUser> {
   @override
-  final Iterable<Type> types = const [User, _$User];
+  final Iterable<Type> types = const [DiaryWithUser, _$DiaryWithUser];
 
   @override
-  final String wireName = r'User';
+  final String wireName = r'DiaryWithUser';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    User object, {
+    DiaryWithUser object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    yield r'createdAt';
+    yield serializers.serialize(
+      object.createdAt,
+      specifiedType: const FullType(Timestamp),
+    );
+    yield r'diaryDate';
+    yield serializers.serialize(
+      object.diaryDate,
+      specifiedType: const FullType(Day),
+    );
     yield r'id';
     yield serializers.serialize(
       object.id,
       specifiedType: const FullType(String),
     );
-    yield r'uid';
+    yield r'user';
     yield serializers.serialize(
-      object.uid,
+      object.user,
+      specifiedType: const FullType(User),
+    );
+    yield r'content';
+    yield serializers.serialize(
+      object.content,
       specifiedType: const FullType(String),
     );
-    yield r'visibility';
+    yield r'thumbnailUrl';
     yield serializers.serialize(
-      object.visibility,
-      specifiedType: const FullType(AccountVisibility),
-    );
-    if (object.iconUrl != null) {
-      yield r'iconUrl';
-      yield serializers.serialize(
-        object.iconUrl,
-        specifiedType: const FullType(String),
-      );
-    }
-    yield r'name';
-    yield serializers.serialize(
-      object.name,
+      object.thumbnailUrl,
       specifiedType: const FullType(String),
-    );
-    yield r'handle';
-    yield serializers.serialize(
-      object.handle,
-      specifiedType: const FullType(String),
-    );
-    yield r'createdAt';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(Timestamp),
     );
     yield r'updatedAt';
     yield serializers.serialize(
@@ -118,7 +90,7 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
   @override
   Object serialize(
     Serializers serializers,
-    User object, {
+    DiaryWithUser object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -129,13 +101,27 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required UserBuilder result,
+    required DiaryWithUserBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'createdAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Timestamp),
+          ) as Timestamp;
+          result.createdAt.replace(valueDes);
+          break;
+        case r'diaryDate':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Day),
+          ) as Day;
+          result.diaryDate.replace(valueDes);
+          break;
         case r'id':
           final valueDes = serializers.deserialize(
             value,
@@ -143,47 +129,26 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
           ) as String;
           result.id = valueDes;
           break;
-        case r'uid':
+        case r'user':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(User),
+          ) as User;
+          result.user.replace(valueDes);
+          break;
+        case r'content':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.uid = valueDes;
+          result.content = valueDes;
           break;
-        case r'visibility':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(AccountVisibility),
-          ) as AccountVisibility;
-          result.visibility = valueDes;
-          break;
-        case r'iconUrl':
+        case r'thumbnailUrl':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.iconUrl = valueDes;
-          break;
-        case r'name':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.name = valueDes;
-          break;
-        case r'handle':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.handle = valueDes;
-          break;
-        case r'createdAt':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(Timestamp),
-          ) as Timestamp;
-          result.createdAt.replace(valueDes);
+          result.thumbnailUrl = valueDes;
           break;
         case r'updatedAt':
           final valueDes = serializers.deserialize(
@@ -201,12 +166,12 @@ class _$UserSerializer implements PrimitiveSerializer<User> {
   }
 
   @override
-  User deserialize(
+  DiaryWithUser deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = UserBuilder();
+    final result = DiaryWithUserBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

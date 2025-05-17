@@ -18,6 +18,7 @@ export const diaries = pgTable(
     ),
     content: varchar("content", { length: 1000 }).notNull(),
     diaryDate: date("diary_date", { mode: "date" }).notNull(),
+    thumbnailPath: varchar("thumbnail_path", { length: 64 }).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())
