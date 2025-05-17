@@ -10,5 +10,16 @@
       "enabled": true
     },
     "singleProjectMode": true
+  },
+  "hosting": {
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "diarlies",
+          "region": "asia-northeast1"
+        }
+      }
+    ]
   }
 }
