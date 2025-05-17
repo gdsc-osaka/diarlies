@@ -6,6 +6,7 @@ import authorize from "./routes/middleware/authorize";
 import users from "./routes/users";
 import diaries from "./routes/diaries";
 import usersDiaries from "./routes/users-diaries";
+import env from "./env";
 
 const app = new Hono();
 
@@ -19,7 +20,7 @@ app.route("/diaries", diaries);
 
 serve({
   fetch: app.fetch,
-  port: 8080,
+  port: env.PORT,
 });
 
 console.log("Server started");
