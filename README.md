@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://github.com/user-attachments/assets/b6e83eff-8b74-4dcc-b740-08e653f95a3b" alt="diarlies logo" width="256">
+  <img src="https://github.com/user-attachments/assets/62b29d4c-1f07-4db2-9018-9d28b9b30a4f" alt="diarlies logo" width="256">
   <br>
 </h1>
 
