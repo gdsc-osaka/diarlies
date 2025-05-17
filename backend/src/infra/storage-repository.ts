@@ -1,7 +1,7 @@
 import { FileData, FileBucket, FilePath } from "../domain/storage";
 import { ResultAsync } from "neverthrow";
 import { handleStorageError, StorageError } from "./error/storage-error";
-import {infraLogger} from "../logger";
+import { infraLogger } from "../logger";
 
 export type UploadFile = (
   bucket: FileBucket,

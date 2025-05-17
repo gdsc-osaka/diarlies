@@ -63,7 +63,7 @@ export const createDBUserForCreate = (
     uid: authUser.uid,
     iconUrl: authUser.picture,
     name: authUser.name,
-    handle: authUser.email?.substring(0, 10) ?? 'unknown',
+    handle: authUser.email?.substring(0, 10) ?? "unknown",
   });
 };
 

@@ -32,7 +32,7 @@ import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
 import cuid2 from "@paralleldrive/cuid2";
-import {serviceLogger} from "../logger";
+import { serviceLogger } from "../logger";
 
 export const Image = z
   .instanceof(File)
@@ -168,8 +168,9 @@ export const createDiary =
           thumbnailUrl && thumbnailUrl.isOk() ? thumbnailUrl.value : undefined,
         );
       })(),
-    ).andThen((result) => result)
-        .orTee(serviceLogger.error);
+    )
+      .andThen((result) => result)
+      .orTee(serviceLogger.error);
 
 export type FetchDiaryByDate = (
   authUser: AuthUser,

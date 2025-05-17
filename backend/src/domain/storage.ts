@@ -17,8 +17,8 @@ export interface FilePath {
 
 export const thumbnailStorageBucket = () =>
   new Storage({
-    projectId: 'diarlies',
-    credentials: JSON.parse(env.STORAGE_CREDENTIALS)
+    projectId: "diarlies",
+    credentials: JSON.parse(env.STORAGE_CREDENTIALS),
   }).bucket("diary-thumbnails");
 
 export const fileData = (

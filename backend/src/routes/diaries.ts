@@ -120,12 +120,12 @@ app.post(
 
     try {
       const res = await createDiary(
-          db(),
-          fetchDBUserByUid,
-          fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
-          createDBDiary,
-          generateContent(createGenAI(env.GEMINI_API_KEY)),
-          uploadFile,
+        db(),
+        fetchDBUserByUid,
+        fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
+        createDBDiary,
+        generateContent(createGenAI(env.GEMINI_API_KEY)),
+        uploadFile,
       )(getAUthUser(c), parseResult.data); // getFirebaseToken(c)!
 
       if (res.isErr()) {
