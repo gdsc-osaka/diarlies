@@ -30,11 +30,12 @@ const gcloudLogger =
       message: unknown,
       ...args: unknown[]
     ): string => {
+      const _args = [message, ...args];
       const msg =
-        `[${category}] ${label} - ${message} ${args.filter((arg) => typeof arg !== "object").join(" ")}`.trimEnd();
+        `[${category}] ${label}: ${_args.filter((arg) => typeof arg !== "object").join(" ")}`.trimEnd();
 
       // args is like [{error: new Error(), user: {id: 1, name: "John Doe"}}]
-      const entries = args
+      const entries = _args
         .filter((arg) => typeof arg === "object" && arg !== null)
         .reduce(
           (acc, arg) => ({
