@@ -16,7 +16,7 @@ export const verifyIdToken: VerifyIdToken = (fireSa, idToken) =>
   ResultAsync.fromPromise(
     firebase(fireSa).auth().verifyIdToken(idToken),
     handleAuthError,
-  ).orTee(infraLogger("verifyIdToken").error);
+  ).orTee(infraLogger("verifyIdToken").warn);
 
 export type DeleteAuthUser = (uid: string) => ResultAsync<void, AuthError>;
 
@@ -26,4 +26,8 @@ export const deleteAuthUser: DeleteAuthUser = (uid) =>
     handleAuthError,
   )
     .andTee(infraLogger("deleteAuthUser").info)
-    .orTee(infraLogger("deleteAuthUser").error);
+    .orTee((error) =>
+      error.code === "unknown"
+        ? infraLogger("deleteAuthUser").error(error)
+        : infraLogger("deleteAuthUser").warn(error),
+    );
