@@ -5,7 +5,7 @@
 import 'package:api/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://diarlies.web.app*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

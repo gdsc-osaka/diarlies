@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path_to_pubspec="pubspec.yaml"
+path_to_pubspec="../pubspec.yaml"
 
 # Gitリポジトリのルートディレクトリに移動 (必要に応じて)
 # cd /path/to/your/repo

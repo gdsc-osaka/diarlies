@@ -13,7 +13,7 @@ import 'package:api/src/api/diaries_api.dart';
 import 'package:api/src/api/users_api.dart';
 
 class Api {
-  static const String basePath = r'http://localhost:8080';
+  static const String basePath = r'https://diarlies.web.app';
 
   final Dio dio;
   final Serializers serializers;
