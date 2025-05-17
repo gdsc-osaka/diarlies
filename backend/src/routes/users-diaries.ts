@@ -25,6 +25,7 @@ app.get(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "getDiariesByUser",
     description: "Get diaries",
     parameters: [
       {

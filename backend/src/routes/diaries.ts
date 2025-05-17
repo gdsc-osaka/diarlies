@@ -44,6 +44,7 @@ app.post(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "createDiary",
     description: "Create a new diary",
     requestBody: {
       content: {
@@ -146,6 +147,7 @@ app.get(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "getDiaries",
     description: "Get diaries",
     parameters: [
       {
@@ -226,6 +228,7 @@ app.delete(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "deleteDiary",
     description: "Delete a diary",
     parameters: [
       {

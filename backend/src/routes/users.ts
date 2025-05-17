@@ -27,6 +27,7 @@ app.get(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "getUser",
     description: "Get user information",
     responses: {
       200: {
@@ -53,6 +54,7 @@ app.post(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "createUser",
     description: "Create a new user",
     responses: {
       201: {
@@ -92,6 +94,7 @@ app.post(
   describeRoute({
     tags,
     validateResponse: true,
+    operationId: "changeUserVisibility",
     description: "Change user visibility",
     parameters: [
       {
