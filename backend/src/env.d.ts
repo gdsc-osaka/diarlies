@@ -6,7 +6,6 @@ declare module "process" {
         PORT?: string;
 
         DATABASE_URL: string;
-        DATABASE_SSL_CERT: string;
         FIRE_SA: string;
         STORAGE_CREDENTIALS: string;
         GEMINI_API_KEY: string;

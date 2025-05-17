@@ -3,7 +3,6 @@ const env = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: Number(process.env.PORT ?? "8080"),
   DATABASE_URL: process.env.DATABASE_URL,
-  DATABASE_SSL_CERT: process.env.DATABASE_SSL_CERT,
   FIRE_SA: process.env.FIRE_SA!,
   STORAGE_CREDENTIALS: process.env.STORAGE_CREDENTIALS!,
   GEMINI_API_KEY: process.env.GEMINI_API_KEY!,

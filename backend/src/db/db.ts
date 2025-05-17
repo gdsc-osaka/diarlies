@@ -11,13 +11,9 @@ function getDBUrl(): string {
   }
   return "postgres://user:password@localhost:6543/db";
 }
-
 const db = () =>
   drizzle(
-    postgres(getDBUrl(), {
-      ssl:
-        env.NODE_ENV === "production" ? { rejectUnauthorized: false, ca: env.DATABASE_SSL_CERT?.replaceAll('\\n', '\n')} : false,
-    }),
+    postgres(getDBUrl()),
     { schema },
   );
 
