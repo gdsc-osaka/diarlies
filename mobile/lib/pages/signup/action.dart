@@ -12,26 +12,26 @@ class SignupAction extends FluxAction {
     final analytics = ref.read(analyticsProvider);
     final usersApi = ref.read(usersApiProvider);
 
-    await auth.signOut();
-
-    final googleUser = await GoogleSignIn().signIn();
-    final googleAuth = await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    final userCredential = await auth.signInWithCredential(credential);
-
-    analytics.logLogin(loginMethod: 'google');
-    ref.read(currentAuthUserProvider.notifier).setUser(userCredential.user);
-
-    logger.i('User signed in with Google: ${userCredential.user?.uid}');
-
-    // idToken の更新を待機
-    await Future.delayed(const Duration(milliseconds: 10));
-
     try {
+      await auth.signOut();
+
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final userCredential = await auth.signInWithCredential(credential);
+
+      analytics.logLogin(loginMethod: 'google');
+      ref.read(currentAuthUserProvider.notifier).setUser(userCredential.user);
+
+      logger.i('User signed in with Google: ${userCredential.user?.uid}');
+
+      // idToken の更新を待機
+      await Future.delayed(const Duration(milliseconds: 10));
+
       final res = await usersApi.createUser();
       final user = res.data;
 
@@ -40,7 +40,9 @@ class SignupAction extends FluxAction {
       }
 
       ref.read(currentUserProvider.notifier).setUser(user);
-
+    } on FirebaseAuthException catch (e) {
+      logger.e('Failed to sign in with Google: $e');
+      return;
     } on DioException catch (e) {
       final serviceError = standardSerializers.deserialize(
         e.response?.data,
