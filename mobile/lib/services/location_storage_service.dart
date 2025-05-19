@@ -1,3 +1,4 @@
+import 'package:diarlies/logger.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_model/hive_model.dart';
 
@@ -17,7 +18,9 @@ class LocationStorageService {
   }
 
   List<LocationPoint> getAllLocationPoints() {
-    return _locationBox.values.toList();
+    final res = _locationBox.values.toList();
+    logger.d("Location points: $res");
+    return res;
   }
 
   LocationPoint? getLastLocationPoint() {

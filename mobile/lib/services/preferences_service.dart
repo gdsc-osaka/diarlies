@@ -33,7 +33,7 @@ class PreferencesService {
 
   static Future<bool> getShouldStoreLocation() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_shouldStoreLocationKey) ?? false; // デフォルトはfalse
+    return prefs.getBool(_shouldStoreLocationKey) ?? true;
   }
 
   // diary_language

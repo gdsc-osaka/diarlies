@@ -4,6 +4,7 @@ import 'package:diarlies/components/nb_button.dart';
 import 'package:diarlies/shared/types.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive_model/hive_model.dart';
 
 import '../../../components/nb_image.dart';
 import '../../../components/nb_text_field.dart';
@@ -13,13 +14,14 @@ import '../../../styles/styles.dart';
 import 'map.dart';
 
 class DiaryForm extends StatelessWidget {
-  const DiaryForm({super.key, required this.onAddPhotoPressed, required this.selectedPhotos, required this.memo, required this.onMemoChanged, required this.onWriteDiaryPressed});
+  const DiaryForm({super.key, required this.onAddPhotoPressed, required this.selectedPhotos, required this.memo, required this.onMemoChanged, required this.onWriteDiaryPressed, required this.locations});
 
   final FutureOrCallback onAddPhotoPressed;
   final List<File> selectedPhotos;
   final String memo;
   final ValueChanged<String> onMemoChanged;
   final FutureOrCallback onWriteDiaryPressed;
+  final List<LocationPoint> locations;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +71,11 @@ class DiaryForm extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        Text(t.home.label.journey, style: styles.text.title.m),
+        Text("${t.home.label.journey} (${locations.length.toString()})", style: styles.text.title.m),
         const SizedBox(height: 8),
         JourneyMap(
           initialLocation: LatLng(35.6811398, 139.7644865),
+          locations: locations,
         ),
         const SizedBox(height: 16),
         Text(t.home.label.memo, style: styles.text.title.m),

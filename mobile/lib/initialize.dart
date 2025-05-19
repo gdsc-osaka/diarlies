@@ -25,7 +25,6 @@ Future<bool> initializeApp() async {
     // ])),
     LocaleSettings.useDeviceLocale(),
     LocationStorageService.initializeHive(),
-    // initializeBackgroundService(),
     Future.delayed(const Duration(seconds: 1)),
   ]);
 
