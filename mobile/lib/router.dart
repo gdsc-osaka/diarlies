@@ -1,4 +1,3 @@
-import 'package:diarlies/logger.dart';
 import 'package:diarlies/pages/home/layout.dart';
 import 'package:diarlies/pages/home/page.dart';
 import 'package:diarlies/pages/home/settings/page.dart';
@@ -8,6 +7,7 @@ import 'package:diarlies/pages/onboarding/page.dart';
 import 'package:diarlies/pages/onboarding/permission/page.dart';
 import 'package:diarlies/pages/signup/page.dart';
 import 'package:diarlies/pages/splash/page.dart';
+import 'package:diarlies/services/preferences_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,8 +81,10 @@ GoRouter router(Ref ref) {
   );
 
   ref.listen(authEventProvider, (prev, next) async {
+    final onboardingCompleted = await ref.read(onboardingCompletedProvider.future);
+
     if (next.value == AuthEvent.signedIn) {
-      router.goNamed(OnboardingPage.name);
+      router.goNamed(onboardingCompleted ? HomePage.name :OnboardingPage.name);
       return;
     }
 

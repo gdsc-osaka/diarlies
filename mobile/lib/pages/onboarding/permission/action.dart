@@ -16,9 +16,9 @@ class OnboardingPermissionAction extends FluxAction {
       await permissionService.requestNotificationPermission();
     }
 
-    if (ref.read(notificationPermissionProvider).valueOrNull == PermissionStatus.granted) {
-      await permissionService.requestNotificationPermission();
-    }
+    // if (ref.read(photoPermissionProvider).valueOrNull == PermissionStatus.granted) {
+    //   await permissionService.requestPhotoPermission();
+    // }
 
     // reload
     ref.invalidate(permissionServiceProvider);

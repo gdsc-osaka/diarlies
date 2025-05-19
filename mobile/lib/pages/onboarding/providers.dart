@@ -20,7 +20,7 @@ class DiaryLanguage extends _$DiaryLanguage {
 Future<bool> isPermissionAllGranted(Ref ref) async {
   final permissionStatuses = await Future.wait([
     ref.watch(locationPermissionProvider.future),
-    ref.watch(photoPermissionProvider.future),
+    // ref.watch(photoPermissionProvider.future),
     ref.watch(notificationPermissionProvider.future),
   ]);
 
