@@ -136,13 +136,13 @@ const localLogger = (category: string): LoggerBuilder => {
 
   return (label: string) => ({
     debug: (message: unknown, ...args: unknown[]) =>
-        logger.debug(label, message, ...args),
+      logger.debug(label, message, ...args),
     info: (message: unknown, ...args: unknown[]) =>
-        logger.info(label, message, ...args),
+      logger.info(label, message, ...args),
     warn: (message: unknown, ...args: unknown[]) =>
-        logger.warn(label, message, ...args),
+      logger.warn(label, message, ...args),
     error: (message: unknown, ...args: unknown[]) =>
-        logger.error(label, message, ...args),
+      logger.error(label, message, ...args),
   });
 };
 
