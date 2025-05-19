@@ -317,7 +317,9 @@ class _TranslationsHomeSettingsLabelJa implements TranslationsHomeSettingsLabelE
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get visibility => 'アカウントの公開範囲';
+	@override String get privacy => 'プライバシー';
+	@override String get account => 'アカウント';
+	@override String get additional_resources => 'その他のリソース';
 }
 
 // Path: home_settings.select
@@ -327,8 +329,8 @@ class _TranslationsHomeSettingsSelectJa implements TranslationsHomeSettingsSelec
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get public => '公開';
-	@override String get private => '非公開';
+	@override String get public => 'アカウントの公開範囲 - 公開';
+	@override String get private => 'アカウントの公開範囲 - 非公開';
 }
 
 // Path: home_settings.success
@@ -417,9 +419,11 @@ extension on TranslationsJa {
 			case 'home_settings.btn.cancel': return 'キャンセル';
 			case 'home_settings.btn.delete_account': return 'アカウントを削除';
 			case 'home_settings.btn.privacy_policy': return 'プライバシーポリシー';
-			case 'home_settings.label.visibility': return 'アカウントの公開範囲';
-			case 'home_settings.select.public': return '公開';
-			case 'home_settings.select.private': return '非公開';
+			case 'home_settings.label.privacy': return 'プライバシー';
+			case 'home_settings.label.account': return 'アカウント';
+			case 'home_settings.label.additional_resources': return 'その他のリソース';
+			case 'home_settings.select.public': return 'アカウントの公開範囲 - 公開';
+			case 'home_settings.select.private': return 'アカウントの公開範囲 - 非公開';
 			case 'home_settings.success.change_visibility': return '公開範囲が変更されました';
 			case 'home_settings.success.delete_account': return 'アカウントが削除されました';
 			case 'home_settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
