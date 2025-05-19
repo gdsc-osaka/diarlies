@@ -83,64 +83,66 @@ const gcloudLogger =
     };
   };
 
+const log4jsConfig: Configuration = {
+  appenders: {
+    console: {
+      type: "console",
+      layout: {
+        // 本番環境は Cloud Run のためそのまま出力
+        type: "colored",
+      },
+    },
+    access: {
+      type: "dateFile",
+      filename: "log/access.log",
+      pattern: ".yyyyMMdd-hhmmss",
+      keepFileExt: true,
+      numBackups: 5,
+    },
+    application: {
+      type: "dateFile",
+      filename: "log/application.log",
+      pattern: ".yyyyMMdd-hhmmss",
+      keepFileExt: true,
+      numBackups: 5,
+    },
+  },
+  categories: {
+    default: {
+      appenders: ["console"],
+      level: "DEBUG",
+    },
+    infra: {
+      appenders: ["console", "application"],
+      level: "DEBUG",
+      enableCallStack: true,
+    },
+    access: {
+      appenders: ["console", "access"],
+      level: "DEBUG",
+      enableCallStack: true,
+    },
+    service: {
+      appenders: ["console", "application"],
+      level: "DEBUG",
+      enableCallStack: true,
+    },
+  },
+};
+configure(log4jsConfig);
+
 const localLogger = (category: string): LoggerBuilder => {
-  const log4jsConfig: Configuration = {
-    appenders: {
-      console: {
-        type: "console",
-        layout: {
-          // 本番環境は Cloud Run のためそのまま出力
-          type: "colored",
-        },
-      },
-      access: {
-        type: "dateFile",
-        filename: "log/access.log",
-        pattern: ".yyyyMMdd-hhmmss",
-        keepFileExt: true,
-        numBackups: 5,
-      },
-      application: {
-        type: "dateFile",
-        filename: "log/application.log",
-        pattern: ".yyyyMMdd-hhmmss",
-        keepFileExt: true,
-        numBackups: 5,
-      },
-    },
-    categories: {
-      default: {
-        appenders: ["console"],
-        level: "DEBUG",
-      },
-      INFRA: {
-        appenders: ["console", "application"],
-        level: "DEBUG",
-        enableCallStack: true,
-      },
-      ACCESS: {
-        appenders: ["console", "access"],
-        level: "DEBUG",
-        enableCallStack: true,
-      },
-      SERVICE: {
-        appenders: ["console", "application"],
-        level: "DEBUG",
-        enableCallStack: true,
-      },
-    },
-  };
-  configure(log4jsConfig);
+  const logger = getLogger(category.toLowerCase());
 
   return (label: string) => ({
     debug: (message: unknown, ...args: unknown[]) =>
-      getLogger(category).debug(label, message, ...args),
+        logger.debug(label, message, ...args),
     info: (message: unknown, ...args: unknown[]) =>
-      getLogger(category).info(label, message, ...args),
+        logger.info(label, message, ...args),
     warn: (message: unknown, ...args: unknown[]) =>
-      getLogger(category).warn(label, message, ...args),
+        logger.warn(label, message, ...args),
     error: (message: unknown, ...args: unknown[]) =>
-      getLogger(category).error(label, message, ...args),
+        logger.error(label, message, ...args),
   });
 };
 

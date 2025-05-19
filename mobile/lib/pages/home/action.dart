@@ -4,7 +4,9 @@ part of 'page.dart';
 HomeAction _homeAction(Ref ref) => HomeAction(ref);
 
 class HomeAction extends FluxAction {
-  HomeAction(super.ref);
+  HomeAction(super.ref) {
+    initializeBackgroundService();
+  }
 
   Future<void> writeDiary({required ErrorHandler errorHandler}) async {
     try {

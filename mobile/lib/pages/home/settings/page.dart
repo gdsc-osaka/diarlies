@@ -111,9 +111,12 @@ class HomeSettingsPage extends ConsumerWidget {
         children: [
           NBCard(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(t.home_settings.title, style: styles.text.headline.m),
+                Text(t.home_settings.title, style: styles.text.headline.m, textAlign: TextAlign.center),
                 const SizedBox(height: 16),
+                Text(t.home_settings.label.privacy, style: styles.text.title.m, textAlign: TextAlign.start),
+                const SizedBox(height: 12),
                 NBSelect<AccountVisibility>(
                   value: ref.watch(_currentAccountVisibilityProvider).valueOrNull,
                   onChanged: handleChangeAccountVisibility,
@@ -132,13 +135,8 @@ class HomeSettingsPage extends ConsumerWidget {
                       ),
                 ),
                 const SizedBox(height: 16),
-                NBButton(
-                  label: Text(t.home_settings.btn.privacy_policy),
-                  icon: const Icon(Icons.privacy_tip_outlined),
-                  variant: Variant.secondary,
-                  onPressed: action.openPrivacyPolicyPage,
-                ),
-                const SizedBox(height: 8),
+                Text(t.home_settings.label.account, style: styles.text.title.m, textAlign: TextAlign.start),
+                const SizedBox(height: 12),
                 NBButton(
                   label: Text(t.home_settings.btn.delete_account),
                   icon: const Icon(Icons.delete_outline),
@@ -151,6 +149,15 @@ class HomeSettingsPage extends ConsumerWidget {
                   icon: const Icon(Icons.logout_outlined),
                   variant: Variant.primary,
                   onPressed: handleSignOut,
+                ),
+                const SizedBox(height: 16),
+                Text(t.home_settings.label.additional_resources, style: styles.text.title.m, textAlign: TextAlign.start),
+                const SizedBox(height: 12),
+                NBButton(
+                  label: Text(t.home_settings.btn.privacy_policy),
+                  icon: const Icon(Icons.privacy_tip_outlined),
+                  variant: Variant.secondary,
+                  onPressed: action.openPrivacyPolicyPage,
                 ),
               ],
             ),

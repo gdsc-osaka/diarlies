@@ -90,11 +90,13 @@
       "privacy_policy": "プライバシーポリシー"
     },
     "label": {
-      "visibility": "アカウントの公開範囲"
+      "privacy": "プライバシー",
+      "account": "アカウント",
+      "additional_resources": "その他のリソース"
     },
     "select": {
-      "public": "公開",
-      "private": "非公開"
+      "public": "アカウントの公開範囲 - 公開",
+      "private": "アカウントの公開範囲 - 非公開"
     },
     "success": {
       "change_visibility": "公開範囲が変更されました",

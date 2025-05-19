@@ -320,7 +320,9 @@ class TranslationsHomeSettingsLabelEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get visibility => 'Account visibility';
+	String get privacy => 'Privacy';
+	String get account => 'Account';
+	String get additional_resources => 'Additional resources';
 }
 
 // Path: home_settings.select
@@ -330,8 +332,8 @@ class TranslationsHomeSettingsSelectEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get public => 'Public';
-	String get private => 'Private';
+	String get public => 'Account visibility - Public';
+	String get private => 'Account visibility - Private';
 }
 
 // Path: home_settings.success
@@ -420,9 +422,11 @@ extension on Translations {
 			case 'home_settings.btn.cancel': return 'Cancel';
 			case 'home_settings.btn.delete_account': return 'Delete account';
 			case 'home_settings.btn.privacy_policy': return 'Privacy Policy';
-			case 'home_settings.label.visibility': return 'Account visibility';
-			case 'home_settings.select.public': return 'Public';
-			case 'home_settings.select.private': return 'Private';
+			case 'home_settings.label.privacy': return 'Privacy';
+			case 'home_settings.label.account': return 'Account';
+			case 'home_settings.label.additional_resources': return 'Additional resources';
+			case 'home_settings.select.public': return 'Account visibility - Public';
+			case 'home_settings.select.private': return 'Account visibility - Private';
 			case 'home_settings.success.change_visibility': return 'Visibility changed successfully';
 			case 'home_settings.success.delete_account': return 'Account deleted successfully';
 			case 'home_settings.error.failed_to_sign_out': return 'Failed to sign out';

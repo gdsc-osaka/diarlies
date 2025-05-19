@@ -4,6 +4,7 @@ import 'package:diarlies/i18n/strings.g.dart';
 import 'package:diarlies/pages/home/page.dart';
 import 'package:diarlies/pages/onboarding/_components/onboarding_positioned.dart';
 import 'package:diarlies/router.dart';
+import 'package:diarlies/services/preferences_service.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -90,11 +90,13 @@
       "privacy_policy": "Privacy Policy"
     },
     "label": {
-      "visibility": "Account visibility"
+      "privacy": "Privacy",
+      "account": "Account",
+      "additional_resources": "Additional resources"
     },
     "select": {
-      "public": "Public",
-      "private": "Private"
+      "public": "Account visibility - Public",
+      "private": "Account visibility - Private"
     },
     "success": {
       "change_visibility": "Visibility changed successfully",

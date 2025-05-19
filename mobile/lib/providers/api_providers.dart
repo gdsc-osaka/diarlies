@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:api/api.dart';
 import 'package:diarlies/logger.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../env.dart';
 import 'auth_providers.dart';
 
 part 'api_providers.g.dart';
@@ -15,9 +15,9 @@ part 'api_providers.g.dart';
 Api api(Ref ref) {
   final api = Api(
     dio: Dio(BaseOptions(
-      baseUrl: switch (kDebugMode) {
+      baseUrl: switch (isDebug) {
         true => Platform.isAndroid ? 'http://10.0.2.2:8080' : 'http://localhost:8080',
-        false => Api.basePath,
+        _ => Api.basePath,
       },
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 15000),

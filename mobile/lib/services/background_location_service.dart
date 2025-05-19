@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui'; // DartPluginRegistrant.ensureInitialized() のために必要
 
+import 'package:diarlies/logger.dart';
 import 'package:diarlies/services/preferences_service.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -10,18 +11,17 @@ import 'package:hive_model/hive_model.dart';
 import 'location_storage_service.dart';
 import 'notification_service.dart';
 
-const int notificationId = 888;
-const String notificationChannelId = 'my_foreground';
-
 @pragma('vm:entry-point')
 Future<void> onStart(ServiceInstance service) async {
+  print("FLUTTER BACKGROUND SERVICE: ON START");
+
   // DartPluginRegistrant.ensureInitialized() は、バックグラウンド isolate で
   // Flutter プラグイン (geolocatorなど) を使用するために必要です。
   DartPluginRegistrant.ensureInitialized();
 
   final locationStorage = LocationStorageService(); // Boxを開くために初期化が必要なら事前に行う
   // Hiveの初期化はmain isolateで行われている前提。もしBoxが閉じていたら再度開く処理が必要
-  // await LocationStorageService.initializeHive(); // バックグラウンドで必要なら
+  await LocationStorageService.initializeHive(); // バックグラウンドで必要なら
 
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
@@ -39,8 +39,19 @@ Future<void> onStart(ServiceInstance service) async {
 
   print("Background Service Started");
 
+  Timer.periodic(const Duration(seconds: 1), (timer) async {
+    if (service is AndroidServiceInstance) {
+      if (await service.isForegroundService()) {
+        NotificationService.showNotification(
+          title: "Diarlies Location Service",
+          body: "Collecting location data in background periodically.",
+        );
+      }
+    }
+  });
+
   // 定期実行タイマー
-  Timer.periodic(const Duration(minutes: 15), (timer) async {
+  Timer.periodic(const Duration(seconds: 5), (timer) async {
     print("Background service running: ${DateTime.now()}");
     bool shouldStore = await PreferencesService.getShouldStoreLocation();
     List<LocationPoint> currentPoints = locationStorage.getAllLocationPoints();
@@ -61,28 +72,25 @@ Future<void> onStart(ServiceInstance service) async {
         }
 
 
-        Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.medium // バッテリー消費を考慮
+        final position = await Geolocator.getCurrentPosition(
+          locationSettings: LocationSettings(
+            accuracy: LocationAccuracy.medium,
+            distanceFilter: 10,
+            timeLimit: const Duration(seconds: 30),
+          ),
         );
+        final lastPoint = locationStorage.getLastLocationPoint();
+
         print("Current location: ${position.latitude}, ${position.longitude}");
+        print("Last location: ${lastPoint?.lat}, ${lastPoint?.lng}");
 
-        LocationPoint? lastPoint = locationStorage.getLastLocationPoint();
-        bool saveLocation = true;
 
-        if (lastPoint != null) {
-          double distance = Geolocator.distanceBetween(
-            lastPoint.lat,
-            lastPoint.lng,
-            position.latitude,
-            position.longitude,
-          );
-          print("Distance from last point: $distance meters");
-          if (distance < 100.0) { // 100m以上離れていない場合
-            saveLocation = false;
-          }
-        }
-
-        if (saveLocation) {
+        if (lastPoint == null || Geolocator.distanceBetween(
+          lastPoint.lat,
+          lastPoint.lng,
+          position.latitude,
+          position.longitude,
+        ) >= 100) {
           final newPoint = LocationPoint(
             createdAt: DateTime.now(),
             lat: position.latitude,
@@ -102,59 +110,11 @@ Future<void> onStart(ServiceInstance service) async {
       print("Not storing location based on flag and existing data.");
     }
 
-    // バックグラウンド処理が実行中であることを示す通知
-    // Androidの場合、setAsForegroundService() を呼ぶと自動で通知が表示されることが多い
-    // ここではその通知内容を更新するイメージ
-    if (service is AndroidServiceInstance) {
-      if (await service.isForegroundService()) {
-        NotificationService.showNotification(
-          id: notificationId,
-          title: "位置情報サービス実行中",
-          body: "バックグラウンドで現在地を監視しています (${DateTime.now().toLocal().toString().substring(0,16)})",
-        );
-      }
-    }
     // iOSの場合、別途フォアグラウンドでの通知表示とは異なる仕組みになるため、
     // flutter_local_notifications を使って定期的に通知を更新するか、
     // またはサービスが動いていることを示す別の方法を検討します。
     // (iOSでは永続的な前景サービス通知はAndroidほど標準的ではありません)
   });
-}
-
-
-Future<void> initializeBackgroundService() async {
-  final service = FlutterBackgroundService();
-
-  // Android の通知チャンネル設定
-  // flutter_local_notifications で設定したチャンネルIDと合わせる
-  // あるいは、flutter_background_service が独自に作成する通知を利用する
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    notificationChannelId, // 'my_foreground'
-    'MY FOREGROUND SERVICE', // title
-    description: 'This channel is used for important notifications.', // description
-    importance: Importance.low, // Low or Default. Highは避ける
-  );
-
-  await NotificationService.initialize(); // ローカル通知サービスの初期化
-
-  await service.configure(
-    androidConfiguration: AndroidConfiguration(
-      onStart: onStart,
-      autoStart: true, // アプリ起動時に自動で開始 (必要に応じてfalseに)
-      isForegroundMode: true, // フォアグラウンドサービスとして動作
-      notificationChannelId: notificationChannelId, // 上記で定義したチャンネルID
-      initialNotificationTitle: '位置情報サービス',
-      initialNotificationContent: '初期化しています...',
-      foregroundServiceNotificationId: notificationId,
-    ),
-    iosConfiguration: IosConfiguration(
-      autoStart: true, // アプリ起動時に自動で開始
-      onForeground: onStart, // フォアグラウンドになったときの処理
-      onBackground: onIosBackground, // バックグラウンドになったときの処理 (オプション)
-    ),
-  );
-  // サービスを開始する場合 (autoStart: false の時)
-  // service.startService();
 }
 
 // iOS用バックグラウンドハンドラ (オプション)
@@ -164,4 +124,28 @@ Future<bool> onIosBackground(ServiceInstance service) async {
   print('FLUTTER BACKGROUND SERVICE: BG IS RUNNING');
   // iOSのバックグラウンドフェッチロジックなどをここに記述
   return true; // trueを返すとバックグラウンド処理を継続しようとする
+}
+
+Future<void> initializeBackgroundService() async {
+  logger.i('Initializing background service...');
+
+  await NotificationService.initialize();
+
+  final service = FlutterBackgroundService();
+  await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      autoStart: true, // アプリ起動時に自動で開始 (必要に応じてfalseに)
+      isForegroundMode: true, // フォアグラウンドサービスとして動作
+      notificationChannelId: NotificationService.channelId, // 上記で定義したチャンネルID
+      initialNotificationTitle: 'Diarlies collecting location',
+      initialNotificationContent: 'Diarlies begins collecting location data after app closed or swiped away.',
+      foregroundServiceNotificationId: NotificationService.notificationId,
+    ),
+    iosConfiguration: IosConfiguration(
+      autoStart: true, // アプリ起動時に自動で開始
+      onForeground: onStart, // フォアグラウンドになったときの処理
+      onBackground: onIosBackground, // バックグラウンドになったときの処理 (オプション)
+    ),
+  );
 }

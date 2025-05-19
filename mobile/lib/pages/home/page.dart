@@ -17,6 +17,8 @@ import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';
 import 'package:diarlies/providers/location_providers.dart';
 import 'package:diarlies/services/api_adapter.dart';
+import 'package:diarlies/services/background_location_service.dart';
+import 'package:diarlies/services/location_storage_service.dart';
 import 'package:diarlies/shared/error_handler.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:diarlies/styles/styles.dart';
@@ -104,12 +106,17 @@ class HomePage extends ConsumerWidget {
                                 memo: ref.watch(diaryMemoProvider) ?? '',
                                 onMemoChanged: action.updateMemo,
                                 onWriteDiaryPressed: handleWriteDiary,
+                                locations: LocationStorageService().getAllLocationPoints(),
                               )
-                              : DiaryDisplay(diary: diary,
-                          headerSuffix: NBButton(label: Text(t.home.btn.regenerate),
-                              icon: const Icon(Icons.delete_outline),
-                              onPressed: () => handleRegenerate(diary), variant: Variant.secondary),
-                          ),
+                              : DiaryDisplay(
+                                diary: diary,
+                                headerSuffix: NBButton(
+                                  label: Text(t.home.btn.regenerate),
+                                  icon: const Icon(Icons.delete_outline),
+                                  onPressed: () => handleRegenerate(diary),
+                                  variant: Variant.secondary,
+                                ),
+                              ),
                   error:
                       (e, s) => NBCard(
                         color: styles.color.error,

@@ -12,6 +12,12 @@ Future<SharedPreferences> _sharedPreferences(Ref ref) =>
 @riverpod
 Future<PreferencesService> preferencesService(Ref ref) async => PreferencesService(await ref.watch(_sharedPreferencesProvider.future));
 
+@Riverpod(keepAlive: true)
+Future<bool> onboardingCompleted(Ref ref) async {
+  final pref = await ref.watch(preferencesServiceProvider.future);
+  return pref.getOnboardingCompleted();
+}
+
 class PreferencesService {
   PreferencesService(this._prefs);
 
@@ -27,7 +33,7 @@ class PreferencesService {
 
   static Future<bool> getShouldStoreLocation() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_shouldStoreLocationKey) ?? false; // デフォルトはfalse
+    return prefs.getBool(_shouldStoreLocationKey) ?? true;
   }
 
   // diary_language
@@ -46,5 +52,16 @@ class PreferencesService {
       (element) => element.name == val,
       orElse: () => Language.en,
     );
+  }
+
+  // onboarding_completed
+  static const String _onboardingCompletedKey = 'onboarding_completed';
+
+  Future<void> setOnboardingCompleted(bool value) async {
+    await _prefs.setBool(_onboardingCompletedKey, value);
+  }
+
+  bool getOnboardingCompleted() {
+    return _prefs.getBool(_onboardingCompletedKey) ?? false;
   }
 }
