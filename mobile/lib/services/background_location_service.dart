@@ -51,7 +51,7 @@ Future<void> onStart(ServiceInstance service) async {
   });
 
   // 定期実行タイマー
-  Timer.periodic(const Duration(seconds: 5), (timer) async {
+  Timer.periodic(const Duration(minutes: 10), (timer) async {
     print("Background service running: ${DateTime.now()}");
     bool shouldStore = await PreferencesService.getShouldStoreLocation();
     List<LocationPoint> currentPoints = locationStorage.getAllLocationPoints();
@@ -74,7 +74,7 @@ Future<void> onStart(ServiceInstance service) async {
 
         final position = await Geolocator.getCurrentPosition(
           locationSettings: LocationSettings(
-            accuracy: LocationAccuracy.medium,
+            accuracy: LocationAccuracy.high,
             distanceFilter: 10,
             timeLimit: const Duration(seconds: 30),
           ),
