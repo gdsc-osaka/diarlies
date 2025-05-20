@@ -31,7 +31,6 @@ import { diaryGenerationPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
-import { serviceLogger } from "../logger";
 
 export const Image = z
   .instanceof(File)
@@ -65,12 +64,9 @@ export const createDiary =
     generateContent: GenerateContent,
     uploadFile: UploadFile,
   ): CreateDiary =>
-  (
-    authUser: AuthUser,
-    args: CreateDiaryRequest,
-  ) =>
-    // check user existence, fetch nearby places, generate content
+  (authUser: AuthUser, args: CreateDiaryRequest) =>
     ResultAsync.combine([
+      // check user existence
       fetchDBUserByUid(db)(authUser.uid).mapErr((err) =>
         match(err)
           .with({ code: "not-found" }, () =>
@@ -78,6 +74,7 @@ export const createDiary =
           )
           .otherwise((e) => e),
       ),
+      // fetch nearby places
       ResultAsync.combine(
         args.locationHistories.map((locationHistory) =>
           fetchNearbyPlaces({
@@ -89,6 +86,7 @@ export const createDiary =
             places,
           })),
         ),
+        // generate content
       ).andThen((places) =>
         generateContent(
           diaryGenerationPrompt(places, args.languageCode, ""),
