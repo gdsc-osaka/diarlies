@@ -42,7 +42,7 @@ export const diaryGenerationPrompt = (
 \`\`\`
 * 以下の情報をもとに日記を生成してください
   * 今日行った場所
-${locationHistories.map(formatLocationHistory('    ')).join("\n")}
+${locationHistories.map(formatLocationHistory("    ")).join("\n")}
   * 今日の出来事
     * ${memo}
   * 今日の感情: 7 (1-10)

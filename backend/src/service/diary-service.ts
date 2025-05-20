@@ -1,5 +1,4 @@
 import z from "zod";
-import { Timestamp, toDate } from "../domain/timestamp";
 import { LanguageCode } from "../domain/language";
 import { FetchNearbyPlaces } from "../infra/map-repository";
 import { okAsync, Result, ResultAsync } from "neverthrow";
@@ -91,7 +90,11 @@ export const createDiary =
         // generate content
       ).andThen((places) =>
         generateContent(
-          diaryGenerationPrompt(places, args.languageCode, args.memo ?? undefined),
+          diaryGenerationPrompt(
+            places,
+            args.languageCode,
+            args.memo ?? undefined,
+          ),
           args.images,
         ).andThen(trimSystemPrompt),
       ),
