@@ -31,6 +31,7 @@ class DiariesApi {
   /// * [locationHistories] - Location histories for diary generation
   /// * [languageCode] 
   /// * [images] 
+  /// * [memo] - Memo for diary generation
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -44,6 +45,7 @@ class DiariesApi {
     required String locationHistories,
     required LanguageCode languageCode,
     required BuiltList<MultipartFile> images,
+    String? memo,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -78,6 +80,7 @@ class DiariesApi {
         r'locationHistories': encodeFormParameter(_serializers, locationHistories, const FullType(String)),
         r'languageCode': encodeFormParameter(_serializers, languageCode, const FullType(LanguageCode)),
         r'images': images.toList(),
+        if (memo != null) r'memo': encodeFormParameter(_serializers, memo, const FullType(String)),
       });
 
     } catch(error, stackTrace) {

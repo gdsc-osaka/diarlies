@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **createDiary**
-> Diary createDiary(locationHistories, languageCode, images)
+> Diary createDiary(locationHistories, languageCode, images, memo)
 
 
 
@@ -30,9 +30,10 @@ final api = Api().getDiariesApi();
 final String locationHistories = locationHistories_example; // String | Location histories for diary generation
 final LanguageCode languageCode = ; // LanguageCode | 
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
+final String memo = memo_example; // String | Memo for diary generation
 
 try {
-    final response = api.createDiary(locationHistories, languageCode, images);
+    final response = api.createDiary(locationHistories, languageCode, images, memo);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling DiariesApi->createDiary: $e\n');
@@ -46,6 +47,7 @@ Name | Type | Description  | Notes
  **locationHistories** | **String**| Location histories for diary generation | 
  **languageCode** | [**LanguageCode**](LanguageCode.md)|  | 
  **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | 
+ **memo** | **String**| Memo for diary generation | [optional] 
 
 ### Return type
 

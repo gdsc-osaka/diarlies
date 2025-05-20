@@ -34,10 +34,15 @@ class HomeAction extends FluxAction {
        */
 
       final res = await postDiaries(ref.read(diariesApiProvider))(
-        locationHistories: ref.read(storedLocationHistoriesProvider),
+        // locationHistories: ref.read(storedLocationHistoriesProvider),
+        locationHistories: [
+          LocationHistory(lat: 34.7981499, lng: 135.4592248, visitedAt: DateTime.now().copyWith(hour: 12, minute: 30)),
+          // LocationHistory(lat: 34.7848265, lng: 135.4705357, visitedAt: DateTime.now().copyWith(hour: 15, minute: 30)),
+        ],
         images: BuiltList.of(photoStreams),
         // diaryLanguage が未設定なのはありえない
         languageCode: languageCode?.code ?? LanguageCode.en,
+        memo: ref.read(diaryMemoProvider),
       );
 
       logger.i('Diary written successfully: ${res.data?.id}');
