@@ -41,14 +41,14 @@ export const Image = z
 export const CreateDiaryRequest = z.object({
   locationHistories: z.array(
     z.object({
-      lag: z.number(),
+      lat: z.number(),
       lng: z.number(),
-      visitedAt: Timestamp,
+      visitedAt: z.string(),
     }),
   ),
   languageCode: LanguageCode,
   images: z.array(Image),
-  memo: z.string().optional(),
+  memo: z.string().optional().nullable(),
 });
 export type CreateDiaryRequest = z.infer<typeof CreateDiaryRequest>;
 
@@ -81,17 +81,17 @@ export const createDiary =
         args.locationHistories.map((locationHistory) =>
           fetchNearbyPlaces({
             languageCode: args.languageCode,
-            lat: locationHistory.lag,
+            lat: locationHistory.lat,
             lng: locationHistory.lng,
           }).map((places) => ({
-            visitedAt: toDate(locationHistory.visitedAt),
+            visitedAt: new Date(locationHistory.visitedAt),
             places,
           })),
         ),
         // generate content
       ).andThen((places) =>
         generateContent(
-          diaryGenerationPrompt(places, args.languageCode, args.memo),
+          diaryGenerationPrompt(places, args.languageCode, args.memo ?? undefined),
           args.images,
         ).andThen(trimSystemPrompt),
       ),

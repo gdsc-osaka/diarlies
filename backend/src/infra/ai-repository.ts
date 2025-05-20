@@ -49,5 +49,8 @@ export const generateContent =
       })(),
       handleAIError,
     )
-      .andTee(infraLogger("generateContent").info)
+      .andTee((result) => infraLogger("generateContent").info({
+          prompt,
+          result
+      }))
       .orTee(infraLogger("generateContent").error);
