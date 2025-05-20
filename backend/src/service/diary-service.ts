@@ -31,6 +31,7 @@ import { diaryGenerationPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
+import { id } from "../shared/func";
 
 export const Image = z
   .instanceof(File)
@@ -72,7 +73,7 @@ export const createDiary =
           .with({ code: "not-found" }, () =>
             createServiceError(StatusCode.Unauthorized, "User not found"),
           )
-          .otherwise((e) => e),
+          .otherwise(id),
       ),
       // fetch nearby places
       ResultAsync.combine(
@@ -113,7 +114,7 @@ export const createDiary =
       .andThen(({ diary, thumbnailUrl }) => convertToDiary(diary, thumbnailUrl))
       .mapErr((err) =>
         match(err)
-          .with({ __brand: "ServiceError" }, (e) => e)
+          .with({ __brand: "ServiceError" }, id)
           .otherwise((err) =>
             createServiceError(
               StatusCode.InternalServerError,
