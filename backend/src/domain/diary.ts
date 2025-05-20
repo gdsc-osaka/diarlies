@@ -4,6 +4,8 @@ import { Day } from "./day";
 import { diaries } from "../db/schema/diaries";
 import { err, ok, Result } from "neverthrow";
 import { convertToUser, DBUser, User } from "./user";
+import cuid2 from "@paralleldrive/cuid2";
+import { GeneratedContent } from "./ai";
 
 export const Diary = z
   .object({
@@ -30,16 +32,14 @@ export type DBDiaryWithDBUser = DBDiary & {
 
 export const dbDiaryForCreate = (
   userId: string,
-  content: string,
-  diaryDate: Day,
-  thumbnailPath?: string,
+  generated: GeneratedContent,
 ): Result<DBDiaryForCreate, never> => {
   return ok({
     userId,
-    content,
-    diaryDate: new Date(diaryDate.year, diaryDate.month - 1, diaryDate.day + 1),
-    // TODO: Replace with a dummy thumbnail path
-    thumbnailPath: thumbnailPath ?? "",
+    content: generated.text,
+    // TODO: diaryDate should be passed from the client
+    diaryDate: new Date(),
+    thumbnailPath: generated.image ? cuid2.createId() : "/not-found.png",
   });
 };
 

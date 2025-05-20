@@ -1,6 +1,4 @@
 import 'package:api/api.dart';
-import 'package:diarlies/components/nb_button.dart';
-import 'package:diarlies/pages/onboarding/page.dart';
 import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:dio/dio.dart';
@@ -44,13 +42,13 @@ class HomeSocialPage extends ConsumerWidget {
             child: ListView.separated(
               clipBehavior: Clip.none,
               itemCount: ref.watch(diariesInTimelineProvider).maybeWhen(
-                data: (diaries) => diaries.length + 1,
+                data: (diaries) => diaries.length + 2,
                 orElse: () => 1,
               ),
               itemBuilder: (context, index) {
-                if (index == 0) return SizedBox(height: 123);
-
                 final diaries = ref.watch(diariesInTimelineProvider).valueOrNull;
+                if (index == 0 || index - 1 == diaries?.length) return SizedBox(height: 123);
+
                 final diary = diaries?.elementAtOrNull(index - 1);
 
                 return DiaryCard(

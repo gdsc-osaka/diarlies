@@ -24,6 +24,7 @@ import z from "zod";
 import { DB, DBorTx } from "../db/db";
 import { DeleteAuthUser } from "../infra/authenticator";
 import { serviceLogger } from "../logger";
+import { id } from "../shared/func";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
@@ -92,7 +93,7 @@ export const createUser =
       .andThen(convertToUser)
       .mapErr((err) =>
         match(err)
-          .with({ __brand: "ServiceError" }, (e) => e)
+          .with({ __brand: "ServiceError" }, id)
           .with({ __brand: "DBError" }, (e) =>
             createServiceError(
               match(e.code)

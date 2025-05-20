@@ -19,7 +19,7 @@ class DiaryDisplay extends StatelessWidget {
     final diaryDate = DateTime(diary.diaryDate.year, diary.diaryDate.month, diary.diaryDate.day);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [

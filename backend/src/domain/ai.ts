@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { MapPlace } from "./map";
 import { LanguageCode } from "./language";
+import { ok, Result } from "neverthrow";
 
 export type GenAI = InstanceType<typeof GoogleGenAI>;
 
@@ -23,30 +24,50 @@ interface LocationHistory {
 export const diaryGenerationPrompt = (
   locationHistories: LocationHistory[],
   languageCode: LanguageCode,
-  memo: string,
+  memo?: string,
 ): string => {
-  return `あなたは私の"日記生成アシスタント"です。
-1. 以下の情報を基に、今日1日を振り返る日記を作成してください。
-2. 日記の言語: ${languageCode}
-3. 日記の内容に合わせて, 色鉛筆で描いた絵を生成してください。ただし, 文字を絵の中に含むことは禁止します。
+  return `日記を生成してください。
+* 以下のルールに従ってください
+  * 日記の言語: ${languageCode}
+  * 日記の内容に合わせて絵を生成する
+    * 文字を絵の中に含むことを禁止する
+    * 画材は色鉛筆または水彩画を使用する
+  * 以下のフォーマットで出力する
+\`\`\`yaml
+# Thinking process
+(思考過程)
 
-# 今日行った場所
-${locationHistories.map(formatLocationHistory).join("\n")}
-
-# 今日の出来事
-今日の感情を1(悲しい)~10(幸せ)の数字で表すと7でした。(この数値は日記には記載しないこと)
-感情の理由: ${memo}
+# Diary entry
+(日記の内容)
+\`\`\`
+* 以下の情報をもとに日記を生成してください
+  * 今日行った場所
+${locationHistories.map(formatLocationHistory("    ")).join("\n")}
+  * 今日の出来事
+    * ${memo}
+  * 今日の感情: 7 (1-10)
 `;
 };
 
-const formatLocationHistory = (location: LocationHistory): string => {
-  return (
-    `- ${formatDate(location.visitedAt)}: \n` +
-    location.places
-      .map((place) => `  - ${place.displayName} (${place.address})`)
-      .join("\n")
-  );
+export const trimSystemPrompt = (
+  generated: GeneratedContent,
+): Result<GeneratedContent, never> => {
+  return ok({
+    text: generated.text.split("# Diary entry").at(-1)?.trim() ?? "",
+    image: generated.image,
+  });
 };
+
+const formatLocationHistory =
+  (indent: string) =>
+  (location: LocationHistory): string => {
+    return (
+      `- ${formatDate(location.visitedAt)}: \n` +
+      location.places
+        .map((place) => `${indent}* ${place.displayName} (${place.address})`)
+        .join("\n")
+    );
+  };
 
 const formatDate = (date: Date): string => {
   // yyyy/MM/dd hh:mm
@@ -57,3 +78,8 @@ const formatDate = (date: Date): string => {
   const mm = String(date.getMinutes()).padStart(2, "0");
   return `${yyyy}/${MM}/${dd} ${hh}:${mm}`;
 };
+
+export interface GeneratedContent {
+  text: string;
+  image?: Buffer<ArrayBuffer>;
+}

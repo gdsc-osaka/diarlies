@@ -1,18 +1,13 @@
 import { ResultAsync } from "neverthrow";
 import { AIError, handleAIError } from "./error/ai-error";
 import { infraLogger } from "../logger";
-import { GenAI } from "../domain/ai";
+import { GenAI, GeneratedContent } from "../domain/ai";
 import { Modality } from "@google/genai";
-
-interface GenerateContentStreamResponse {
-  text: string;
-  image?: Buffer<ArrayBuffer>;
-}
 
 export type GenerateContent = (
   prompt: string,
   images: File[],
-) => ResultAsync<GenerateContentStreamResponse, AIError>;
+) => ResultAsync<GeneratedContent, AIError>;
 
 export const generateContent =
   (ai: GenAI): GenerateContent =>
@@ -54,5 +49,10 @@ export const generateContent =
       })(),
       handleAIError,
     )
-      .andTee(infraLogger("generateContent").info)
+      .andTee((result) =>
+        infraLogger("generateContent").info({
+          prompt,
+          result,
+        }),
+      )
       .orTee(infraLogger("generateContent").error);

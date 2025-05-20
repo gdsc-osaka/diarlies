@@ -51,9 +51,10 @@ final api = Api().getDiariesApi();
 final String locationHistories = locationHistories_example; // String | Location histories for diary generation
 final LanguageCode languageCode = ; // LanguageCode | 
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
+final String memo = memo_example; // String | Memo for diary generation
 
 try {
-    final response = await api.createDiary(locationHistories, languageCode, images);
+    final response = await api.createDiary(locationHistories, languageCode, images, memo);
     print(response);
 } catch on DioException (e) {
     print("Exception when calling DiariesApi->createDiary: $e\n");

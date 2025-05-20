@@ -21,7 +21,7 @@ export const fetchNearbyPlaces =
       mapPlace.searchNearby(
         {
           languageCode,
-          maxResultCount: 3,
+          maxResultCount: 1,
           locationRestriction: {
             circle: {
               center: {
@@ -29,14 +29,14 @@ export const fetchNearbyPlaces =
                 longitude: lng,
               },
               // GPS の誤差は概ね 100m
-              radius: 100,
+              radius: 10,
             },
           },
         },
         {
           otherArgs: {
             headers: {
-              "X-Goog-FieldMask": "places.displayName,",
+              "X-Goog-FieldMask": "places.displayName",
             },
           },
         },
