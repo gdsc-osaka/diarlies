@@ -25,26 +25,46 @@ export const diaryGenerationPrompt = (
   languageCode: LanguageCode,
   memo: string,
 ): string => {
-  return `日記を生成してください。
-* 以下のルールに従ってください
-  * 日記の言語: ${languageCode}
-  * 日記の内容に合わせて絵を生成する
-    * 文字を絵の中に含むことを禁止する
-    * 画材は色鉛筆または水彩画を使用する
-  * 以下のフォーマットで出力する
+  return `You are an AI assistant tasked with generating a diary entry and an accompanying illustration concept.
+
+## Task
+Generate a diary entry based on the provided information. Also, describe an illustration concept that visually represents the diary entry.
+
+## Rules & Constraints
+
+1.  **Diary Language:**
+    * The diary entry must be written in: ${languageCode}
+
+2.  **Illustration Details:**
+    * The illustration concept should visually depict the events or mood of the diary entry.
+    * **Critical:** The illustration MUST NOT contain any text, letters, or numbers.
+    * **Art Medium:** The style for the conceptual illustration should be exclusively colored pencil OR watercolor.
+
+3.  **Output Format:**
+    * Strictly adhere to the following YAML format.
+    * The "Thinking process" should briefly explain your reasoning for the diary content and the image concept.
+
 \`\`\`yaml
 # Thinking process
-(思考過程)
+# This section should outline:
+# 1. Your reasoning for the diary entry's content and tone.
+# 2. A detailed description of the illustration concept, including composition, key elements, and how it relates to the diary.
+#    Remember the art medium (colored pencil or watercolor) and the no-text constraint for the image.
 
 # Diary entry
-(日記の内容)
+# [Content of the diary entry in ${languageCode}]
 \`\`\`
-* 以下の情報をもとに日記を生成してください
-  * 今日行った場所
+
+## Input Information
+Use the following details to generate the diary and illustration concept:
+
+* **Places Visited Today:**
 ${locationHistories.map(formatLocationHistory('    ')).join("\n")}
-  * 今日の出来事
+
+* **Today's Key Events/Memo:**
     * ${memo}
-  * 今日の感情: 7 (1-10)
+
+* **Today's Overall Emotion (1-10 scale, where 1 = very negative, 10 = very positive):** 7
 `;
 };
 
