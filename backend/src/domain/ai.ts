@@ -57,3 +57,8 @@ const formatDate = (date: Date): string => {
   const mm = String(date.getMinutes()).padStart(2, "0");
   return `${yyyy}/${MM}/${dd} ${hh}:${mm}`;
 };
+
+export interface GeneratedContent {
+  text: string;
+  image?: Buffer<ArrayBuffer>;
+}

@@ -2,7 +2,7 @@ import z from "zod";
 import { Timestamp, toDate } from "../domain/timestamp";
 import { LanguageCode } from "../domain/language";
 import { FetchNearbyPlaces } from "../infra/map-repository";
-import { errAsync, Result, ResultAsync } from "neverthrow";
+import { okAsync, Result, ResultAsync } from "neverthrow";
 import { DBorTx } from "../db/db";
 import {
   createServiceError,
@@ -31,7 +31,6 @@ import { diaryGenerationPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
-import cuid2 from "@paralleldrive/cuid2";
 import { serviceLogger } from "../logger";
 
 export const Image = z
@@ -57,7 +56,6 @@ export type CreateDiary = (
   args: CreateDiaryRequest,
 ) => ResultAsync<Diary, ServiceError>;
 
-const createDiaryLogger = serviceLogger("createDiary");
 export const createDiary =
   (
     db: DBorTx,
@@ -69,109 +67,62 @@ export const createDiary =
   ): CreateDiary =>
   (
     authUser: AuthUser,
-    args: CreateDiaryRequest, //:  =>
+    args: CreateDiaryRequest,
   ) =>
-    ResultAsync.fromSafePromise(
-      (async () => {
-        // Check current user
-        const dbUser = await fetchDBUserByUid(db)(authUser.uid);
-        if (dbUser.isErr()) {
-          return errAsync(
-            createServiceError(
-              StatusCode.Unauthorized,
-              "User not found",
-              dbUser.error.message,
-            ),
-          );
-        }
-
-        // Call Gemini API
-        const places = await ResultAsync.combine(
-          args.locationHistories.map((locationHistory) =>
-            fetchNearbyPlaces({
-              languageCode: args.languageCode,
-              lat: locationHistory.lag,
-              lng: locationHistory.lng,
-            }).map((places) => ({
-              visitedAt: toDate(locationHistory.visitedAt),
-              places,
-            })),
-          ),
-        );
-
-        if (places.isErr()) {
-          return errAsync(
-            createServiceError(
-              StatusCode.InternalServerError,
-              "Failed to fetch nearby places",
-              places.error.message,
-            ),
-          );
-        }
-
-        const generated = await generateContent(
-          diaryGenerationPrompt(places.value, args.languageCode, ""),
+    // check user existence, fetch nearby places, generate content
+    ResultAsync.combine([
+      fetchDBUserByUid(db)(authUser.uid).mapErr((err) =>
+        match(err)
+          .with({ code: "not-found" }, () =>
+            createServiceError(StatusCode.Unauthorized, "User not found"),
+          )
+          .otherwise((e) => e),
+      ),
+      ResultAsync.combine(
+        args.locationHistories.map((locationHistory) =>
+          fetchNearbyPlaces({
+            languageCode: args.languageCode,
+            lat: locationHistory.lag,
+            lng: locationHistory.lng,
+          }).map((places) => ({
+            visitedAt: toDate(locationHistory.visitedAt),
+            places,
+          })),
+        ),
+      ).andThen((places) =>
+        generateContent(
+          diaryGenerationPrompt(places, args.languageCode, ""),
           args.images,
-        );
-
-        if (generated.isErr()) {
-          return errAsync(
-            createServiceError(
-              StatusCode.InternalServerError,
-              "Failed to generate content",
-              generated.error.message,
-            ),
-          );
-        }
-
-        const thumbnailPath = cuid2.createId();
-        const thumbnailUrl = generated.value.image
-          ? await uploadFile(thumbnailStorageBucket())(
-              fileData(dbUser.value, thumbnailPath, generated.value.image),
+        ),
+      ),
+    ])
+      // insert diary to db
+      .andThen(([dbUser, generated]) =>
+        dbDiaryForCreate(dbUser.id, generated)
+          .asyncAndThen(createDBDiary(db))
+          .map((diary) => ({ dbUser, diary, generated })),
+      )
+      // upload thumbnail to storage
+      .andThen(({ dbUser, diary, generated }) =>
+        (generated.image
+          ? uploadFile(thumbnailStorageBucket())(
+              fileData(dbUser, diary.thumbnailPath, generated.image),
             )
-          : undefined;
-
-        if (thumbnailUrl?.isErr()) {
-          return errAsync(
+          : okAsync(undefined)
+        ).map((thumbnailUrl) => ({ diary, thumbnailUrl })),
+      )
+      // convert to Diary
+      .andThen(({ diary, thumbnailUrl }) => convertToDiary(diary, thumbnailUrl))
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "ServiceError" }, (e) => e)
+          .otherwise((err) =>
             createServiceError(
               StatusCode.InternalServerError,
-              `Failed to upload thumbnail. ${thumbnailUrl.error.message}`,
+              `Unexpected error occurred. ${err.message}`,
             ),
-          );
-        }
-
-        const now = new Date();
-        const diary = await dbDiaryForCreate(
-          dbUser.value.id,
-          generated.value.text,
-          {
-            year: now.getFullYear(),
-            month: now.getMonth() + 1,
-            day: now.getDate(),
-          },
-          thumbnailPath,
-        ).asyncAndThen(createDBDiary(db));
-
-        if (diary.isErr()) {
-          return errAsync(
-            createServiceError(
-              StatusCode.InternalServerError,
-              "Failed to create diary",
-              diary.error.message,
-            ),
-          );
-        }
-
-        console.log("Diary generation completed:", diary.value);
-
-        return convertToDiary(
-          diary.value,
-          thumbnailUrl && thumbnailUrl.isOk() ? thumbnailUrl.value : undefined,
-        );
-      })(),
-    )
-      .andThen((result) => result)
-      .orTee(createDiaryLogger.error);
+          ),
+      );
 
 export type FetchDiaryByDate = (
   authUser: AuthUser,
