@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { MapPlace } from "./map";
 import { LanguageCode } from "./language";
+import { ok, Result } from "neverthrow";
 
 export type GenAI = InstanceType<typeof GoogleGenAI>;
 
@@ -23,7 +24,7 @@ interface LocationHistory {
 export const diaryGenerationPrompt = (
   locationHistories: LocationHistory[],
   languageCode: LanguageCode,
-  memo: string,
+  memo?: string,
 ): string => {
   return `You are an AI assistant tasked with generating a diary entry and an accompanying illustration concept.
 
@@ -43,39 +44,52 @@ Generate a diary entry based on the provided information. Also, describe an illu
 3.  **Output Format:**
     * Strictly adhere to the following YAML format.
     * The "Thinking process" should briefly explain your reasoning for the diary content and the image concept.
+    * Do not include quote sentences (>) in the YAML output.
 
 \`\`\`yaml
 # Thinking process
-# This section should outline:
-# 1. Your reasoning for the diary entry's content and tone.
-# 2. A detailed description of the illustration concept, including composition, key elements, and how it relates to the diary.
-#    Remember the art medium (colored pencil or watercolor) and the no-text constraint for the image.
+> This section should outline:
+> 1. Your reasoning for the diary entry's content and tone.
+> 2. A detailed description of the illustration concept, including composition, key elements, and how it relates to the diary.
+>    Remember the art medium (colored pencil or watercolor) and the no-text constraint for the image.
 
 # Diary entry
-# [Content of the diary entry in ${languageCode}]
+> [Content of the diary entry in ${languageCode}]
 \`\`\`
 
 ## Input Information
 Use the following details to generate the diary and illustration concept:
 
 * **Places Visited Today:**
-${locationHistories.map(formatLocationHistory('    ')).join("\n")}
+${locationHistories.map(formatLocationHistory("    ")).join("\n")}
 
 * **Today's Key Events/Memo:**
-    * ${memo}
+${memo ?? "No specific events or memos provided."}
 
-* **Today's Overall Emotion (1-10 scale, where 1 = very negative, 10 = very positive):** 7
+* **Today's Overall Emotion (1-10 scale, where 1 = very negative, 10 = very positive):**
+7
 `;
 };
 
-const formatLocationHistory = (indent: string) => (location: LocationHistory): string => {
-  return (
-    `- ${formatDate(location.visitedAt)}: \n` +
-    location.places
-      .map((place) => `${indent}* ${place.displayName} (${place.address})`)
-      .join("\n")
-  );
+export const trimSystemPrompt = (
+  generated: GeneratedContent,
+): Result<GeneratedContent, never> => {
+  return ok({
+    text: generated.text.split("# Diary entry").at(1)?.trim() ?? "",
+    image: generated.image,
+  });
 };
+
+const formatLocationHistory =
+  (indent: string) =>
+  (location: LocationHistory): string => {
+    return (
+      `- ${formatDate(location.visitedAt)}: \n` +
+      location.places
+        .map((place) => `${indent}* ${place.displayName} (${place.address})`)
+        .join("\n")
+    );
+  };
 
 const formatDate = (date: Date): string => {
   // yyyy/MM/dd hh:mm

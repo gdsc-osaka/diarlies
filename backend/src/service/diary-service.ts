@@ -27,7 +27,7 @@ import {
   DiaryWithUser,
   isDBDiaryOwnedByUser,
 } from "../domain/diary";
-import { diaryGenerationPrompt } from "../domain/ai";
+import { diaryGenerationPrompt, trimSystemPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
@@ -48,6 +48,7 @@ export const CreateDiaryRequest = z.object({
   ),
   languageCode: LanguageCode,
   images: z.array(Image),
+  memo: z.string().optional(),
 });
 export type CreateDiaryRequest = z.infer<typeof CreateDiaryRequest>;
 
@@ -90,9 +91,9 @@ export const createDiary =
         // generate content
       ).andThen((places) =>
         generateContent(
-          diaryGenerationPrompt(places, args.languageCode, ""),
+          diaryGenerationPrompt(places, args.languageCode, args.memo),
           args.images,
-        ),
+        ).andThen(trimSystemPrompt),
       ),
     ])
       // insert diary to db
