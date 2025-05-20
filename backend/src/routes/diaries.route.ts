@@ -31,6 +31,10 @@ const createDiary = describeRoute({
                 description: "Images for diary generation",
               },
             },
+            memo: {
+              type: "string",
+              description: "Memo for diary generation",
+            },
           },
           required: ["locationHistories", "images", "languageCode"],
         },

@@ -53,12 +53,14 @@ app.post(
     const locationHistories = form.get("locationHistories") as string;
     const languageCode = form.get("languageCode") as LanguageCode;
     const images = form.getAll("images") as File[];
+    const memo = form.get("memo") as string | undefined;
 
     // Convert json string to object
     const parseResult = await CreateDiaryRequest.safeParseAsync({
       locationHistories: JSON.parse(locationHistories),
-      languageCode: languageCode,
-      images: images,
+      languageCode,
+      images,
+      memo,
     });
     if (!parseResult.success) {
       throw toHTTPException(
