@@ -278,7 +278,7 @@ class TranslationsHomePlaceholderEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get memo => 'Today I feel like...';
+	String get memo => 'Today I feel like...\nI went to...';
 }
 
 // Path: home.success
@@ -454,7 +454,7 @@ extension on Translations {
 			case 'home.label.photo': return 'Today’s photos';
 			case 'home.label.journey': return 'Today’s journey';
 			case 'home.label.memo': return 'Memo';
-			case 'home.placeholder.memo': return 'Today I feel like...';
+			case 'home.placeholder.memo': return 'Today I feel like...\nI went to...';
 			case 'home.success.report_diary': return 'Thank you for your report.';
 			case 'home.error.failed_to_fetch_todays_diary': return 'Failed to fetch today’s diary';
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';

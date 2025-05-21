@@ -275,7 +275,7 @@ class _TranslationsHomePlaceholderJa implements TranslationsHomePlaceholderEn {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
-	@override String get memo => '今日の気分は...';
+	@override String get memo => '今日の気分は...\n行った場所は...';
 }
 
 // Path: home.success
@@ -451,7 +451,7 @@ extension on TranslationsJa {
 			case 'home.label.photo': return '今日の写真';
 			case 'home.label.journey': return '今日の旅路';
 			case 'home.label.memo': return 'メモ';
-			case 'home.placeholder.memo': return '今日の気分は...';
+			case 'home.placeholder.memo': return '今日の気分は...\n行った場所は...';
 			case 'home.success.report_diary': return 'ご報告ありがとうございます。';
 			case 'home.error.failed_to_fetch_todays_diary': return '今日の日記の取得に失敗しました';
 			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';

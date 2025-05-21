@@ -67,7 +67,7 @@
       "memo": "メモ"
     },
     "placeholder": {
-      "memo": "今日の気分は..."
+      "memo": "今日の気分は...\n行った場所は..."
     },
     "success": {
       "report_diary": "ご報告ありがとうございます。"
