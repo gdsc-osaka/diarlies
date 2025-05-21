@@ -250,6 +250,7 @@ class _TranslationsHomeBtnJa implements TranslationsHomeBtnEn {
 	@override String get retry => '再試行';
 	@override String get regenerate => '再生成';
 	@override String get cancel => 'キャンセル';
+	@override String get report => '報告';
 }
 
 // Path: home.label
@@ -293,6 +294,8 @@ class _TranslationsHomeDialogJa implements TranslationsHomeDialogEn {
 	// Translations
 	@override String get regenerate_title => '日記を再生成してもよろしいですか？';
 	@override String get regenerate_content => 'この操作は元に戻せません。';
+	@override String get report_title => '不適切なコンテンツを報告';
+	@override String get report_content => 'このコンテンツを報告する理由を教えてください。';
 }
 
 // Path: home_settings.btn
@@ -404,6 +407,7 @@ extension on TranslationsJa {
 			case 'home.btn.retry': return '再試行';
 			case 'home.btn.regenerate': return '再生成';
 			case 'home.btn.cancel': return 'キャンセル';
+			case 'home.btn.report': return '報告';
 			case 'home.label.photo': return '今日の写真';
 			case 'home.label.journey': return '今日の旅路';
 			case 'home.label.memo': return 'メモ';
@@ -411,6 +415,8 @@ extension on TranslationsJa {
 			case 'home.error.failed_to_fetch_todays_diary': return '今日の日記の取得に失敗しました';
 			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';
 			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';
+			case 'home.dialog.report_title': return '不適切なコンテンツを報告';
+			case 'home.dialog.report_content': return 'このコンテンツを報告する理由を教えてください。';
 			case 'home_social.title': return 'ソーシャル';
 			case 'home_settings.title': return '設定';
 			case 'home_settings.btn.sign_out': return 'サインアウト';

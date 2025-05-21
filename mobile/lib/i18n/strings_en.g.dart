@@ -253,6 +253,7 @@ class TranslationsHomeBtnEn {
 	String get retry => 'Retry';
 	String get regenerate => 'Regenerate';
 	String get cancel => 'Cancel';
+	String get report => 'Report';
 }
 
 // Path: home.label
@@ -296,6 +297,8 @@ class TranslationsHomeDialogEn {
 	// Translations
 	String get regenerate_title => 'Are you sure you want to regenerate diary?';
 	String get regenerate_content => 'You can’t undo this action.';
+	String get report_title => 'Report inappropriate content';
+	String get report_content => 'Please provide a reason for reporting this content.';
 }
 
 // Path: home_settings.btn
@@ -407,6 +410,7 @@ extension on Translations {
 			case 'home.btn.retry': return 'Retry';
 			case 'home.btn.regenerate': return 'Regenerate';
 			case 'home.btn.cancel': return 'Cancel';
+			case 'home.btn.report': return 'Report';
 			case 'home.label.photo': return 'Today’s photos';
 			case 'home.label.journey': return 'Today’s journey';
 			case 'home.label.memo': return 'Memo';
@@ -414,6 +418,8 @@ extension on Translations {
 			case 'home.error.failed_to_fetch_todays_diary': return 'Failed to fetch today’s diary';
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';
 			case 'home.dialog.regenerate_content': return 'You can’t undo this action.';
+			case 'home.dialog.report_title': return 'Report inappropriate content';
+			case 'home.dialog.report_content': return 'Please provide a reason for reporting this content.';
 			case 'home_social.title': return 'Social';
 			case 'home_settings.title': return 'Settings';
 			case 'home_settings.btn.sign_out': return 'Sign out';

@@ -101,4 +101,8 @@ class HomeAction extends FluxAction {
       return;
     }
   }
+
+  Future<void> reportContent(Diary diary) async {
+
+  }
 }

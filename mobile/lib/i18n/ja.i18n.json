@@ -58,7 +58,8 @@
       "keep_diary": "日記をつける",
       "retry": "再試行",
       "regenerate": "再生成",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "report": "報告"
     },
     "label": {
       "photo": "今日の写真",
@@ -73,7 +74,9 @@
     },
     "dialog": {
         "regenerate_title": "日記を再生成してもよろしいですか？",
-        "regenerate_content": "この操作は元に戻せません。"
+        "regenerate_content": "この操作は元に戻せません。",
+        "report_title": "不適切なコンテンツを報告",
+        "report_content": "このコンテンツを報告する理由を教えてください。"
     }
   },
   "home_social": {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:diarlies/components/nb_button.dart';
+import 'package:diarlies/services/api_adapter.dart';
 import 'package:diarlies/shared/types.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,7 +22,7 @@ class DiaryForm extends StatelessWidget {
   final String memo;
   final ValueChanged<String> onMemoChanged;
   final FutureOrCallback onWriteDiaryPressed;
-  final List<LocationPoint> locations;
+  final List<LocationHistory> locations;
 
   @override
   Widget build(BuildContext context) {

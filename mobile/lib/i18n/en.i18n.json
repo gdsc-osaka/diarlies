@@ -58,7 +58,8 @@
       "keep_diary": "Keep diary",
       "retry": "Retry",
       "regenerate": "Regenerate",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "report": "Report"
     },
     "label": {
       "photo": "Today’s photos",
@@ -73,7 +74,9 @@
     },
     "dialog": {
       "regenerate_title": "Are you sure you want to regenerate diary?",
-      "regenerate_content": "You can’t undo this action."
+      "regenerate_content": "You can’t undo this action.",
+      "report_title": "Report inappropriate content",
+      "report_content": "Please provide a reason for reporting this content."
     }
   },
   "home_social": {
