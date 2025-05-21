@@ -1,6 +1,10 @@
 import 'package:api/api.dart';
+import 'package:diarlies/components/nb_card.dart';
+import 'package:diarlies/logger.dart';
+import 'package:diarlies/pages/home/settings/page.dart';
 import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/shared/flux_action.dart';
+import 'package:diarlies/shared/serialize.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,13 +47,45 @@ class HomeSocialPage extends ConsumerWidget {
               clipBehavior: Clip.none,
               itemCount: ref.watch(diariesInTimelineProvider).maybeWhen(
                 data: (diaries) => diaries.length + 2,
-                orElse: () => 1,
+                orElse: () => 2,
               ),
               itemBuilder: (context, index) {
-                final diaries = ref.watch(diariesInTimelineProvider).valueOrNull;
-                if (index == 0 || index - 1 == diaries?.length) return SizedBox(height: 123);
+                final diaries = ref.watch(diariesInTimelineProvider);
+                final diariesVal = diaries.valueOrNull;
 
-                final diary = diaries?.elementAtOrNull(index - 1);
+                if (diaries.isLoading && index == 1) {
+                  return const SizedBox(
+                    height: 123,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (diaries.hasValue && diariesVal?.isEmpty == true && index == 1) {
+                  return NBCard(
+                    child: Text(t.home_social.subtitle.diary_not_found, style: styles.text.title.m),
+                  );
+                }
+
+                if (diaries.hasError && index == 1) {
+                  return NBCard(
+                    color: styles.color.error,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(t.home_social.subtitle.diary_fetch_error, style: styles.text.title.m.copyWith(color: styles.color.onError)),
+                        const SizedBox(height: 8),
+                        Text(
+                          diaries.error.toString(),
+                          style: styles.text.body.l.copyWith(color: styles.color.onError),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (index == 0 || index - 1 == diariesVal?.length) return SizedBox(height: 123);
+
+                final diary = diariesVal?.elementAtOrNull(index - 1);
 
                 return DiaryCard(
                   showPrevPage: false,

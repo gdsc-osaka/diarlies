@@ -28,7 +28,7 @@ final locationStorageServiceProvider =
 typedef LocationStorageServiceRef =
     AutoDisposeProviderRef<LocationStorageService>;
 String _$storedLocationHistoriesHash() =>
-    r'f92fb74a5f40cfbf3a5a32c18d2726f419a90ef2';
+    r'f975d742f1692ed4a0d77cf5e3fa108b1a0cb6c3';
 
 /// See also [storedLocationHistories].
 @ProviderFor(storedLocationHistories)

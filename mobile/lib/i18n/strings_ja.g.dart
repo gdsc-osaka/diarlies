@@ -121,6 +121,7 @@ class _TranslationsHomeSocialJa implements TranslationsHomeSocialEn {
 
 	// Translations
 	@override String get title => 'ソーシャル';
+	@override late final _TranslationsHomeSocialSubtitleJa subtitle = _TranslationsHomeSocialSubtitleJa._(_root);
 }
 
 // Path: home_settings
@@ -309,6 +310,17 @@ class _TranslationsHomeDialogJa implements TranslationsHomeDialogEn {
 	@override String get report_content => 'このコンテンツを報告する理由を教えてください。';
 }
 
+// Path: home_social.subtitle
+class _TranslationsHomeSocialSubtitleJa implements TranslationsHomeSocialSubtitleEn {
+	_TranslationsHomeSocialSubtitleJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get diary_not_found => 'まだ誰も日記を共有していないようです。\nアカウントの公開範囲を公開に変更して、最初の日記を共有しましょう！';
+	@override String get diary_fetch_error => 'おっと！日記の取得中に問題が発生しました。\nしばらく待ってからもう一度お試しください。';
+}
+
 // Path: home_settings.btn
 class _TranslationsHomeSettingsBtnJa implements TranslationsHomeSettingsBtnEn {
 	_TranslationsHomeSettingsBtnJa._(this._root);
@@ -430,6 +442,8 @@ extension on TranslationsJa {
 			case 'home.dialog.report_title': return '不適切なコンテンツを報告';
 			case 'home.dialog.report_content': return 'このコンテンツを報告する理由を教えてください。';
 			case 'home_social.title': return 'ソーシャル';
+			case 'home_social.subtitle.diary_not_found': return 'まだ誰も日記を共有していないようです。\nアカウントの公開範囲を公開に変更して、最初の日記を共有しましょう！';
+			case 'home_social.subtitle.diary_fetch_error': return 'おっと！日記の取得中に問題が発生しました。\nしばらく待ってからもう一度お試しください。';
 			case 'home_settings.title': return '設定';
 			case 'home_settings.btn.sign_out': return 'サインアウト';
 			case 'home_settings.btn.terms': return '利用規約';

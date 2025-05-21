@@ -124,6 +124,7 @@ class TranslationsHomeSocialEn {
 
 	// Translations
 	String get title => 'Social';
+	late final TranslationsHomeSocialSubtitleEn subtitle = TranslationsHomeSocialSubtitleEn._(_root);
 }
 
 // Path: home_settings
@@ -312,6 +313,17 @@ class TranslationsHomeDialogEn {
 	String get report_content => 'Please provide a reason for reporting this content.';
 }
 
+// Path: home_social.subtitle
+class TranslationsHomeSocialSubtitleEn {
+	TranslationsHomeSocialSubtitleEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get diary_not_found => 'It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!';
+	String get diary_fetch_error => 'Woops! Something went wrong while fetching the diary.\nPlease try again later.';
+}
+
 // Path: home_settings.btn
 class TranslationsHomeSettingsBtnEn {
 	TranslationsHomeSettingsBtnEn._(this._root);
@@ -433,6 +445,8 @@ extension on Translations {
 			case 'home.dialog.report_title': return 'Report inappropriate content';
 			case 'home.dialog.report_content': return 'Please provide a reason for reporting this content.';
 			case 'home_social.title': return 'Social';
+			case 'home_social.subtitle.diary_not_found': return 'It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!';
+			case 'home_social.subtitle.diary_fetch_error': return 'Woops! Something went wrong while fetching the diary.\nPlease try again later.';
 			case 'home_settings.title': return 'Settings';
 			case 'home_settings.btn.sign_out': return 'Sign out';
 			case 'home_settings.btn.terms': return 'Terms of Service';

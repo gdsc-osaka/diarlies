@@ -83,7 +83,11 @@
     }
   },
   "home_social": {
-    "title": "Social"
+    "title": "Social",
+    "subtitle": {
+      "diary_not_found": "It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!",
+      "diary_fetch_error": "Woops! Something went wrong while fetching the diary.\nPlease try again later."
+    }
   },
   "home_settings": {
     "title": "Settings",

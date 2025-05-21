@@ -118,7 +118,7 @@ class HomeSettingsPage extends ConsumerWidget {
                 Text(t.home_settings.label.privacy, style: styles.text.title.m, textAlign: TextAlign.start),
                 const SizedBox(height: 12),
                 NBSelect<AccountVisibility>(
-                  value: ref.watch(_currentAccountVisibilityProvider).valueOrNull,
+                  value: ref.watch(currentAccountVisibilityProvider).valueOrNull,
                   onChanged: handleChangeAccountVisibility,
                   values: [AccountVisibility.private, AccountVisibility.public],
                   builder:
