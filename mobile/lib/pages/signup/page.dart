@@ -1,5 +1,6 @@
 import 'package:api/api.dart';
 import 'package:built_value/serializer.dart';
+import 'package:diarlies/components/nb_shape.dart';
 import 'package:diarlies/pages/_components/app_icon.dart';
 import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';
@@ -35,50 +36,62 @@ class SignupPage extends ConsumerWidget {
     final action = ref.watch(_signupActionProvider);
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 32, right: 32, bottom: 140),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AppIcon(size: 128, type: AppIconType.splash),
-              const SizedBox(height: 16),
-              Text('Diarlies', style: styles.text.display.m),
-              const SizedBox(height: 8),
-              Text(
-                t.signup.subtitle,
-                style: styles.text.display.m.copyWith(
-                  fontFamily: Fonts.lexendGiga.name,
-                  fontSize: styles.text.body.m.fontSize,
-                ),
-              ),
-              const SizedBox(height: 48),
-              NBCard(
-                child: Column(
-                  children: [
-                    NBButton(
-                      label: Text(t.signup.btn.google),
-                      icon: GoogleIcon(),
-                      backgroundColor: styles.color.googleButton,
-                      foregroundColor: styles.color.onGoogleButton,
-                      mainAxisSize: MainAxisSize.max,
-                      onPressed: action.signInWithGoogle,
+      body: Stack(
+        children: [
+          Positioned(
+              top: -10,
+              left: -100,
+              child: NBStick()),
+          Positioned(
+              bottom: -100,
+              right: -100,
+              child: NBHexagon()),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 32, right: 32, bottom: 140),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AppIcon(size: 128, type: AppIconType.splash),
+                  const SizedBox(height: 16),
+                  Text('Diarlies', style: styles.text.display.m),
+                  const SizedBox(height: 8),
+                  Text(
+                    t.signup.subtitle,
+                    style: styles.text.display.m.copyWith(
+                      fontFamily: Fonts.lexendGiga.name,
+                      fontSize: styles.text.body.m.fontSize,
                     ),
-                    const SizedBox(height: 16),
-                    NBButton(
-                      label: Text(t.signup.btn.apple),
-                      icon: AppleIcon(),
-                      backgroundColor: styles.color.appleButton,
-                      foregroundColor: styles.color.onAppleButton,
-                      mainAxisSize: MainAxisSize.max,
-                      onPressed: () {},
+                  ),
+                  const SizedBox(height: 48),
+                  NBCard(
+                    child: Column(
+                      children: [
+                        NBButton(
+                          label: Text(t.signup.btn.google),
+                          icon: GoogleIcon(),
+                          backgroundColor: styles.color.googleButton,
+                          foregroundColor: styles.color.onGoogleButton,
+                          mainAxisSize: MainAxisSize.max,
+                          onPressed: action.signInWithGoogle,
+                        ),
+                        const SizedBox(height: 16),
+                        NBButton(
+                          label: Text(t.signup.btn.apple),
+                          icon: AppleIcon(),
+                          backgroundColor: styles.color.appleButton,
+                          foregroundColor: styles.color.onAppleButton,
+                          mainAxisSize: MainAxisSize.max,
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

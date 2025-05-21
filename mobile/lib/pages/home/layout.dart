@@ -1,4 +1,5 @@
 import 'package:diarlies/components/nb_bottom_navigation.dart';
+import 'package:diarlies/components/nb_shape.dart';
 import 'package:diarlies/i18n/strings.g.dart';
 import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,25 @@ class HomeLayout extends StatelessWidget {
 
     return Scaffold(
       extendBody: true,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            shell,
-            Align(
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+              bottom: -100,
+              left: -100,
+              child: NBCircle()),
+          Positioned(
+              top: -20,
+              right: -10,
+              child: NBTriangle(),
+          ),
+          SafeArea(child: shell),
+          SafeArea(
+            top: false,
+            bottom: true,
+            left: false,
+            right: false,
+            child: Align(
               alignment: Alignment.bottomCenter,
               child: NBBottomNavigation(
                 currentIndex: shell.currentIndex,
@@ -50,8 +65,8 @@ class HomeLayout extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

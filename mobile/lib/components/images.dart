@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 enum Images {
-  book('assets/images/book.svg', AssetType.svg);
+  book('assets/images/book.svg', AssetType.svg),
+  shapeCircleGreen('assets/images/shape_circle_green.svg', AssetType.svg),
+  shapeTrianglePink('assets/images/shape_triangle_pink.svg', AssetType.svg),
+  shapeHexagonBlue('assets/images/shape_hexagon_blue.svg', AssetType.svg),
+  shapeStickPurple('assets/images/shape_stick_purple.svg', AssetType.svg);
 
   const Images(this.path, this.type);
 
