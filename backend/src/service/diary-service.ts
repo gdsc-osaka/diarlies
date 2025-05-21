@@ -31,6 +31,7 @@ import { match } from "ts-pattern";
 import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
 import { id } from "../shared/func";
+import { SendDiscordMessage } from "../infra/discord-repository";
 
 export const Image = z
   .instanceof(File)
@@ -334,6 +335,83 @@ export const deleteDiary =
               StatusCode.Forbidden,
               "The user does not have permission to delete this diary",
               "permission_denied",
+            ),
+          )
+          .exhaustive(),
+      );
+
+export type ReportInappropriateDiary = (
+  authUser: AuthUser,
+  diaryId: string,
+  reason: string,
+) => ResultAsync<void, ServiceError>;
+
+// check if diary exists, check if diary belongs to user, send discord message
+export const reportInappropriateDiary =
+  (
+    db: DBorTx,
+    fetchDBUserByUid: FetchDBUserByUid,
+    fetchDBDiaryById: FetchDBDiaryById,
+    sendDiscordMessage: SendDiscordMessage,
+  ): ReportInappropriateDiary =>
+  (authUser: AuthUser, diaryId: string, reason: string) =>
+    fetchDBUserByUid(db)(authUser.uid)
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "DBError", code: "not-found" }, () =>
+            createServiceError(
+              StatusCode.Unauthorized,
+              "User not found",
+              err.message,
+            ),
+          )
+          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to find user",
+              e.message,
+            ),
+          )
+          .exhaustive(),
+      )
+      .andThen((dbUser) =>
+        fetchDBDiaryById(db)(diaryId).andThen((dbDiary) =>
+          isDBDiaryOwnedByUser(dbDiary, dbUser),
+        ),
+      )
+      .andThen(() =>
+        sendDiscordMessage(
+          `Inappropriate diary reported. Diary ID: ${diaryId}. Reason: ${reason}`,
+        ),
+      )
+      .mapErr((err) =>
+        match(err)
+          .with({ __brand: "ServiceError" }, id)
+          .with({ __brand: "DBError", code: "not-found" }, (e) =>
+            createServiceError(
+              StatusCode.NotFound,
+              "Diary not found",
+              e.message,
+            ),
+          )
+          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to report diary",
+              e.message,
+            ),
+          )
+          .with("diary_not_owned_by_user", () =>
+            createServiceError(
+              StatusCode.Forbidden,
+              "The user does not have permission to report this diary",
+              "permission_denied",
+            ),
+          )
+          .with({ __brand: "DiscordError" }, () =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              `Failed to send discord message.`,
             ),
           )
           .exhaustive(),

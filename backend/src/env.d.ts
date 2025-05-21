@@ -10,6 +10,7 @@ declare module "process" {
         STORAGE_CREDENTIALS: string;
         GEMINI_API_KEY: string;
         GOOGLE_MAPS_API_KEY: string;
+        DISCORD_WEBHOOK_URL: string;
       }
     }
   }

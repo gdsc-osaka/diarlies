@@ -4,6 +4,7 @@ import {
   CreateDiaryRequest,
   deleteDiary,
   fetchDiariesByDuration,
+  reportInappropriateDiary,
 } from "../service/diary-service";
 import {
   createServiceError,
@@ -27,6 +28,9 @@ import env from "../env";
 import { getAUthUser } from "./middleware/authorize";
 import { getDownloadUrl, uploadFile } from "../infra/storage-repository";
 import diariesRoute from "./diaries.route";
+import { sendDiscordMessage } from "../infra/discord-repository";
+import { zValidator } from "@hono/zod-validator";
+import z from "zod";
 
 type Bindings = {
   GEMINI_API_KEY: string;
@@ -149,5 +153,33 @@ app.delete("/:diaryId", diariesRoute.deleteDiary, async (c) => {
 
   return c.json(res.value);
 });
+
+app.post(
+  "/:diaryId/report-inappropriate",
+  diariesRoute.reportInappropriateDiary,
+  zValidator(
+    "json",
+    z.object({
+      reason: z.string(),
+    }),
+  ),
+  async (c) => {
+    const diaryId = c.req.param("diaryId");
+    const { reason } = c.req.valid("json");
+
+    const res = await reportInappropriateDiary(
+      db(),
+      fetchDBUserByUid,
+      fetchDBDiaryById,
+      sendDiscordMessage,
+    )(getAUthUser(c), diaryId, reason);
+
+    if (res.isErr()) {
+      throw toHTTPException(res.error);
+    }
+
+    return c.text("Diary reported successfully", 200);
+  },
+);
 
 export default app;

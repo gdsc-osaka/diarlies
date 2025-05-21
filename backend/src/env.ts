@@ -7,6 +7,7 @@ const env = {
   STORAGE_CREDENTIALS: process.env.STORAGE_CREDENTIALS!,
   GEMINI_API_KEY: process.env.GEMINI_API_KEY!,
   GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY!,
+  DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL!,
 } as const;
 
 export default env;

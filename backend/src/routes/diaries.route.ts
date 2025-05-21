@@ -120,8 +120,48 @@ const deleteDiary = describeRoute({
   },
 });
 
+const reportInappropriateDiary = describeRoute({
+  tags,
+  validateResponse: true,
+  operationId: "reportInappropriateDiary",
+  description: "Report a diary as inappropriate",
+  parameters: [
+    {
+      name: "diaryId",
+      in: "path",
+      description: "Diary ID to report",
+      required: true,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            reason: {
+              type: "string",
+              description: "Reason for reporting the diary",
+            },
+          },
+          required: ["reason"],
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Diary reported successfully",
+    },
+  },
+});
+
 export default {
   createDiary,
   getDiaries,
   deleteDiary,
+  reportInappropriateDiary,
 };
