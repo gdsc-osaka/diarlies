@@ -35,5 +35,12 @@ void main() {
       // TODO
     });
 
+    // Report a diary as inappropriate
+    //
+    //Future reportInappropriateDiary(String diaryId, { ReportInappropriateDiaryRequest reportInappropriateDiaryRequest }) async
+    test('test reportInappropriateDiary', () async {
+      // TODO
+    });
+
   });
 }

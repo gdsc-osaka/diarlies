@@ -72,6 +72,7 @@ Class | Method | HTTP request | Description
 [*DiariesApi*](doc/DiariesApi.md) | [**deleteDiary**](doc/DiariesApi.md#deletediary) | **DELETE** /api/diaries/{diaryId} | 
 [*DiariesApi*](doc/DiariesApi.md) | [**getDiaries**](doc/DiariesApi.md#getdiaries) | **GET** /api/diaries | 
 [*DiariesApi*](doc/DiariesApi.md) | [**getDiariesByUser**](doc/DiariesApi.md#getdiariesbyuser) | **GET** /api/users/{userId}/diaries | 
+[*DiariesApi*](doc/DiariesApi.md) | [**reportInappropriateDiary**](doc/DiariesApi.md#reportinappropriatediary) | **POST** /api/diaries/{diaryId}/report-inappropriate | 
 [*UsersApi*](doc/UsersApi.md) | [**changeUserVisibility**](doc/UsersApi.md#changeuservisibility) | **POST** /api/users/{userId}/change-visibility | 
 [*UsersApi*](doc/UsersApi.md) | [**createUser**](doc/UsersApi.md#createuser) | **POST** /api/users | 
 [*UsersApi*](doc/UsersApi.md) | [**deleteUser**](doc/UsersApi.md#deleteuser) | **DELETE** /api/users/{userId} | 
@@ -87,6 +88,7 @@ Class | Method | HTTP request | Description
  - [Diary](doc/Diary.md)
  - [DiaryWithUser](doc/DiaryWithUser.md)
  - [LanguageCode](doc/LanguageCode.md)
+ - [ReportInappropriateDiaryRequest](doc/ReportInappropriateDiaryRequest.md)
  - [ServiceError](doc/ServiceError.md)
  - [Timestamp](doc/Timestamp.md)
  - [User](doc/User.md)

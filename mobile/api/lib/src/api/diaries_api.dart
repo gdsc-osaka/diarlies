@@ -13,6 +13,7 @@ import 'package:api/src/model/date.dart';
 import 'package:api/src/model/diary.dart';
 import 'package:api/src/model/diary_with_user.dart';
 import 'package:api/src/model/language_code.dart';
+import 'package:api/src/model/report_inappropriate_diary_request.dart';
 import 'package:api/src/model/service_error.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -391,6 +392,81 @@ class DiariesApi {
       statusMessage: _response.statusMessage,
       extra: _response.extra,
     );
+  }
+
+  /// reportInappropriateDiary
+  /// Report a diary as inappropriate
+  ///
+  /// Parameters:
+  /// * [diaryId] - Diary ID to report
+  /// * [reportInappropriateDiaryRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<void>> reportInappropriateDiary({ 
+    required String diaryId,
+    ReportInappropriateDiaryRequest? reportInappropriateDiaryRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/diaries/{diaryId}/report-inappropriate'.replaceAll('{' r'diaryId' '}', encodeQueryParameter(_serializers, diaryId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(ReportInappropriateDiaryRequest);
+      _bodyData = reportInappropriateDiaryRequest == null ? null : _serializers.serialize(reportInappropriateDiaryRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
   }
 
 }
