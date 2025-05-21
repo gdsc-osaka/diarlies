@@ -18,6 +18,12 @@ Future<bool> onboardingCompleted(Ref ref) async {
   return pref.getOnboardingCompleted();
 }
 
+@Riverpod(keepAlive: true)
+Future<bool> backgroundLocationEnabled(Ref ref) async {
+  final pref = await ref.watch(preferencesServiceProvider.future);
+  return pref.getBackgroundLocationEnabled();
+}
+
 class PreferencesService {
   PreferencesService(this._prefs);
 
@@ -63,5 +69,16 @@ class PreferencesService {
 
   bool getOnboardingCompleted() {
     return _prefs.getBool(_onboardingCompletedKey) ?? false;
+  }
+
+  // background location enabled
+  static const String _backgroundLocationEnabledKey = 'background_location_enabled';
+
+  Future<void> setBackgroundLocationEnabled(bool value) async {
+    await _prefs.setBool(_backgroundLocationEnabledKey, value);
+  }
+
+  bool getBackgroundLocationEnabled() {
+    return _prefs.getBool(_backgroundLocationEnabledKey) ?? false;
   }
 }

@@ -126,16 +126,25 @@ Future<bool> onIosBackground(ServiceInstance service) async {
   return true; // trueを返すとバックグラウンド処理を継続しようとする
 }
 
-Future<void> initializeBackgroundService() async {
+Future<void> enableBackgroundService() async {
   logger.i('Initializing background service...');
 
   await NotificationService.initialize();
+  await configureBackgroundService(autoStart: true);
+}
 
+Future<void> disableBackgroundService() async {
   final service = FlutterBackgroundService();
-  await service.configure(
+  service.invoke('stopService');
+  logger.i('Background service disabled.');
+  configureBackgroundService(autoStart: false);
+}
+
+Future<void> configureBackgroundService({required bool autoStart}) {
+  return FlutterBackgroundService().configure(
     androidConfiguration: AndroidConfiguration(
       onStart: onStart,
-      autoStart: true, // アプリ起動時に自動で開始 (必要に応じてfalseに)
+      autoStart: autoStart, // アプリ起動時に自動で開始 (必要に応じてfalseに)
       isForegroundMode: true, // フォアグラウンドサービスとして動作
       notificationChannelId: NotificationService.channelId, // 上記で定義したチャンネルID
       initialNotificationTitle: 'Diarlies collecting location',

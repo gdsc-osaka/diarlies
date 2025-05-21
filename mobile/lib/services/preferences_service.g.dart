@@ -65,5 +65,24 @@ final onboardingCompletedProvider = FutureProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnboardingCompletedRef = FutureProviderRef<bool>;
+String _$backgroundLocationEnabledHash() =>
+    r'ef720478f5e76702f3a5c1b4ecb65946d8de7315';
+
+/// See also [backgroundLocationEnabled].
+@ProviderFor(backgroundLocationEnabled)
+final backgroundLocationEnabledProvider = FutureProvider<bool>.internal(
+  backgroundLocationEnabled,
+  name: r'backgroundLocationEnabledProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$backgroundLocationEnabledHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef BackgroundLocationEnabledRef = FutureProviderRef<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

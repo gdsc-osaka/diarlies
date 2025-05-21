@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:diarlies/components/nb_button.dart';
+import 'package:diarlies/components/nb_card.dart';
+import 'package:diarlies/services/api_adapter.dart';
 import 'package:diarlies/shared/types.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_model/hive_model.dart';
 
@@ -14,14 +17,15 @@ import '../../../styles/styles.dart';
 import 'map.dart';
 
 class DiaryForm extends StatelessWidget {
-  const DiaryForm({super.key, required this.onAddPhotoPressed, required this.selectedPhotos, required this.memo, required this.onMemoChanged, required this.onWriteDiaryPressed, required this.locations});
+  const DiaryForm({super.key, required this.onAddPhotoPressed, required this.selectedPhotos, required this.memo, required this.onMemoChanged, required this.onWriteDiaryPressed, required this.locations, required this.enableBackgroundLocation});
 
   final FutureOrCallback onAddPhotoPressed;
   final List<File> selectedPhotos;
   final String memo;
   final ValueChanged<String> onMemoChanged;
   final FutureOrCallback onWriteDiaryPressed;
-  final List<LocationPoint> locations;
+  final List<LocationHistory> locations;
+  final AsyncValue<bool> enableBackgroundLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +77,37 @@ class DiaryForm extends StatelessWidget {
         const SizedBox(height: 16),
         Text("${t.home.label.journey} (${locations.length.toString()})", style: styles.text.title.m),
         const SizedBox(height: 8),
-        JourneyMap(
-          initialLocation: LatLng(35.6811398, 139.7644865),
-          locations: locations,
+        SizedBox(
+          height: 80,
+          child: enableBackgroundLocation.when(
+            data: (enable) =>
+                enable ? JourneyMap(
+                  initialLocation: LatLng(35.6811398, 139.7644865),
+                  locations: locations,
+                ) : NBCard(
+                  padding: const EdgeInsets.all(12),
+                  shadow: styles.shadow.low,
+                  child: Text(
+                    t.home.card.background_location_disabled,
+                    style: styles.text.body.s,
+                  ),
+                ),
+            error: (_, __) => NBCard(
+              padding: const EdgeInsets.all(12),
+              shadow: styles.shadow.low,
+              child: Text(
+                t.home.card.background_location_disabled,
+                style: styles.text.body.s,
+              ),
+            ),
+            loading: () => NBCard(
+              padding: const EdgeInsets.all(12),
+              shadow: styles.shadow.low,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 16),
         Text(t.home.label.memo, style: styles.text.title.m),

@@ -21,6 +21,7 @@ import 'package:api/src/model/day.dart';
 import 'package:api/src/model/diary.dart';
 import 'package:api/src/model/diary_with_user.dart';
 import 'package:api/src/model/language_code.dart';
+import 'package:api/src/model/report_inappropriate_diary_request.dart';
 import 'package:api/src/model/service_error.dart';
 import 'package:api/src/model/timestamp.dart';
 import 'package:api/src/model/user.dart';
@@ -35,6 +36,7 @@ part 'serializers.g.dart';
   Diary,$Diary,
   DiaryWithUser,
   LanguageCode,
+  ReportInappropriateDiaryRequest,
   ServiceError,
   Timestamp,
   User,

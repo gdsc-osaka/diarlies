@@ -111,8 +111,10 @@ class TranslationsHomeEn {
 	late final TranslationsHomeBtnEn btn = TranslationsHomeBtnEn._(_root);
 	late final TranslationsHomeLabelEn label = TranslationsHomeLabelEn._(_root);
 	late final TranslationsHomePlaceholderEn placeholder = TranslationsHomePlaceholderEn._(_root);
+	late final TranslationsHomeSuccessEn success = TranslationsHomeSuccessEn._(_root);
 	late final TranslationsHomeErrorEn error = TranslationsHomeErrorEn._(_root);
 	late final TranslationsHomeDialogEn dialog = TranslationsHomeDialogEn._(_root);
+	late final TranslationsHomeCardEn card = TranslationsHomeCardEn._(_root);
 }
 
 // Path: home_social
@@ -123,6 +125,7 @@ class TranslationsHomeSocialEn {
 
 	// Translations
 	String get title => 'Social';
+	late final TranslationsHomeSocialCardEn card = TranslationsHomeSocialCardEn._(_root);
 }
 
 // Path: home_settings
@@ -253,6 +256,7 @@ class TranslationsHomeBtnEn {
 	String get retry => 'Retry';
 	String get regenerate => 'Regenerate';
 	String get cancel => 'Cancel';
+	String get report => 'Report';
 }
 
 // Path: home.label
@@ -274,7 +278,17 @@ class TranslationsHomePlaceholderEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get memo => 'Today I feel like...';
+	String get memo => 'Today I feel like...\nI went to...';
+}
+
+// Path: home.success
+class TranslationsHomeSuccessEn {
+	TranslationsHomeSuccessEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get report_diary => 'Thank you for your report.';
 }
 
 // Path: home.error
@@ -296,6 +310,29 @@ class TranslationsHomeDialogEn {
 	// Translations
 	String get regenerate_title => 'Are you sure you want to regenerate diary?';
 	String get regenerate_content => 'You can’t undo this action.';
+	String get report_title => 'Report inappropriate content';
+	String get report_content => 'Please provide a reason for reporting this content.';
+}
+
+// Path: home.card
+class TranslationsHomeCardEn {
+	TranslationsHomeCardEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get background_location_disabled => 'Background location is disabled. We can include location changes in your diary by enabling this from the settings page.';
+}
+
+// Path: home_social.card
+class TranslationsHomeSocialCardEn {
+	TranslationsHomeSocialCardEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get diary_not_found => 'It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!';
+	String get diary_fetch_error => 'Woops! Something went wrong while fetching the diary.\nPlease try again later.';
 }
 
 // Path: home_settings.btn
@@ -309,6 +346,8 @@ class TranslationsHomeSettingsBtnEn {
 	String get terms => 'Terms of Service';
 	String get privacy => 'Privacy Policy';
 	String get cancel => 'Cancel';
+	String get enable_background_location => 'Enable background location';
+	String get disable_background_location => 'Disable background location';
 	String get delete_account => 'Delete account';
 	String get privacy_policy => 'Privacy Policy';
 }
@@ -345,6 +384,8 @@ class TranslationsHomeSettingsSuccessEn {
 	// Translations
 	String get change_visibility => 'Visibility changed successfully';
 	String get delete_account => 'Account deleted successfully';
+	String get background_location_enabled => 'Background location enabled';
+	String get background_location_disabled => 'Background location disabled';
 }
 
 // Path: home_settings.error
@@ -356,6 +397,8 @@ class TranslationsHomeSettingsErrorEn {
 	// Translations
 	String get failed_to_sign_out => 'Failed to sign out';
 	String get failed_to_delete_account => 'Failed to delete account';
+	String get failed_to_enable_background_location => 'Failed to enable background location';
+	String get failed_to_disable_background_location => 'Failed to disable background location';
 }
 
 // Path: home_settings.dialog
@@ -407,19 +450,28 @@ extension on Translations {
 			case 'home.btn.retry': return 'Retry';
 			case 'home.btn.regenerate': return 'Regenerate';
 			case 'home.btn.cancel': return 'Cancel';
+			case 'home.btn.report': return 'Report';
 			case 'home.label.photo': return 'Today’s photos';
 			case 'home.label.journey': return 'Today’s journey';
 			case 'home.label.memo': return 'Memo';
-			case 'home.placeholder.memo': return 'Today I feel like...';
+			case 'home.placeholder.memo': return 'Today I feel like...\nI went to...';
+			case 'home.success.report_diary': return 'Thank you for your report.';
 			case 'home.error.failed_to_fetch_todays_diary': return 'Failed to fetch today’s diary';
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';
 			case 'home.dialog.regenerate_content': return 'You can’t undo this action.';
+			case 'home.dialog.report_title': return 'Report inappropriate content';
+			case 'home.dialog.report_content': return 'Please provide a reason for reporting this content.';
+			case 'home.card.background_location_disabled': return 'Background location is disabled. We can include location changes in your diary by enabling this from the settings page.';
 			case 'home_social.title': return 'Social';
+			case 'home_social.card.diary_not_found': return 'It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!';
+			case 'home_social.card.diary_fetch_error': return 'Woops! Something went wrong while fetching the diary.\nPlease try again later.';
 			case 'home_settings.title': return 'Settings';
 			case 'home_settings.btn.sign_out': return 'Sign out';
 			case 'home_settings.btn.terms': return 'Terms of Service';
 			case 'home_settings.btn.privacy': return 'Privacy Policy';
 			case 'home_settings.btn.cancel': return 'Cancel';
+			case 'home_settings.btn.enable_background_location': return 'Enable background location';
+			case 'home_settings.btn.disable_background_location': return 'Disable background location';
 			case 'home_settings.btn.delete_account': return 'Delete account';
 			case 'home_settings.btn.privacy_policy': return 'Privacy Policy';
 			case 'home_settings.label.privacy': return 'Privacy';
@@ -429,8 +481,12 @@ extension on Translations {
 			case 'home_settings.select.private': return 'Account visibility - Private';
 			case 'home_settings.success.change_visibility': return 'Visibility changed successfully';
 			case 'home_settings.success.delete_account': return 'Account deleted successfully';
+			case 'home_settings.success.background_location_enabled': return 'Background location enabled';
+			case 'home_settings.success.background_location_disabled': return 'Background location disabled';
 			case 'home_settings.error.failed_to_sign_out': return 'Failed to sign out';
 			case 'home_settings.error.failed_to_delete_account': return 'Failed to delete account';
+			case 'home_settings.error.failed_to_enable_background_location': return 'Failed to enable background location';
+			case 'home_settings.error.failed_to_disable_background_location': return 'Failed to disable background location';
 			case 'home_settings.dialog.sign_out_title': return 'Are you sure you want to sign out?';
 			case 'home_settings.dialog.delete_account_title': return 'Are you sure you want to delete your account?';
 			case 'home_settings.dialog.delete_account_content': return 'This action is irreversible. All your data will be deleted.';

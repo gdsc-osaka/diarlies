@@ -11,6 +11,7 @@ import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';
 import 'package:diarlies/providers/firebase_providers.dart';
 import 'package:diarlies/router.dart';
+import 'package:diarlies/services/preferences_service.dart';
 import 'package:diarlies/shared/error_handler.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:diarlies/shared/serialize.dart';
@@ -21,6 +22,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../logger.dart';
+import '../../../services/background_location_service.dart';
 import '../../../shared/urls.dart';
 import '../../../styles/styles.dart';
 
@@ -104,6 +106,13 @@ class HomeSettingsPage extends ConsumerWidget {
       );
     }
 
+    handleChangeBackgroundLocationSetting() {
+      return action.updateBackgroundLocationSetting(
+        successHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.success),
+        errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -118,7 +127,7 @@ class HomeSettingsPage extends ConsumerWidget {
                 Text(t.home_settings.label.privacy, style: styles.text.title.m, textAlign: TextAlign.start),
                 const SizedBox(height: 12),
                 NBSelect<AccountVisibility>(
-                  value: ref.watch(_currentAccountVisibilityProvider).valueOrNull,
+                  value: ref.watch(currentAccountVisibilityProvider).valueOrNull,
                   onChanged: handleChangeAccountVisibility,
                   values: [AccountVisibility.private, AccountVisibility.public],
                   builder:
@@ -133,6 +142,15 @@ class HomeSettingsPage extends ConsumerWidget {
                           ),
                         ],
                       ),
+                ),
+                const SizedBox(height: 8),
+                NBButton(
+                  label: Text(ref.watch(backgroundLocationEnabledProvider).valueOrNull == true
+                      ? t.home_settings.btn.disable_background_location
+                      : t.home_settings.btn.enable_background_location),
+                  icon: const Icon(Icons.location_on_outlined),
+                  variant: Variant.secondary,
+                  onPressed: handleChangeBackgroundLocationSetting,
                 ),
                 const SizedBox(height: 16),
                 Text(t.home_settings.label.account, style: styles.text.title.m, textAlign: TextAlign.start),

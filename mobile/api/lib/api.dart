@@ -20,6 +20,7 @@ export 'package:api/src/model/day.dart';
 export 'package:api/src/model/diary.dart';
 export 'package:api/src/model/diary_with_user.dart';
 export 'package:api/src/model/language_code.dart';
+export 'package:api/src/model/report_inappropriate_diary_request.dart';
 export 'package:api/src/model/service_error.dart';
 export 'package:api/src/model/timestamp.dart';
 export 'package:api/src/model/user.dart';

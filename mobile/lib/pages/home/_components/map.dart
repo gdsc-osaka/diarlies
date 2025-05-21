@@ -1,15 +1,15 @@
+import 'package:diarlies/services/api_adapter.dart';
 import 'package:diarlies/shared/formatter.dart';
 import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hive_model/hive_model.dart';
 
 class JourneyMap extends HookWidget {
   const JourneyMap({super.key, required this.initialLocation, required this.locations});
 
   final LatLng initialLocation;
-  final List<LocationPoint> locations;
+  final List<LocationHistory> locations;
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +70,10 @@ class JourneyMap extends HookWidget {
         ),
           markers: locations.map((location) {
             return Marker(
-              markerId: MarkerId(location.key.toString()),
+              markerId: MarkerId(location.toString()),
               position: LatLng(location.lat, location.lng),
               infoWindow: InfoWindow(
-                title: hhmmFormatter.format(location.createdAt),
+                title: hhmmFormatter.format(location.visitedAt),
               ),
             );
           }).toSet(),

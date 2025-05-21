@@ -27,14 +27,14 @@ final _homeSettingsActionProvider =
 // ignore: unused_element
 typedef _HomeSettingsActionRef = AutoDisposeProviderRef<HomeSettingsAction>;
 String _$currentAccountVisibilityHash() =>
-    r'94eb3c60a4f2efe64807ce77d7f5ba6bbbe24e24';
+    r'acc6b9caedf37f1df9acd170dec371526e1e77c4';
 
-/// See also [_currentAccountVisibility].
-@ProviderFor(_currentAccountVisibility)
-final _currentAccountVisibilityProvider =
+/// See also [currentAccountVisibility].
+@ProviderFor(currentAccountVisibility)
+final currentAccountVisibilityProvider =
     AutoDisposeFutureProvider<AccountVisibility?>.internal(
-      _currentAccountVisibility,
-      name: r'_currentAccountVisibilityProvider',
+      currentAccountVisibility,
+      name: r'currentAccountVisibilityProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
@@ -45,7 +45,7 @@ final _currentAccountVisibilityProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _CurrentAccountVisibilityRef =
+typedef CurrentAccountVisibilityRef =
     AutoDisposeFutureProviderRef<AccountVisibility?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

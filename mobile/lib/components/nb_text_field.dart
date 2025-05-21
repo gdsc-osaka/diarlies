@@ -66,7 +66,7 @@ class NBTextField extends HookWidget {
         prefixIcon: prefixIcon,
         hintText: placeholder,
         // プレースホルダーのテキストスタイル。NBSelect のプレースホルダースタイルを参考に設定します。
-        hintStyle: TextStyle(color: styles.color.onTertiary),
+        hintStyle: TextStyle(color: styles.color.outline),
         filled: true, // 背景色を有効にします。
         fillColor: styles.color.tertiary, // NBSelect の背景色に合わせます。
         // コンテンツのパディング。NBSelect のパディングに合わせます。

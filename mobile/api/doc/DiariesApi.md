@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**deleteDiary**](DiariesApi.md#deletediary) | **DELETE** /api/diaries/{diaryId} | 
 [**getDiaries**](DiariesApi.md#getdiaries) | **GET** /api/diaries | 
 [**getDiariesByUser**](DiariesApi.md#getdiariesbyuser) | **GET** /api/users/{userId}/diaries | 
+[**reportInappropriateDiary**](DiariesApi.md#reportinappropriatediary) | **POST** /api/diaries/{diaryId}/report-inappropriate | 
 
 
 # **createDiary**
@@ -194,6 +195,50 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reportInappropriateDiary**
+> reportInappropriateDiary(diaryId, reportInappropriateDiaryRequest)
+
+
+
+Report a diary as inappropriate
+
+### Example
+```dart
+import 'package:api/api.dart';
+
+final api = Api().getDiariesApi();
+final String diaryId = diaryId_example; // String | Diary ID to report
+final ReportInappropriateDiaryRequest reportInappropriateDiaryRequest = ; // ReportInappropriateDiaryRequest | 
+
+try {
+    api.reportInappropriateDiary(diaryId, reportInappropriateDiaryRequest);
+} catch on DioException (e) {
+    print('Exception when calling DiariesApi->reportInappropriateDiary: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **diaryId** | **String**| Diary ID to report | 
+ **reportInappropriateDiaryRequest** | [**ReportInappropriateDiaryRequest**](ReportInappropriateDiaryRequest.md)|  | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

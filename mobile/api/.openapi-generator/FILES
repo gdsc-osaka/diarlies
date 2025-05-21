@@ -10,6 +10,7 @@ doc/DiariesApi.md
 doc/Diary.md
 doc/DiaryWithUser.md
 doc/LanguageCode.md
+doc/ReportInappropriateDiaryRequest.md
 doc/ServiceError.md
 doc/Timestamp.md
 doc/User.md
@@ -33,6 +34,7 @@ lib/src/model/day.dart
 lib/src/model/diary.dart
 lib/src/model/diary_with_user.dart
 lib/src/model/language_code.dart
+lib/src/model/report_inappropriate_diary_request.dart
 lib/src/model/service_error.dart
 lib/src/model/timestamp.dart
 lib/src/model/user.dart
@@ -46,6 +48,7 @@ test/diaries_api_test.dart
 test/diary_test.dart
 test/diary_with_user_test.dart
 test/language_code_test.dart
+test/report_inappropriate_diary_request_test.dart
 test/service_error_test.dart
 test/timestamp_test.dart
 test/user_test.dart
