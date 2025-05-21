@@ -16,3 +16,6 @@ rm -rf mobile/api && mv mobile/api.tmp mobile/api
 
 # Clean up temporary files
 rm tmp.openapi.json
+
+echo "Adding generated files to git..."
+git add -A mobile/api
