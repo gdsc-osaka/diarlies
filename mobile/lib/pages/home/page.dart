@@ -18,7 +18,6 @@ import 'package:diarlies/providers/api_providers.dart';
 import 'package:diarlies/providers/auth_providers.dart';
 import 'package:diarlies/providers/location_providers.dart';
 import 'package:diarlies/services/api_adapter.dart';
-import 'package:diarlies/services/background_location_service.dart';
 import 'package:diarlies/shared/error_handler.dart';
 import 'package:diarlies/shared/flux_action.dart';
 import 'package:diarlies/styles/styles.dart';
@@ -29,6 +28,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../services/preferences_service.dart';
 import '_components/report_content_dialog.dart';
 
 part 'action.dart';
@@ -128,6 +128,7 @@ class HomePage extends ConsumerWidget {
                                 onMemoChanged: action.updateMemo,
                                 onWriteDiaryPressed: handleWriteDiary,
                                 locations: ref.watch(storedLocationHistoriesProvider),
+                            enableBackgroundLocation: ref.watch(backgroundLocationEnabledProvider),
                               )
                               : DiaryDisplay(
                                 diary: diary,

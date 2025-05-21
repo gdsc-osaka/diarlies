@@ -111,4 +111,38 @@ class HomeSettingsAction extends FluxAction {
       throw Exception('Could not launch $url');
     }
   }
+
+  Future<void> updateBackgroundLocationSetting({
+    required SuccessHandler<String> successHandler,
+    required ErrorHandler errorHandler,
+}) async {
+    final enabled = await ref.read(backgroundLocationEnabledProvider.future);
+
+    try {
+      final preferencesService = await ref.read(preferencesServiceProvider.future);
+
+      if (enabled) {
+        await disableBackgroundService();
+      } else {
+        await enableBackgroundService();
+      }
+
+      await preferencesService.setBackgroundLocationEnabled(!enabled);
+      ref.invalidate(backgroundLocationEnabledProvider);
+
+      successHandler(
+        enabled
+          ? t.home_settings.success.background_location_disabled
+          : t.home_settings.success.background_location_enabled,
+      );
+
+    } catch (e) {
+      errorHandler(
+        enabled
+          ? t.home_settings.error.failed_to_disable_background_location
+          : t.home_settings.error.failed_to_enable_background_location,
+      );
+      logger.e('Error updating background location setting: $e');
+    }
+  }
 }

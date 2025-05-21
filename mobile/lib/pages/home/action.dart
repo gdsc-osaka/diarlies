@@ -5,7 +5,7 @@ HomeAction _homeAction(Ref ref) => HomeAction(ref);
 
 class HomeAction extends FluxAction {
   HomeAction(super.ref) {
-    initializeBackgroundService();
+    // enableBackgroundService();
   }
 
   Future<void> writeDiary({required ErrorHandler errorHandler}) async {

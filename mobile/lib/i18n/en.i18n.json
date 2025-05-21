@@ -80,11 +80,14 @@
       "regenerate_content": "You can’t undo this action.",
       "report_title": "Report inappropriate content",
       "report_content": "Please provide a reason for reporting this content."
+    },
+    "card": {
+      "background_location_disabled": "Background location is disabled. We can include location changes in your diary by enabling this from the settings page."
     }
   },
   "home_social": {
     "title": "Social",
-    "subtitle": {
+    "card": {
       "diary_not_found": "It seems like anyone hasn’t shared their diary yet.\nBe the first to share your diary by changing your account visibility to public!",
       "diary_fetch_error": "Woops! Something went wrong while fetching the diary.\nPlease try again later."
     }
@@ -96,6 +99,8 @@
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
       "cancel": "Cancel",
+      "enable_background_location": "Enable background location",
+      "disable_background_location": "Disable background location",
       "delete_account": "Delete account",
       "privacy_policy": "Privacy Policy"
     },
@@ -110,11 +115,15 @@
     },
     "success": {
       "change_visibility": "Visibility changed successfully",
-      "delete_account": "Account deleted successfully"
+      "delete_account": "Account deleted successfully",
+      "background_location_enabled": "Background location enabled",
+      "background_location_disabled": "Background location disabled"
     },
     "error": {
       "failed_to_sign_out": "Failed to sign out",
-      "failed_to_delete_account": "Failed to delete account"
+      "failed_to_delete_account": "Failed to delete account",
+      "failed_to_enable_background_location": "Failed to enable background location",
+      "failed_to_disable_background_location": "Failed to disable background location"
     },
     "dialog": {
       "sign_out_title": "Are you sure you want to sign out?",

@@ -62,7 +62,7 @@ class HomeSocialPage extends ConsumerWidget {
 
                 if (diaries.hasValue && diariesVal?.isEmpty == true && index == 1) {
                   return NBCard(
-                    child: Text(t.home_social.subtitle.diary_not_found, style: styles.text.title.m),
+                    child: Text(t.home_social.card.diary_not_found, style: styles.text.title.m),
                   );
                 }
 
@@ -72,7 +72,7 @@ class HomeSocialPage extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(t.home_social.subtitle.diary_fetch_error, style: styles.text.title.m.copyWith(color: styles.color.onError)),
+                        Text(t.home_social.card.diary_fetch_error, style: styles.text.title.m.copyWith(color: styles.color.onError)),
                         const SizedBox(height: 8),
                         Text(
                           diaries.error.toString(),

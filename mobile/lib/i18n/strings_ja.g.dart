@@ -111,6 +111,7 @@ class _TranslationsHomeJa implements TranslationsHomeEn {
 	@override late final _TranslationsHomeSuccessJa success = _TranslationsHomeSuccessJa._(_root);
 	@override late final _TranslationsHomeErrorJa error = _TranslationsHomeErrorJa._(_root);
 	@override late final _TranslationsHomeDialogJa dialog = _TranslationsHomeDialogJa._(_root);
+	@override late final _TranslationsHomeCardJa card = _TranslationsHomeCardJa._(_root);
 }
 
 // Path: home_social
@@ -121,7 +122,7 @@ class _TranslationsHomeSocialJa implements TranslationsHomeSocialEn {
 
 	// Translations
 	@override String get title => 'ソーシャル';
-	@override late final _TranslationsHomeSocialSubtitleJa subtitle = _TranslationsHomeSocialSubtitleJa._(_root);
+	@override late final _TranslationsHomeSocialCardJa card = _TranslationsHomeSocialCardJa._(_root);
 }
 
 // Path: home_settings
@@ -310,9 +311,19 @@ class _TranslationsHomeDialogJa implements TranslationsHomeDialogEn {
 	@override String get report_content => 'このコンテンツを報告する理由を教えてください。';
 }
 
-// Path: home_social.subtitle
-class _TranslationsHomeSocialSubtitleJa implements TranslationsHomeSocialSubtitleEn {
-	_TranslationsHomeSocialSubtitleJa._(this._root);
+// Path: home.card
+class _TranslationsHomeCardJa implements TranslationsHomeCardEn {
+	_TranslationsHomeCardJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get background_location_disabled => 'バックグラウンド位置情報が無効になっています。\n設定ページからこれを有効にすることで、日記に位置情報の変更を含めることができます。';
+}
+
+// Path: home_social.card
+class _TranslationsHomeSocialCardJa implements TranslationsHomeSocialCardEn {
+	_TranslationsHomeSocialCardJa._(this._root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -332,6 +343,8 @@ class _TranslationsHomeSettingsBtnJa implements TranslationsHomeSettingsBtnEn {
 	@override String get terms => '利用規約';
 	@override String get privacy => 'プライバシーポリシー';
 	@override String get cancel => 'キャンセル';
+	@override String get enable_background_location => 'バックグラウンド位置情報を有効にする';
+	@override String get disable_background_location => 'バックグラウンド位置情報を無効にする';
 	@override String get delete_account => 'アカウントを削除';
 	@override String get privacy_policy => 'プライバシーポリシー';
 }
@@ -368,6 +381,8 @@ class _TranslationsHomeSettingsSuccessJa implements TranslationsHomeSettingsSucc
 	// Translations
 	@override String get change_visibility => '公開範囲が変更されました';
 	@override String get delete_account => 'アカウントが削除されました';
+	@override String get background_location_enabled => 'バックグラウンド位置情報が有効になりました';
+	@override String get background_location_disabled => 'バックグラウンド位置情報が無効になりました';
 }
 
 // Path: home_settings.error
@@ -379,6 +394,8 @@ class _TranslationsHomeSettingsErrorJa implements TranslationsHomeSettingsErrorE
 	// Translations
 	@override String get failed_to_sign_out => 'サインアウトに失敗しました';
 	@override String get failed_to_delete_account => 'アカウントの削除に失敗しました';
+	@override String get failed_to_enable_background_location => 'バックグラウンド位置情報の有効化に失敗しました';
+	@override String get failed_to_disable_background_location => 'バックグラウンド位置情報の無効化に失敗しました';
 }
 
 // Path: home_settings.dialog
@@ -441,14 +458,17 @@ extension on TranslationsJa {
 			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';
 			case 'home.dialog.report_title': return '不適切なコンテンツを報告';
 			case 'home.dialog.report_content': return 'このコンテンツを報告する理由を教えてください。';
+			case 'home.card.background_location_disabled': return 'バックグラウンド位置情報が無効になっています。\n設定ページからこれを有効にすることで、日記に位置情報の変更を含めることができます。';
 			case 'home_social.title': return 'ソーシャル';
-			case 'home_social.subtitle.diary_not_found': return 'まだ誰も日記を共有していないようです。\nアカウントの公開範囲を公開に変更して、最初の日記を共有しましょう！';
-			case 'home_social.subtitle.diary_fetch_error': return 'おっと！日記の取得中に問題が発生しました。\nしばらく待ってからもう一度お試しください。';
+			case 'home_social.card.diary_not_found': return 'まだ誰も日記を共有していないようです。\nアカウントの公開範囲を公開に変更して、最初の日記を共有しましょう！';
+			case 'home_social.card.diary_fetch_error': return 'おっと！日記の取得中に問題が発生しました。\nしばらく待ってからもう一度お試しください。';
 			case 'home_settings.title': return '設定';
 			case 'home_settings.btn.sign_out': return 'サインアウト';
 			case 'home_settings.btn.terms': return '利用規約';
 			case 'home_settings.btn.privacy': return 'プライバシーポリシー';
 			case 'home_settings.btn.cancel': return 'キャンセル';
+			case 'home_settings.btn.enable_background_location': return 'バックグラウンド位置情報を有効にする';
+			case 'home_settings.btn.disable_background_location': return 'バックグラウンド位置情報を無効にする';
 			case 'home_settings.btn.delete_account': return 'アカウントを削除';
 			case 'home_settings.btn.privacy_policy': return 'プライバシーポリシー';
 			case 'home_settings.label.privacy': return 'プライバシー';
@@ -458,8 +478,12 @@ extension on TranslationsJa {
 			case 'home_settings.select.private': return 'アカウントの公開範囲 - 非公開';
 			case 'home_settings.success.change_visibility': return '公開範囲が変更されました';
 			case 'home_settings.success.delete_account': return 'アカウントが削除されました';
+			case 'home_settings.success.background_location_enabled': return 'バックグラウンド位置情報が有効になりました';
+			case 'home_settings.success.background_location_disabled': return 'バックグラウンド位置情報が無効になりました';
 			case 'home_settings.error.failed_to_sign_out': return 'サインアウトに失敗しました';
 			case 'home_settings.error.failed_to_delete_account': return 'アカウントの削除に失敗しました';
+			case 'home_settings.error.failed_to_enable_background_location': return 'バックグラウンド位置情報の有効化に失敗しました';
+			case 'home_settings.error.failed_to_disable_background_location': return 'バックグラウンド位置情報の無効化に失敗しました';
 			case 'home_settings.dialog.sign_out_title': return 'ログアウトしますか？';
 			case 'home_settings.dialog.delete_account_title': return 'アカウントを削除しますか？';
 			case 'home_settings.dialog.delete_account_content': return 'この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。';

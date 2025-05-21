@@ -80,11 +80,14 @@
         "regenerate_content": "この操作は元に戻せません。",
         "report_title": "不適切なコンテンツを報告",
         "report_content": "このコンテンツを報告する理由を教えてください。"
+    },
+    "card": {
+        "background_location_disabled": "バックグラウンド位置情報が無効になっています。\n設定ページからこれを有効にすることで、日記に位置情報の変更を含めることができます。"
     }
   },
   "home_social": {
     "title": "ソーシャル",
-    "subtitle": {
+    "card": {
       "diary_not_found": "まだ誰も日記を共有していないようです。\nアカウントの公開範囲を公開に変更して、最初の日記を共有しましょう！",
       "diary_fetch_error": "おっと！日記の取得中に問題が発生しました。\nしばらく待ってからもう一度お試しください。"
     }
@@ -96,6 +99,8 @@
       "terms": "利用規約",
       "privacy": "プライバシーポリシー",
       "cancel": "キャンセル",
+      "enable_background_location": "バックグラウンド位置情報を有効にする",
+      "disable_background_location": "バックグラウンド位置情報を無効にする",
       "delete_account": "アカウントを削除",
       "privacy_policy": "プライバシーポリシー"
     },
@@ -110,16 +115,20 @@
     },
     "success": {
       "change_visibility": "公開範囲が変更されました",
-      "delete_account": "アカウントが削除されました"
+      "delete_account": "アカウントが削除されました",
+      "background_location_enabled": "バックグラウンド位置情報が有効になりました",
+      "background_location_disabled": "バックグラウンド位置情報が無効になりました"
     },
     "error": {
       "failed_to_sign_out": "サインアウトに失敗しました",
-    "failed_to_delete_account": "アカウントの削除に失敗しました"
+      "failed_to_delete_account": "アカウントの削除に失敗しました",
+      "failed_to_enable_background_location": "バックグラウンド位置情報の有効化に失敗しました",
+      "failed_to_disable_background_location": "バックグラウンド位置情報の無効化に失敗しました"
     },
     "dialog": {
       "sign_out_title": "ログアウトしますか？",
       "delete_account_title": "アカウントを削除しますか？",
-        "delete_account_content": "この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。"
+      "delete_account_content": "この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。"
     }
   }
 }
