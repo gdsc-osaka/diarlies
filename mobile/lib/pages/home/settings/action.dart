@@ -106,7 +106,7 @@ class HomeSettingsAction extends FluxAction {
   Future<void> openPrivacyPolicyPage() async {
     final url = Uri.parse(Urls.privacyPolicy);
     if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.inAppWebView);
+      await launchUrl(url);
     } else {
       throw Exception('Could not launch $url');
     }
