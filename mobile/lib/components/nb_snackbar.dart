@@ -46,7 +46,8 @@ class NBSnackBar extends HookWidget {
       return null; // クリーンアップ関数なし
     }, [isVisible]); // isVisibleが変更された時（特に最初に表示された時）に高さを再計算する可能性も考慮
 
-    final topPosition = isVisible ? 16.0 : -(snackBarHeight.value + 16.0) - 100;
+    final safeAreaTop = MediaQuery.of(context).padding.top;
+    final topPosition = isVisible ? safeAreaTop : -(snackBarHeight.value + 16.0) - 100;
 
     return AnimatedPositioned(
       duration: animationDuration,

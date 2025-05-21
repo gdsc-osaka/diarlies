@@ -7,7 +7,6 @@ import 'package:diarlies/components/nb_card.dart';
 import 'package:diarlies/components/nb_dialog.dart';
 import 'package:diarlies/components/nb_icon_button.dart';
 import 'package:diarlies/components/nb_snackbar.dart';
-import 'package:diarlies/components/nb_text_field.dart';
 import 'package:diarlies/components/variant.dart';
 import 'package:diarlies/i18n/strings.g.dart';
 import 'package:diarlies/logger.dart';
@@ -33,9 +32,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '_components/report_content_dialog.dart';
 
 part 'action.dart';
-
 part 'page.g.dart';
-
 part 'providers.dart';
 
 class HomePage extends ConsumerWidget {
@@ -60,7 +57,7 @@ class HomePage extends ConsumerWidget {
     }
 
     handleRegenerate(Diary diary) {
-      return showDialog(
+      showDialog(
         context: context,
         builder:
             (context) => NBDialog(
@@ -90,14 +87,20 @@ class HomePage extends ConsumerWidget {
       );
     }
 
-    handleReportContent(Diary diary) {
-      return showDialog(
+    void handleReportContent(Diary diary) {
+      showDialog(
         context: context,
         builder:
             (context) => ReportContentDialog(
               onCancel: () => Navigator.of(context).pop(),
-              onSubmit: () async {
-                await action.reportContent(diary);
+              onSubmit: (reason) async {
+                await action.reportContent(diary, reason,
+                    successHandler: (_) {
+                      showNBSnackBar(context, title: t.home.success.report_diary, type: SnackBarType.success);
+                    },
+                    errorHandler: (message) {
+                  showNBSnackBar(context, title: message, type: SnackBarType.error);
+                });
 
                 if (context.mounted) Navigator.of(context).pop();
               },

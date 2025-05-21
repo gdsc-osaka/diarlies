@@ -108,6 +108,7 @@ class _TranslationsHomeJa implements TranslationsHomeEn {
 	@override late final _TranslationsHomeBtnJa btn = _TranslationsHomeBtnJa._(_root);
 	@override late final _TranslationsHomeLabelJa label = _TranslationsHomeLabelJa._(_root);
 	@override late final _TranslationsHomePlaceholderJa placeholder = _TranslationsHomePlaceholderJa._(_root);
+	@override late final _TranslationsHomeSuccessJa success = _TranslationsHomeSuccessJa._(_root);
 	@override late final _TranslationsHomeErrorJa error = _TranslationsHomeErrorJa._(_root);
 	@override late final _TranslationsHomeDialogJa dialog = _TranslationsHomeDialogJa._(_root);
 }
@@ -275,6 +276,16 @@ class _TranslationsHomePlaceholderJa implements TranslationsHomePlaceholderEn {
 	@override String get memo => '今日の気分は...';
 }
 
+// Path: home.success
+class _TranslationsHomeSuccessJa implements TranslationsHomeSuccessEn {
+	_TranslationsHomeSuccessJa._(this._root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+	@override String get report_diary => 'ご報告ありがとうございます。';
+}
+
 // Path: home.error
 class _TranslationsHomeErrorJa implements TranslationsHomeErrorEn {
 	_TranslationsHomeErrorJa._(this._root);
@@ -412,6 +423,7 @@ extension on TranslationsJa {
 			case 'home.label.journey': return '今日の旅路';
 			case 'home.label.memo': return 'メモ';
 			case 'home.placeholder.memo': return '今日の気分は...';
+			case 'home.success.report_diary': return 'ご報告ありがとうございます。';
 			case 'home.error.failed_to_fetch_todays_diary': return '今日の日記の取得に失敗しました';
 			case 'home.dialog.regenerate_title': return '日記を再生成してもよろしいですか？';
 			case 'home.dialog.regenerate_content': return 'この操作は元に戻せません。';

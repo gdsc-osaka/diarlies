@@ -12,7 +12,7 @@ class ReportContentDialog extends HookWidget {
   const ReportContentDialog({super.key, required this.onCancel, required this.onSubmit});
 
   final FutureOrCallback onCancel;
-  final FutureOrCallback onSubmit;
+  final Future<void> Function(String reason) onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class ReportContentDialog extends HookWidget {
           ),
           NBButton(
             label: Text(t.home.btn.report),
-            onPressed: report.value.isEmpty ? null : onSubmit,
+            onPressed: report.value.isEmpty ? null : () => onSubmit(report.value),
           )
         ]);
   }

@@ -102,7 +102,31 @@ class HomeAction extends FluxAction {
     }
   }
 
-  Future<void> reportContent(Diary diary) async {
+  Future<void> reportContent(Diary diary, String reason, {
+    required SuccessHandler<void> successHandler,
+    required ErrorHandler errorHandler}) async {
+    final requestBuilder = ReportInappropriateDiaryRequestBuilder();
+    requestBuilder.reason = reason;
 
+    try {
+      final res = await ref.watch(diariesApiProvider).reportInappropriateDiary(
+        diaryId: diary.id,
+          reportInappropriateDiaryRequest: requestBuilder.build(),
+      );
+
+      logger.i('Content reported successfully. (${res.statusCode})');
+
+      successHandler("");
+
+    } on DioException catch (e) {
+      if (e.response?.data case ServiceError err) {
+        errorHandler('${err.code}: ${err.message}');
+      } else {
+        errorHandler(e.message ?? 'Unknown error occurred');
+      }
+
+      logger.e(e);
+      return;
+    }
   }
 }

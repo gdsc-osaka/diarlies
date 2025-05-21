@@ -111,6 +111,7 @@ class TranslationsHomeEn {
 	late final TranslationsHomeBtnEn btn = TranslationsHomeBtnEn._(_root);
 	late final TranslationsHomeLabelEn label = TranslationsHomeLabelEn._(_root);
 	late final TranslationsHomePlaceholderEn placeholder = TranslationsHomePlaceholderEn._(_root);
+	late final TranslationsHomeSuccessEn success = TranslationsHomeSuccessEn._(_root);
 	late final TranslationsHomeErrorEn error = TranslationsHomeErrorEn._(_root);
 	late final TranslationsHomeDialogEn dialog = TranslationsHomeDialogEn._(_root);
 }
@@ -278,6 +279,16 @@ class TranslationsHomePlaceholderEn {
 	String get memo => 'Today I feel like...';
 }
 
+// Path: home.success
+class TranslationsHomeSuccessEn {
+	TranslationsHomeSuccessEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get report_diary => 'Thank you for your report.';
+}
+
 // Path: home.error
 class TranslationsHomeErrorEn {
 	TranslationsHomeErrorEn._(this._root);
@@ -415,6 +426,7 @@ extension on Translations {
 			case 'home.label.journey': return 'Today’s journey';
 			case 'home.label.memo': return 'Memo';
 			case 'home.placeholder.memo': return 'Today I feel like...';
+			case 'home.success.report_diary': return 'Thank you for your report.';
 			case 'home.error.failed_to_fetch_todays_diary': return 'Failed to fetch today’s diary';
 			case 'home.dialog.regenerate_title': return 'Are you sure you want to regenerate diary?';
 			case 'home.dialog.regenerate_content': return 'You can’t undo this action.';

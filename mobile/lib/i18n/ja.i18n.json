@@ -69,6 +69,9 @@
     "placeholder": {
       "memo": "今日の気分は..."
     },
+    "success": {
+      "report_diary": "ご報告ありがとうございます。"
+    },
     "error": {
       "failed_to_fetch_todays_diary": "今日の日記の取得に失敗しました"
     },

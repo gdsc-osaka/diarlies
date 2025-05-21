@@ -69,6 +69,9 @@
     "placeholder": {
       "memo": "Today I feel like..."
     },
+    "success": {
+      "report_diary": "Thank you for your report."
+    },
     "error": {
       "failed_to_fetch_todays_diary": "Failed to fetch today’s diary"
     },
