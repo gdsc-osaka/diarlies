@@ -5,7 +5,7 @@ import {
   handleDiscordError,
 } from "./error/discord-error";
 import env from "../env";
-import {infraLogger} from "../logger";
+import { infraLogger } from "../logger";
 
 export type SendDiscordMessage = (
   message: string,
@@ -33,4 +33,4 @@ export const sendDiscordMessage: SendDiscordMessage = (message) =>
             ),
           ),
     )
-      .orTee(infraLogger('sendDiscordMessage').error)
+    .orTee(infraLogger("sendDiscordMessage").error);
