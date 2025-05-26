@@ -31,7 +31,7 @@ dependencies:
   slang: ^4.7.1
   slang_flutter: ^4.7.0
   flutter_svg: ^2.1.0
-  photo_manager: ^3.6.4
+  photo_manager: ^3.7.1
   permission_handler: ^12.0.0+1
   location: ^8.0.0
   image_picker: ^1.1.2
