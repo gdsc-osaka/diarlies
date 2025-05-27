@@ -20,7 +20,7 @@ Api api(Ref ref) {
         _ => Api.basePath,
       },
       connectTimeout: const Duration(milliseconds: 5000),
-      receiveTimeout: const Duration(milliseconds: 15000),
+      receiveTimeout: const Duration(milliseconds: 30000),
     )),
     interceptors: [BearerAuthInterceptor(), LoggingInterceptor()],
   );
