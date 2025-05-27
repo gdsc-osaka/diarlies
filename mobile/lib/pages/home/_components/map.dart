@@ -67,14 +67,15 @@ class JourneyMap extends HookWidget {
             Brightness.light => null,
             Brightness.dark => googleMapDarkStyle,
           },
-          markers:
-              locations.map((location) {
-                return Marker(
-                  markerId: MarkerId(location.toString()),
-                  position: LatLng(location.lat, location.lng),
-                  infoWindow: InfoWindow(title: hhmmFormatter.format(location.visitedAt)),
-                );
-              }).toSet(),
+          // draw a polyline so that each next point is connected
+          polylines: {
+            Polyline(
+              polylineId: PolylineId('journey'),
+              color: styles.color.primary,
+              width: 4,
+              points: locations.map((location) => LatLng(location.lat, location.lng)).toList(),
+            ),
+          },
         ),
       ),
     );
