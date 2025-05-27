@@ -12,9 +12,9 @@ dependencies:
     path: hive_model
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  firebase_analytics: ^11.4.5
+  firebase_analytics: ^11.4.6
   firebase_auth: ^5.5.3
-  firebase_core: ^3.13.0
+  firebase_core: ^3.13.1
   firebase_crashlytics: ^4.3.6
   firebase_messaging: ^15.2.5
   flutter:
@@ -28,10 +28,10 @@ dependencies:
   logger: ^2.5.0
   riverpod_annotation: ^2.6.1
   sign_in_with_apple: ^7.0.1
-  slang: ^4.7.1
+  slang: ^4.7.2
   slang_flutter: ^4.7.0
   flutter_svg: ^2.1.0
-  photo_manager: ^3.6.4
+  photo_manager: ^3.7.1
   permission_handler: ^12.0.0+1
   location: ^8.0.0
   image_picker: ^1.1.2
