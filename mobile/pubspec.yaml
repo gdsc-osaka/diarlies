@@ -12,7 +12,7 @@ dependencies:
     path: hive_model
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  firebase_analytics: ^11.4.5
+  firebase_analytics: ^11.4.6
   firebase_auth: ^5.5.3
   firebase_core: ^3.13.1
   firebase_crashlytics: ^4.3.5
