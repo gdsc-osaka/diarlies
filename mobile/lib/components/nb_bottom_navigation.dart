@@ -88,7 +88,13 @@ class _NBBottomNavigationTile extends HookWidget {
     final disabled = onTap == null;
 
     // NBButtonのisPressed時や、このタイルのselected/isPressed時のハイライト色
-    final highlightedBgColor = darkenColor(effectiveBgColor, lightnessFactor: 0.2, saturationFactor: 0.3);
+    final highlightedBgColor = darkenColor(effectiveBgColor, lightnessFactor: switch (styles.brightness) {
+      Brightness.light => 0.2,
+      Brightness.dark => 0.1,
+    }, saturationFactor: switch (styles.brightness) {
+      Brightness.light => 0.3,
+      Brightness.dark => 0.2,
+    });
 
     final currentBgColor = switch (false) {
       false when disabled => styles.color.disabled,

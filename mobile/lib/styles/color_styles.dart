@@ -209,12 +209,12 @@ class ColorStyles {
   );
 
   static const dark = ColorStyles(
-    background: Color(0xFF2D3332),
+    background: Color(0xFF202020),
     onBackground: Color(0xFFF2F2F2),
-    surface: Color(0xFF33331E),
+    surface: Color(0xFF303030),
     onSurface: Color(0xFFF2F2F2),
-    primary: Color(0xFFF87959),
-    onPrimary: Color(0xFF333333),
+    primary: Color(0xFFE14D2A),
+    onPrimary: Color(0xFFFFFFFF),
     secondary: Color(0xFF1C1C1C),
     onSecondary: Color(0xFFE6E6E6),
     tertiary: Color(0xFF333333),
@@ -224,8 +224,8 @@ class ColorStyles {
     disabled: Color(0xFF686868),
     onDisabled: Color(0xFFF1F1F1),
     link: Color(0xFF0A3B75),
-    border: Color(0xFFFFFFFF),
-    paper: Color(0xFF636259),
+    border: Color(0xFFD8D8D8),
+    paper: Color(0xFF333333),
     outline: Color(0xFFE1E1E1),
 
     googleButton: Color(0xFFFFFFFF),
@@ -235,7 +235,7 @@ class ColorStyles {
 
     greenPastel: Color(0xFFBAFCA2),
     onGreenPastel: Color(0xFF000000),
-    greenHalfTone: Color(0xFF90EE90),
+    greenHalfTone: Color(0xFF053005),
     onGreenHalfTone: Color(0xFF000000),
     green: Color(0xFF7FBC8C),
     onGreen: Color(0xFFFFFFFF),
@@ -247,7 +247,7 @@ class ColorStyles {
     onBlue: Color(0xFFFFFFFF),
     orangePastel: Color(0xFFFDFD96),
     onOrangePastel: Color(0xFF000000),
-    orangeHalfTone: Color(0xFFFFDB58),
+    orangeHalfTone: Color(0xFF776818),
     onOrangeHalfTone: Color(0xFF000000),
     orange: Color(0xFFE3A018),
     onOrange: Color(0xFFFFFFFF),
@@ -269,7 +269,7 @@ class ColorStyles {
     onPinkHalfTone: Color(0xFF000000),
     pink: Color(0xFFFF69B4),
     onPink: Color(0xFFFFFFFF),
-    grey: Color(0xFFE3E3E3),
-    onGrey: Color(0xFF000000),
+    grey: Color(0xFF575757),
+    onGrey: Color(0xFFE4E4E4),
   );
 }
