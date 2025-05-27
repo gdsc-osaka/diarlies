@@ -19,8 +19,14 @@ class LocationStorageService {
 
   List<LocationPoint> getAllLocationPoints() {
     final res = _locationBox.values.toList();
+    final todays = res.where((point) => point.createdAt.isAfter(DateTime.now().subtract(const Duration(days: 1)))).toList();
+    final olds = res.where((point) => point.createdAt.isBefore(DateTime.now().subtract(const Duration(days: 1)))).toList();
+
+    // 古いポイントを削除
+    _locationBox.deleteAll(olds.map((point) => point.key));
+
     logger.d("Location points: $res");
-    return res;
+    return todays;
   }
 
   LocationPoint? getLastLocationPoint() {

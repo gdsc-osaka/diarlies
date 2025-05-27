@@ -6,7 +6,25 @@ part of 'auth_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authEventHash() => r'abf2c42afd449c6ea3d4a9c35a337543c8d9e8a4';
+String _$currentIdTokenHash() => r'4f5986f86184e80e0b93953fef3d9a2cf09d85b2';
+
+/// See also [currentIdToken].
+@ProviderFor(currentIdToken)
+final currentIdTokenProvider = StreamProvider<String?>.internal(
+  currentIdToken,
+  name: r'currentIdTokenProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$currentIdTokenHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CurrentIdTokenRef = StreamProviderRef<String?>;
+String _$authEventHash() => r'5320e151432bacd28a5f21daf0b4c5151d327228';
 
 /// See also [authEvent].
 @ProviderFor(authEvent)
@@ -39,7 +57,7 @@ final currentAuthUserProvider =
     );
 
 typedef _$CurrentAuthUser = StreamNotifier<AuthUser?>;
-String _$currentUserHash() => r'e9ea8e8ab4a67a74d9751b84529e7ba5b5bd69ff';
+String _$currentUserHash() => r'2dd76997388c4e51e4c7e125b2b04c9f98bdd58f';
 
 /// See also [CurrentUser].
 @ProviderFor(CurrentUser)

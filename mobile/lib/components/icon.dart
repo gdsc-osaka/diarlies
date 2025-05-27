@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../styles/styles.dart';
+
 class GoogleIcon extends StatelessWidget {
   const GoogleIcon({super.key, this.size = 24});
 
@@ -23,7 +25,7 @@ class AppleIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = Styles.of(context).brightness;
 
   return Image.asset(
     switch (brightness) {

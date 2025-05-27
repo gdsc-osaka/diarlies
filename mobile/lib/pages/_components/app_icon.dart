@@ -1,3 +1,4 @@
+import 'package:diarlies/styles/styles.dart';
 import 'package:flutter/material.dart';
 
 enum AppIconType { appIcon, splash }
@@ -10,7 +11,7 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = Styles.of(context).brightness;
 
     return Image.asset(
       switch (type) {

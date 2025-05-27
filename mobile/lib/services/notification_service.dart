@@ -12,7 +12,7 @@ class NotificationService {
   static Future<void> initialize() async {
     await _notificationsPlugin.initialize(
       InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('@drawable/ic_stat'),
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false, // バックグラウンドサービス側で制御する場合
           requestBadgePermission: false,
@@ -51,7 +51,7 @@ class NotificationService {
         ongoing: true,
         // 消えにくい通知 (フォアグラウンドサービス用)
         autoCancel: false,
-        icon: '@mipmap/ic_launcher',
+        icon: '@drawable/ic_stat',
       ),
       iOS: DarwinNotificationDetails(
         presentSound: false,

@@ -102,7 +102,8 @@
       "enable_background_location": "バックグラウンド位置情報を有効にする",
       "disable_background_location": "バックグラウンド位置情報を無効にする",
       "delete_account": "アカウントを削除",
-      "privacy_policy": "プライバシーポリシー"
+      "privacy_policy": "プライバシーポリシー",
+      "enable": "有効化"
     },
     "label": {
       "privacy": "プライバシー",
@@ -128,7 +129,9 @@
     "dialog": {
       "sign_out_title": "ログアウトしますか？",
       "delete_account_title": "アカウントを削除しますか？",
-      "delete_account_content": "この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。"
+      "delete_account_content": "この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。",
+      "enable_background_location_title": "バックグラウンド位置情報を有効にしますか？",
+      "enable_background_location_content": "バックグラウンド位置情報を有効にすると、アプリがバックグラウンドで位置情報を追跡し、LLMが位置情報の変化に基づいて日記を生成できるようになります。"
     }
   }
 }

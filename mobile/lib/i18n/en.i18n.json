@@ -102,7 +102,8 @@
       "enable_background_location": "Enable background location",
       "disable_background_location": "Disable background location",
       "delete_account": "Delete account",
-      "privacy_policy": "Privacy Policy"
+      "privacy_policy": "Privacy Policy",
+      "enable": "Enable"
     },
     "label": {
       "privacy": "Privacy",
@@ -128,7 +129,9 @@
     "dialog": {
       "sign_out_title": "Are you sure you want to sign out?",
       "delete_account_title": "Are you sure you want to delete your account?",
-      "delete_account_content": "This action is irreversible. All your data will be deleted."
+      "delete_account_content": "This action is irreversible. All your data will be deleted.",
+      "enable_background_location_title": "Enable background location",
+      "enable_background_location_content": "Enabling background location will allow the app to track your location in the background so that LLM can generate a diary based on your location changes."
     }
   }
 }

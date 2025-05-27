@@ -64,6 +64,7 @@ class NBTextField extends HookWidget {
       style: styles.text.label.m.copyWith(color: styles.color.onTertiary),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+        iconColor: styles.color.onTertiary,
         hintText: placeholder,
         // プレースホルダーのテキストスタイル。NBSelect のプレースホルダースタイルを参考に設定します。
         hintStyle: TextStyle(color: styles.color.outline),

@@ -15,10 +15,7 @@ class HomeLayout extends StatelessWidget {
     final styles = Styles.of(context);
 
     void onNavigate(int index) {
-      shell.goBranch(
-        index,
-        initialLocation: index == shell.currentIndex,
-      );
+      shell.goBranch(index, initialLocation: index == shell.currentIndex);
     }
 
     return Scaffold(
@@ -26,15 +23,8 @@ class HomeLayout extends StatelessWidget {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
-              bottom: -100,
-              left: -100,
-              child: NBCircle()),
-          Positioned(
-              top: -20,
-              right: -10,
-              child: NBTriangle(),
-          ),
+          if (styles.brightness == Brightness.light) Positioned(bottom: -100, left: -100, child: NBCircle()),
+          if (styles.brightness == Brightness.light) Positioned(top: -20, right: -10, child: NBTriangle()),
           SafeArea(child: shell),
           SafeArea(
             top: false,

@@ -34,11 +34,43 @@ class CurrentAuthUser extends _$CurrentAuthUser {
   }
 }
 
+class AuthUninitializedException implements Exception {
+  @override
+  String toString() => 'Firebase Auth is not initialized. Please initialize Firebase before using this provider.';
+}
+
+@Riverpod(keepAlive: true)
+Stream<String?> currentIdToken(Ref ref) {
+  final controller = StreamController<String?>();
+
+  ref.listen(currentAuthUserProvider, (prev, next) async {
+    final user = next.valueOrNull;
+    if (user == null) {
+      controller.add(null);
+      return;
+    }
+
+    try {
+      final token = await user.getIdToken();
+      logger.d('[CurrentIdToken] idToken: ${token?.substring(0, 10)}...');
+      controller.add(token);
+    } catch (e, s) {
+      logger.e('[CurrentIdToken] Error getting ID token', error: e, stackTrace: s);
+      controller.addError(e, s);
+    }
+  });
+
+  controller.addError(AuthUninitializedException());
+
+  return controller.stream;
+}
+
+
 @Riverpod(keepAlive: true)
 class CurrentUser extends _$CurrentUser {
   @override
   Future<User?> build() async {
-    if (Firebase.apps.isEmpty) return Future.error('uninitialized');
+    if (Firebase.apps.isEmpty) throw AuthUninitializedException();
 
     final res = await ref.watch(usersApiProvider).getUser();
     return res.data;
@@ -67,7 +99,9 @@ Stream<AuthEvent> authEvent(Ref ref) {
       final isLoading = user.isLoading;
       final userNotFound = user.hasValue && user.value == null;
       final userExists = user.hasValue && user.value != null;
-      final failedToAuthenticate = user.hasError && user.error != 'uninitialized';
+      final failedToAuthenticate = user.hasError && user.error is! AuthUninitializedException;
+
+      logger.d('[AuthEvent], ${prevUser?.valueOrNull}, ${user.valueOrNull}');
 
       final newState = switch (oldState) {
         AuthEvent.uninitialized => switch (true) {

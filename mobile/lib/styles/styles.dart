@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'text_styles.dart';
 
 class Styles {
-  const Styles({required this.color, required this.text, required this.shadow});
+  const Styles({required this.color, required this.text, required this.shadow, required this.brightness});
 
   final ColorStyles color;
   final TextStyles text;
   final ShadowStyles shadow;
+  final Brightness brightness;
 
   static Styles of(BuildContext context) {
     final provider = context.dependOnInheritedWidgetOfExactType<StylesProvider>();
@@ -26,7 +27,7 @@ class Styles {
       Brightness.dark => ColorStyles.dark,
     };
 
-    return Styles(color: color, text: TextStyles.from(color), shadow: ShadowStyles.from(color));
+    return Styles(color: color, text: TextStyles.from(color), shadow: ShadowStyles.from(color), brightness: brightness);
   }
 }
 

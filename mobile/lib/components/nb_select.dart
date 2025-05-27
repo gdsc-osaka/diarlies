@@ -46,7 +46,9 @@ class NBSelect<T> extends StatelessWidget {
             return DropdownMenuItem<T>(
               value: val,
               // builder 関数で各項目の Widget を構築
-              child: DefaultTextStyle(style: styles.text.label.m, child: builder(val)),
+              child: IconTheme(
+                  data: IconThemeData(color: styles.color.onTertiary),
+                  child: DefaultTextStyle(style: styles.text.label.m, child: builder(val))),
             );
           }).toList(),
       onChanged: onChanged,
