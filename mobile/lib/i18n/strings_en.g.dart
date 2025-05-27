@@ -350,6 +350,7 @@ class TranslationsHomeSettingsBtnEn {
 	String get disable_background_location => 'Disable background location';
 	String get delete_account => 'Delete account';
 	String get privacy_policy => 'Privacy Policy';
+	String get enable => 'Enable';
 }
 
 // Path: home_settings.label
@@ -411,6 +412,8 @@ class TranslationsHomeSettingsDialogEn {
 	String get sign_out_title => 'Are you sure you want to sign out?';
 	String get delete_account_title => 'Are you sure you want to delete your account?';
 	String get delete_account_content => 'This action is irreversible. All your data will be deleted.';
+	String get enable_background_location_title => 'Enable background location';
+	String get enable_background_location_content => 'Enabling background location will allow the app to track your location in the background so that LLM can generate a diary based on your location changes.';
 }
 
 /// Flat map(s) containing all translations.
@@ -474,6 +477,7 @@ extension on Translations {
 			case 'home_settings.btn.disable_background_location': return 'Disable background location';
 			case 'home_settings.btn.delete_account': return 'Delete account';
 			case 'home_settings.btn.privacy_policy': return 'Privacy Policy';
+			case 'home_settings.btn.enable': return 'Enable';
 			case 'home_settings.label.privacy': return 'Privacy';
 			case 'home_settings.label.account': return 'Account';
 			case 'home_settings.label.additional_resources': return 'Additional resources';
@@ -490,6 +494,8 @@ extension on Translations {
 			case 'home_settings.dialog.sign_out_title': return 'Are you sure you want to sign out?';
 			case 'home_settings.dialog.delete_account_title': return 'Are you sure you want to delete your account?';
 			case 'home_settings.dialog.delete_account_content': return 'This action is irreversible. All your data will be deleted.';
+			case 'home_settings.dialog.enable_background_location_title': return 'Enable background location';
+			case 'home_settings.dialog.enable_background_location_content': return 'Enabling background location will allow the app to track your location in the background so that LLM can generate a diary based on your location changes.';
 			default: return null;
 		}
 	}

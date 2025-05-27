@@ -347,6 +347,7 @@ class _TranslationsHomeSettingsBtnJa implements TranslationsHomeSettingsBtnEn {
 	@override String get disable_background_location => 'バックグラウンド位置情報を無効にする';
 	@override String get delete_account => 'アカウントを削除';
 	@override String get privacy_policy => 'プライバシーポリシー';
+	@override String get enable => '有効化';
 }
 
 // Path: home_settings.label
@@ -408,6 +409,8 @@ class _TranslationsHomeSettingsDialogJa implements TranslationsHomeSettingsDialo
 	@override String get sign_out_title => 'ログアウトしますか？';
 	@override String get delete_account_title => 'アカウントを削除しますか？';
 	@override String get delete_account_content => 'この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。';
+	@override String get enable_background_location_title => 'バックグラウンド位置情報を有効にしますか？';
+	@override String get enable_background_location_content => 'バックグラウンド位置情報を有効にすると、アプリがバックグラウンドで位置情報を追跡し、LLMが位置情報の変化に基づいて日記を生成できるようになります。';
 }
 
 /// Flat map(s) containing all translations.
@@ -471,6 +474,7 @@ extension on TranslationsJa {
 			case 'home_settings.btn.disable_background_location': return 'バックグラウンド位置情報を無効にする';
 			case 'home_settings.btn.delete_account': return 'アカウントを削除';
 			case 'home_settings.btn.privacy_policy': return 'プライバシーポリシー';
+			case 'home_settings.btn.enable': return '有効化';
 			case 'home_settings.label.privacy': return 'プライバシー';
 			case 'home_settings.label.account': return 'アカウント';
 			case 'home_settings.label.additional_resources': return 'その他のリソース';
@@ -487,6 +491,8 @@ extension on TranslationsJa {
 			case 'home_settings.dialog.sign_out_title': return 'ログアウトしますか？';
 			case 'home_settings.dialog.delete_account_title': return 'アカウントを削除しますか？';
 			case 'home_settings.dialog.delete_account_content': return 'この操作は元に戻せません。アカウントを削除すると、すべてのデータが失われます。';
+			case 'home_settings.dialog.enable_background_location_title': return 'バックグラウンド位置情報を有効にしますか？';
+			case 'home_settings.dialog.enable_background_location_content': return 'バックグラウンド位置情報を有効にすると、アプリがバックグラウンドで位置情報を追跡し、LLMが位置情報の変化に基づいて日記を生成できるようになります。';
 			default: return null;
 		}
 	}

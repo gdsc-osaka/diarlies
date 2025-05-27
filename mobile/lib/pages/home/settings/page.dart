@@ -82,8 +82,8 @@ class HomeSettingsPage extends ConsumerWidget {
                 ),
                 NBButton(
                   label: Text(t.home_settings.btn.delete_account),
-                  onPressed: () async {
-                    action.deleteAccount(
+                  onPressed: () {
+                    return action.deleteAccount(
                       successHandler: (message) {
                         if (context.mounted) Navigator.of(context).pop();
 
@@ -107,9 +107,38 @@ class HomeSettingsPage extends ConsumerWidget {
     }
 
     handleChangeBackgroundLocationSetting() {
-      return action.updateBackgroundLocationSetting(
-        successHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.success),
-        errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+      if (ref.watch(backgroundLocationEnabledProvider).valueOrNull == true) {
+        return action.updateBackgroundLocationSetting(
+          successHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.success),
+          errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+        );
+      }
+      return showDialog(
+        context: context,
+        builder:
+            (context) => NBDialog(
+          title: Text(t.home_settings.dialog.enable_background_location_title),
+          content: Text(t.home_settings.dialog.enable_background_location_content),
+          actions: [
+            NBButton(
+              label: Text(t.home_settings.btn.cancel),
+              variant: Variant.secondary,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            NBButton(
+              label: Text(t.home_settings.btn.enable),
+              onPressed: () {
+                return action.updateBackgroundLocationSetting(
+                  successHandler: (message) {
+                    if (context.mounted) Navigator.of(context).pop();
+                    showNBSnackBar(context, title: message, type: SnackBarType.success);
+                  },
+                  errorHandler: (message) => showNBSnackBar(context, title: message, type: SnackBarType.error),
+                );
+              },
+            ),
+          ],
+        ),
       );
     }
 
