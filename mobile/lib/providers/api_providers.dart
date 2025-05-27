@@ -25,31 +25,11 @@ Api api(Ref ref) {
     interceptors: [BearerAuthInterceptor(), LoggingInterceptor()],
   );
 
-  ref.listen(currentAuthUserProvider, (prev, next) async {
-    logger.d('CurrentAuthUserProvider changed to: $next');
-
-    final authUser = next.value;
-    if (authUser == null) {
-      api.setBearerAuth('bearerAuth', '');
-      return;
-    }
-
-    try {
-      final idToken = await authUser.getIdToken();
-
-      if (idToken == null) {
-        api.setBearerAuth('bearerAuth', '');
-        return;
-      }
-
-      logger.d('idToken: ${idToken.substring(0, 10)}...');
-      api.setBearerAuth('bearerAuth', idToken);
-    } catch (e, s) {
-      logger.e('Error getting idToken: $e, $s');
-
-      api.setBearerAuth('bearerAuth', '');
-    }
-  });
+  final idToken = ref.watch(currentIdTokenProvider).value;
+  if (idToken != null) {
+    logger.d('idToken: ${idToken.substring(0, 10)}...');
+    api.setBearerAuth('bearerAuth', idToken);
+  }
 
   return api;
 }
