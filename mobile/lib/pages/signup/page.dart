@@ -22,6 +22,7 @@ import '../../logger.dart';
 import '../../shared/flux_action.dart';
 
 part 'action.dart';
+
 part 'page.g.dart';
 
 class SignupPage extends ConsumerWidget {
@@ -38,14 +39,8 @@ class SignupPage extends ConsumerWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-              top: -10,
-              left: -100,
-              child: NBStick()),
-          Positioned(
-              bottom: -100,
-              right: -100,
-              child: NBHexagon()),
+          if (styles.brightness == Brightness.light) Positioned(top: -10, left: -100, child: NBStick()),
+          if (styles.brightness == Brightness.light) Positioned(bottom: -100, right: -100, child: NBHexagon()),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(left: 32, right: 32, bottom: 140),

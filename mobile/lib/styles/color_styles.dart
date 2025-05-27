@@ -209,9 +209,9 @@ class ColorStyles {
   );
 
   static const dark = ColorStyles(
-    background: Color(0xFF202020),
+    background: Color(0xFF212B28),
     onBackground: Color(0xFFF2F2F2),
-    surface: Color(0xFF303030),
+    surface: Color(0xFF35351F),
     onSurface: Color(0xFFF2F2F2),
     primary: Color(0xFFE14D2A),
     onPrimary: Color(0xFFFFFFFF),
@@ -228,10 +228,10 @@ class ColorStyles {
     paper: Color(0xFF333333),
     outline: Color(0xFFE1E1E1),
 
-    googleButton: Color(0xFFFFFFFF),
-    onGoogleButton: Color(0xFF000000),
-    appleButton: Color(0xFF3E3E3E),
-    onAppleButton: Color(0xFFFFFFFF),
+    googleButton: Color(0xFF252525),
+    onGoogleButton: Color(0xFFFFFFFF),
+    appleButton: Color(0xFFFFFFFF),
+    onAppleButton: Color(0xFF000000),
 
     greenPastel: Color(0xFFBAFCA2),
     onGreenPastel: Color(0xFF000000),
