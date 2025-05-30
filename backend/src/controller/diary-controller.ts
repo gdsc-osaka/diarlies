@@ -15,9 +15,12 @@ export const createDiaryController = (createDiary: ReturnType<CreateDiary>) =>
         createServiceError(StatusCode.InternalServerError, e.message),
       )
       .with(DBUserNotFoundError.is, (e) =>
-        createServiceError(StatusCode.NotFound, e.message, "user-not-found", {
-          uid: e.extra?.userId,
-        }),
+        createServiceError(
+          StatusCode.NotFound,
+          e.message,
+          "user-not-found",
+          e.extra,
+        ),
       )
       .with(DBDiaryAlreadyExistsError.is, (e) =>
         createServiceError(

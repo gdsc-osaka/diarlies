@@ -13,7 +13,7 @@ import {
 export type CreateDBDiary = (
   db: DBorTx,
 ) => (
-  user: DBDiaryForCreate,
+  diary: DBDiaryForCreate,
 ) => ResultAsync<DBDiary, DBInternalError | DBDiaryAlreadyExistsError>;
 
 export const createDBDiary: CreateDBDiary = (db) => (diary) =>
@@ -47,7 +47,9 @@ export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
-        : errAsync(DBInternalError("Diary not found", { extra: { diaryId } })),
+        : errAsync(
+            DBDiaryNotFoundError(`Diary not found`, { extra: { diaryId } }),
+          ),
     )
     .orTee(infraLogger("fetchDBDiaryById").error);
 
