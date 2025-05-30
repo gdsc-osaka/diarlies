@@ -24,9 +24,7 @@ export const fetchDBUserByUid: FetchDBUserByUid = (db) => (uid) =>
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
-        : errAsync(
-            DBUserNotFoundError("User not found", { extra: { uid } }),
-          ),
+        : errAsync(DBUserNotFoundError("User not found", { extra: { uid } })),
     )
     .orTee(infraLogger("fetchDBUserByUid").error);
 

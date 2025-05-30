@@ -47,9 +47,7 @@ export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
-        : errAsync(
-            DBInternalError("Diary not found", { extra: { diaryId } }),
-          ),
+        : errAsync(DBInternalError("Diary not found", { extra: { diaryId } })),
     )
     .orTee(infraLogger("fetchDBDiaryById").error);
 
