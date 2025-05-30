@@ -25,7 +25,7 @@ export const createDBDiary: CreateDBDiary = (db) => (diary) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBDiaryAlreadyExistsError.build("Diary already exists", {
+            DBDiaryAlreadyExistsError("Diary already exists", {
               extra: { diaryDate: diary.diaryDate, userId: diary.userId },
             }),
           ),
@@ -48,7 +48,7 @@ export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBInternalError.build("Diary not found", { extra: { diaryId } }),
+            DBInternalError("Diary not found", { extra: { diaryId } }),
           ),
     )
     .orTee(infraLogger("fetchDBDiaryById").error);
@@ -74,7 +74,7 @@ export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBDiaryNotFoundError.build("Diary not found", {
+            DBDiaryNotFoundError("Diary not found", {
               extra: { userId, date },
             }),
           ),
@@ -130,7 +130,7 @@ export const deleteDBDiary: DeleteDBDiary = (db) => (diaryId) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBDiaryNotFoundError.build("Diary not found", {
+            DBDiaryNotFoundError("Diary not found", {
               extra: { diaryId },
             }),
           ),

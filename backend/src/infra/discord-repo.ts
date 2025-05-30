@@ -22,7 +22,7 @@ export const sendDiscordMessage: SendDiscordMessage = (message) =>
       res.ok
         ? okAsync(undefined)
         : errAsync(
-            DiscordError.build(
+            DiscordError(
               `Failed to send discord webhook. (${res.status})`,
             ),
           ),

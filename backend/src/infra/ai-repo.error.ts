@@ -1,4 +1,4 @@
-import { errorBuilder, ErrorType } from "../shared/error";
+import { errorBuilder, InferError } from "../shared/error";
 
 export const AIError = errorBuilder("AIError");
-export type AIError = ErrorType<typeof AIError>;
+export type AIError = InferError<typeof AIError>;

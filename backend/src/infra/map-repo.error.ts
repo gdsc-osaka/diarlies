@@ -1,4 +1,4 @@
-import { errorBuilder, ErrorType } from "../shared/error";
+import { errorBuilder, InferError } from "../shared/error";
 
 export const MapError = errorBuilder("MapError");
-export type MapError = ErrorType<typeof MapError>;
+export type MapError = InferError<typeof MapError>;

@@ -1,4 +1,4 @@
-import { errorBuilder, ErrorType } from "../shared/error";
+import { errorBuilder, InferError } from "../shared/error";
 
 export const StorageError = errorBuilder("StorageError");
-export type StorageError = ErrorType<typeof StorageError>;
+export type StorageError = InferError<typeof StorageError>;

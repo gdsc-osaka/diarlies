@@ -25,7 +25,7 @@ export const fetchDBUserByUid: FetchDBUserByUid = (db) => (uid) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBUserNotFoundError.build("User not found", { extra: { uid } }),
+            DBUserNotFoundError("User not found", { extra: { uid } }),
           ),
     )
     .orTee(infraLogger("fetchDBUserByUid").error);
@@ -55,7 +55,7 @@ export const createDBUser: CreateDBUser = (db) => (user) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBUserAlreadyExistsError.build("User already exists", {
+            DBUserAlreadyExistsError("User already exists", {
               extra: { uid: user.uid },
             }),
           ),
@@ -83,7 +83,7 @@ export const updateDBUser: UpdateDBUser = (db) => (user) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBUserNotFoundError.build("User not found", {
+            DBUserNotFoundError("User not found", {
               extra: { id: user.id },
             }),
           ),
@@ -106,7 +106,7 @@ export const deleteDBUser: DeleteDBUser = (db) => (user) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            DBUserNotFoundError.build("User not found", {
+            DBUserNotFoundError("User not found", {
               extra: { id: user.id },
             }),
           ),

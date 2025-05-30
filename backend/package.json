@@ -35,7 +35,6 @@
     "@hono/node-server": "^1.14.1",
     "@hono/zod-validator": "^0.5.0",
     "drizzle-orm": "^0.43.1",
-    "effect": "^3.15.4",
     "firebase-admin": "^13.4.0",
     "hono": "^4.7.8",
     "hono-openapi": "^0.4.8",
