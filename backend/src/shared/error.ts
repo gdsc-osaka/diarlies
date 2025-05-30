@@ -14,6 +14,7 @@ interface ErrorOptions<Extra extends BaseExtra> {
   cause?: unknown;
   extra?: Extra;
 }
+
 type ErrorBuilder<Tag extends BaseTag, Extra extends BaseExtra> = {
   (message: string, options?: ErrorOptions<Extra>): BaseError<Tag, Extra>;
   handle: (error: unknown) => BaseError<Tag, Extra>;
@@ -30,23 +31,17 @@ export const errorBuilder = <
     Output extends object = object,
     Def extends ZodTypeDef = ZodTypeDef,
     Input = Output,
+    ActualExtra extends object = Extra extends ZodType<Output, Def, Input> ? Extra["_output"] : never,
 >(
     tag: Tag,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _?: Extra,
-): ErrorBuilder<Tag, Extra extends ZodType<Output, Def, Input> ? Extra["_output"] : never> =>
+): ErrorBuilder<Tag, ActualExtra> =>
     Object.assign(
         (
             message: string,
-            options?: ErrorOptions<Extra extends ZodType<Output, Def, Input> ? Extra["_output"] : never>,
-        ): BaseError<Tag, Extra extends ZodType<Output, Def, Input> ? Extra["_output"] : never> => {
-          if (_ === undefined) {
-            return {
-              _tag: tag,
-              message: message,
-              cause: options?.cause,
-            };
-          }
+            options?: ErrorOptions<ActualExtra>,
+        ): BaseError<Tag, ActualExtra> => {
           return {
             _tag: tag,
             message: message,
@@ -55,7 +50,7 @@ export const errorBuilder = <
           };
         },
         {
-          handle: (error: unknown): BaseError<Tag, Extra extends ZodType<Output, Def, Input> ? Extra["_output"] : never> => {
+          handle: (error: unknown): BaseError<Tag, ActualExtra> => {
             if (error instanceof Error) {
               return {
                 _tag: tag,
