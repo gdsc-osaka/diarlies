@@ -11,7 +11,7 @@ import {
   deleteDBUser,
   fetchDBUserByUid,
   updateDBUser,
-} from "../infra/user-repository";
+} from "../infra/user-repo";
 import { toHTTPException } from "../service/error/service-error";
 import db from "../db/db";
 import { getAUthUser } from "./middleware/authorize";

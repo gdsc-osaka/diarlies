@@ -1,61 +1,63 @@
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
 import { users } from "../db/schema/users";
 import { eq } from "drizzle-orm";
-import { createDBError, DBError, handleDBError } from "./error/db-error";
+import { DBInternalError } from "./error/db-error";
 import type { DBorTx } from "../db/db";
 import { DBUser, DBUserForCreate, DBUserForUpdate } from "../domain/user";
 import { infraLogger } from "../logger";
+import {
+  DBUserAlreadyExistsError,
+  DBUserNotFoundError,
+} from "./user-repo.error";
 
 export type FetchDBUserByUid = (
   db: DBorTx,
-) => (uid: string) => ResultAsync<DBUser, DBError<"unknown" | "not-found">>;
+) => (
+  uid: string,
+) => ResultAsync<DBUser, DBInternalError | DBUserNotFoundError>;
 
 export const fetchDBUserByUid: FetchDBUserByUid = (db) => (uid) =>
   ResultAsync.fromPromise(
     db.select().from(users).where(eq(users.uid, uid)).limit(1).execute(),
-    handleDBError,
+    DBUserNotFoundError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "not-found",
-              `User with uid ${uid} not found`,
-              undefined,
-            ),
+            DBUserNotFoundError.build("User not found", { extra: { uid } }),
           ),
     )
     .orTee(infraLogger("fetchDBUserByUid").error);
 
 export type FetchIfDBUserExists = (
   db: DBorTx,
-) => (uid: string) => ResultAsync<boolean, DBError<"unknown">>;
+) => (uid: string) => ResultAsync<boolean, DBInternalError>;
 
 export const fetchIfDBUserExists: FetchIfDBUserExists = (db) => (uid) =>
   ResultAsync.fromPromise(
     db.select({}).from(users).where(eq(users.uid, uid)).limit(1).execute(),
-    handleDBError,
+    DBInternalError.handle,
   ).map((records) => records.length > 0);
 
 export type CreateDBUser = (
   db: DBorTx,
-) => (user: DBUserForCreate) => ResultAsync<DBUser, DBError<"unknown">>;
+) => (
+  user: DBUserForCreate,
+) => ResultAsync<DBUser, DBInternalError | DBUserAlreadyExistsError>;
 
 export const createDBUser: CreateDBUser = (db) => (user) =>
   ResultAsync.fromPromise(
     db.insert(users).values(user).returning().execute(),
-    handleDBError,
+    DBUserAlreadyExistsError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "unknown",
-              `User with uid ${user.uid} not created`,
-              undefined,
-            ),
+            DBUserAlreadyExistsError.build("User already exists", {
+              extra: { uid: user.uid },
+            }),
           ),
     )
     .andTee(infraLogger("createDBUser").info)
@@ -63,7 +65,9 @@ export const createDBUser: CreateDBUser = (db) => (user) =>
 
 export type UpdateDBUser = (
   db: DBorTx,
-) => (user: DBUserForUpdate) => ResultAsync<DBUser, DBError<"unknown">>;
+) => (
+  user: DBUserForUpdate,
+) => ResultAsync<DBUser, DBInternalError | DBUserNotFoundError>;
 
 export const updateDBUser: UpdateDBUser = (db) => (user) =>
   ResultAsync.fromPromise(
@@ -73,17 +77,15 @@ export const updateDBUser: UpdateDBUser = (db) => (user) =>
       .where(eq(users.id, user.id))
       .returning()
       .execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "unknown",
-              `User with id ${user.id} not updated`,
-              undefined,
-            ),
+            DBUserNotFoundError.build("User not found", {
+              extra: { id: user.id },
+            }),
           ),
     )
     .andTee(infraLogger("updateDBUser").info)
@@ -91,22 +93,22 @@ export const updateDBUser: UpdateDBUser = (db) => (user) =>
 
 export type DeleteDBUser = (
   db: DBorTx,
-) => (dbUser: DBUser) => ResultAsync<DBUser, DBError<"unknown">>;
+) => (
+  dbUser: DBUser,
+) => ResultAsync<DBUser, DBInternalError | DBUserNotFoundError>;
 
 export const deleteDBUser: DeleteDBUser = (db) => (user) =>
   ResultAsync.fromPromise(
     db.delete(users).where(eq(users.id, user.id)).returning().execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "unknown",
-              `User with id ${user.id} not deleted`,
-              undefined,
-            ),
+            DBUserNotFoundError.build("User not found", {
+              extra: { id: user.id },
+            }),
           ),
     )
     .andTee(infraLogger("deleteDBUser").info)

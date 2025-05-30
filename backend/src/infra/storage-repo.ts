@@ -1,7 +1,7 @@
-import { FileData, FileBucket, FilePath } from "../domain/storage";
+import { FileBucket, FileData, FilePath } from "../domain/storage";
 import { ResultAsync } from "neverthrow";
-import { handleStorageError, StorageError } from "./error/storage-error";
 import { infraLogger } from "../logger";
+import { StorageError } from "./storage-repo.error";
 
 export type UploadFile = (
   bucket: FileBucket,
@@ -20,7 +20,7 @@ export const uploadFile: UploadFile =
         });
         return url;
       })(),
-      handleStorageError,
+      StorageError.handle,
     )
       .andTee((url) => infraLogger("uploadFile").info({ url }))
       .orTee(infraLogger("uploadFile").error);
@@ -40,5 +40,5 @@ export const getDownloadUrl = (bucket: FileBucket) => (filePath: FilePath) =>
       });
       return url;
     })(),
-    handleStorageError,
+    StorageError.handle,
   ).orTee(infraLogger("getDownloadUrl").error);

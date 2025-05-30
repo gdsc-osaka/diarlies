@@ -13,24 +13,25 @@ import {
 } from "../service/error/service-error";
 import { LanguageCode } from "../domain/language";
 import db from "../db/db";
-import { fetchNearbyPlaces } from "../infra/map-repository";
+import { fetchNearbyPlaces } from "../infra/map-repo";
 import {
   createDBDiary,
   deleteDBDiary,
   fetchDBDiariesByDuration,
   fetchDBDiaryById,
-} from "../infra/diary-repository";
-import { fetchDBUserByUid } from "../infra/user-repository";
-import { generateContent } from "../infra/ai-repository";
+} from "../infra/diary-repo";
+import { fetchDBUserByUid } from "../infra/user-repo";
+import { generateContent } from "../infra/ai-repo";
 import { createMapPlaceClient } from "../domain/map";
 import { createGenAI } from "../domain/ai";
 import env from "../env";
 import { getAUthUser } from "./middleware/authorize";
-import { getDownloadUrl, uploadFile } from "../infra/storage-repository";
+import { getDownloadUrl, uploadFile } from "../infra/storage-repo";
 import diariesRoute from "./diaries.route";
-import { sendDiscordMessage } from "../infra/discord-repository";
+import { sendDiscordMessage } from "../infra/discord-repo";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
+import { createDiaryController } from "../controller/diary-controller";
 
 type Bindings = {
   GEMINI_API_KEY: string;
@@ -79,14 +80,16 @@ app.post(
       );
     }
 
-    const res = await createDiary(
-      db(),
-      fetchDBUserByUid,
-      fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
-      createDBDiary,
-      generateContent(createGenAI(env.GEMINI_API_KEY)),
-      uploadFile,
-    )(getAUthUser(c), parseResult.data); // getFirebaseToken(c)!
+    const res = await createDiaryController(
+      createDiary(
+        db(),
+        fetchDBUserByUid,
+        fetchNearbyPlaces(createMapPlaceClient(env.GOOGLE_MAPS_API_KEY)),
+        createDBDiary,
+        generateContent(createGenAI(env.GEMINI_API_KEY)),
+        uploadFile,
+      )(getAUthUser(c), parseResult.data),
+    ); // getFirebaseToken(c)!
 
     if (res.isErr()) {
       throw toHTTPException(res.error);

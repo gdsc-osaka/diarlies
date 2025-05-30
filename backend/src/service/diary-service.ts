@@ -1,6 +1,6 @@
 import z from "zod";
 import { LanguageCode } from "../domain/language";
-import { FetchNearbyPlaces } from "../infra/map-repository";
+import { FetchNearbyPlaces } from "../infra/map-repo";
 import { okAsync, Result, ResultAsync } from "neverthrow";
 import { DBorTx } from "../db/db";
 import {
@@ -14,10 +14,9 @@ import {
   FetchDBDiariesByDuration,
   FetchDBDiaryByDate,
   FetchDBDiaryById,
-} from "../infra/diary-repository";
-import { GenerateContent } from "../infra/ai-repository";
+} from "../infra/diary-repo";
+import { GenerateContent } from "../infra/ai-repo";
 import { AuthUser } from "../domain/auth";
-import { FetchDBUserByUid } from "../infra/user-repository";
 import {
   convertToDiary,
   convertToDiaryWithUser,
@@ -28,10 +27,21 @@ import {
 } from "../domain/diary";
 import { diaryGenerationPrompt, trimSystemPrompt } from "../domain/ai";
 import { match } from "ts-pattern";
-import { GetDownloadUrl, UploadFile } from "../infra/storage-repository";
+import { GetDownloadUrl, UploadFile } from "../infra/storage-repo";
 import { fileData, filePath, thumbnailStorageBucket } from "../domain/storage";
 import { id } from "../shared/func";
-import { SendDiscordMessage } from "../infra/discord-repository";
+import { SendDiscordMessage } from "../infra/discord-repo";
+import { FetchDBUserByUid } from "../infra/user-repo";
+import { DBInternalError } from "../infra/error/db-error";
+import { DBUserNotFoundError } from "../infra/user-repo.error";
+import {
+  DBDiaryAlreadyExistsError,
+  DBDiaryNotFoundError,
+} from "../infra/diary-repo.error";
+import { AIError } from "../infra/ai-repo.error";
+import { MapError } from "../infra/map-repo.error";
+import { StorageError } from "../infra/storage-repo.error";
+import { DiscordError } from "../infra/discord-repo.error";
 
 export const Image = z
   .instanceof(File)
@@ -55,7 +65,15 @@ export type CreateDiaryRequest = z.infer<typeof CreateDiaryRequest>;
 export type CreateDiary = (
   authUser: AuthUser,
   args: CreateDiaryRequest,
-) => ResultAsync<Diary, ServiceError>;
+) => ResultAsync<
+  Diary,
+  | DBInternalError
+  | DBUserNotFoundError
+  | DBDiaryAlreadyExistsError
+  | AIError
+  | MapError
+  | StorageError
+>;
 
 export const createDiary =
   (
@@ -69,13 +87,7 @@ export const createDiary =
   (authUser: AuthUser, args: CreateDiaryRequest) =>
     ResultAsync.combine([
       // check user existence
-      fetchDBUserByUid(db)(authUser.uid).mapErr((err) =>
-        match(err)
-          .with({ code: "not-found" }, () =>
-            createServiceError(StatusCode.Unauthorized, "User not found"),
-          )
-          .otherwise(id),
-      ),
+      fetchDBUserByUid(db)(authUser.uid),
       // fetch nearby places
       ResultAsync.combine(
         args.locationHistories.map((locationHistory) =>
@@ -116,16 +128,8 @@ export const createDiary =
         ).map((thumbnailUrl) => ({ diary, thumbnailUrl })),
       )
       // convert to Diary
-      .andThen(({ diary, thumbnailUrl }) => convertToDiary(diary, thumbnailUrl))
-      .mapErr((err) =>
-        match(err)
-          .with({ __brand: "ServiceError" }, id)
-          .otherwise((err) =>
-            createServiceError(
-              StatusCode.InternalServerError,
-              `Unexpected error occurred. ${err.message}`,
-            ),
-          ),
+      .andThen(({ diary, thumbnailUrl }) =>
+        convertToDiary(diary, thumbnailUrl),
       );
 
 export type FetchDiaryByDate = (
@@ -144,29 +148,19 @@ export const fetchDiaryByDate =
     fetchDBUserByUid(db)(authUser.uid)
       .mapErr((err) =>
         match(err)
-          .with(
-            {
-              __brand: "DBError",
-              code: "not-found",
-            },
-            () =>
-              createServiceError(
-                StatusCode.Unauthorized,
-                "User not found",
-                err.message,
-              ),
+          .with(DBUserNotFoundError.is, () =>
+            createServiceError(
+              StatusCode.Unauthorized,
+              "User not found",
+              err.message,
+            ),
           )
-          .with(
-            {
-              __brand: "DBError",
-              code: "unknown",
-            },
-            (e) =>
-              createServiceError(
-                StatusCode.InternalServerError,
-                "Failed to find user",
-                e.message,
-              ),
+          .with(DBInternalError.is, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to find user",
+              e.message,
+            ),
           )
           .exhaustive(),
       )
@@ -182,31 +176,21 @@ export const fetchDiaryByDate =
       )
       .mapErr((err) =>
         match(err)
-          .with(
-            {
-              __brand: "DBError",
-              code: "not-found",
-            },
-            (e) =>
-              createServiceError(
-                StatusCode.NotFound,
-                "Diary not found",
-                e.message,
-              ),
+          .with(DBDiaryNotFoundError.is, (e) =>
+            createServiceError(
+              StatusCode.NotFound,
+              "Diary not found",
+              e.message,
+            ),
           )
-          .with(
-            {
-              __brand: "DBError",
-              code: "unknown",
-            },
-            (e) =>
-              createServiceError(
-                StatusCode.InternalServerError,
-                "Failed to fetch diary",
-                e.message,
-              ),
+          .with(DBInternalError.is, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to fetch diary",
+              e.message,
+            ),
           )
-          .with({ __brand: "StorageError" }, (e) =>
+          .with(StorageError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to fetch thumbnail",
@@ -250,19 +234,14 @@ export const fetchDiariesByDuration =
       )
       .mapErr((err) =>
         match(err)
-          .with(
-            {
-              __brand: "DBError",
-              code: "unknown",
-            },
-            (e) =>
-              createServiceError(
-                StatusCode.InternalServerError,
-                "Failed to fetch diary",
-                e.message,
-              ),
+          .with(DBInternalError.is, (e) =>
+            createServiceError(
+              StatusCode.InternalServerError,
+              "Failed to fetch diary",
+              e.message,
+            ),
           )
-          .with({ __brand: "StorageError" }, (e) =>
+          .with(StorageError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to fetch thumbnail",
@@ -290,14 +269,14 @@ export const deleteDiary =
     fetchDBUserByUid(db)(authUser.uid)
       .mapErr((err) =>
         match(err)
-          .with({ __brand: "DBError", code: "not-found" }, () =>
+          .with(DBUserNotFoundError.is, () =>
             createServiceError(
               StatusCode.Unauthorized,
               "User not found",
               err.message,
             ),
           )
-          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+          .with(DBInternalError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to find user",
@@ -316,14 +295,14 @@ export const deleteDiary =
       .mapErr((err) =>
         match(err)
           .with({ __brand: "ServiceError" }, id)
-          .with({ __brand: "DBError", code: "not-found" }, (e) =>
+          .with(DBDiaryNotFoundError.is, (e) =>
             createServiceError(
               StatusCode.NotFound,
               "Diary not found",
               e.message,
             ),
           )
-          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+          .with(DBInternalError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to delete diary",
@@ -358,14 +337,14 @@ export const reportInappropriateDiary =
     fetchDBUserByUid(db)(authUser.uid)
       .mapErr((err) =>
         match(err)
-          .with({ __brand: "DBError", code: "not-found" }, () =>
+          .with(DBUserNotFoundError.is, () =>
             createServiceError(
               StatusCode.Unauthorized,
               "User not found",
               err.message,
             ),
           )
-          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+          .with(DBInternalError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to find user",
@@ -387,14 +366,14 @@ export const reportInappropriateDiary =
       .mapErr((err) =>
         match(err)
           .with({ __brand: "ServiceError" }, id)
-          .with({ __brand: "DBError", code: "not-found" }, (e) =>
+          .with(DBDiaryNotFoundError.is, (e) =>
             createServiceError(
               StatusCode.NotFound,
               "Diary not found",
               e.message,
             ),
           )
-          .with({ __brand: "DBError", code: "unknown" }, (e) =>
+          .with(DBInternalError.is, (e) =>
             createServiceError(
               StatusCode.InternalServerError,
               "Failed to report diary",
@@ -408,7 +387,7 @@ export const reportInappropriateDiary =
               "permission_denied",
             ),
           )
-          .with({ __brand: "DiscordError" }, () =>
+          .with(DiscordError.is, () =>
             createServiceError(
               StatusCode.InternalServerError,
               `Failed to send discord message.`,

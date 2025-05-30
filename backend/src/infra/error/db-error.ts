@@ -1,4 +1,5 @@
 import { DrizzleError } from "drizzle-orm";
+import { errorBuilder, ErrorType } from "../../shared/error";
 
 type DBErrorCode = "unknown" | "not-found";
 
@@ -56,3 +57,6 @@ export const createUserDBError = <T extends DBErrorCode>(
 export const handleUserDBError = (
   error: unknown,
 ): DBError<"unknown", "UserDBError"> => handleDBError(error, "UserDBError");
+
+export const DBInternalError = errorBuilder("DBInternalError");
+export type DBInternalError = ErrorType<typeof DBInternalError>;

@@ -1,15 +1,15 @@
 import { Hono } from "hono";
 import { fetchDiaryByDate } from "../service/diary-service";
 import db from "../db/db";
-import { fetchDBUserByUid } from "../infra/user-repository";
-import { fetchDBDiaryByDate } from "../infra/diary-repository";
+import { fetchDBUserByUid } from "../infra/user-repo";
+import { fetchDBDiaryByDate } from "../infra/diary-repo";
 import { getAUthUser } from "./middleware/authorize";
 import {
   createServiceError,
   StatusCode,
   toHTTPException,
 } from "../service/error/service-error";
-import { getDownloadUrl } from "../infra/storage-repository";
+import { getDownloadUrl } from "../infra/storage-repo";
 import usersDiariesRoute from "./users-diaries.route";
 
 const app = new Hono();
