@@ -2,34 +2,39 @@ import { ZodType, ZodTypeDef } from "zod/lib/types";
 
 type BaseTag = string;
 type BaseExtra = object;
+type Extra<E extends BaseExtra> = [E] extends [never]
+  ? { extra?: E }
+  : { extra: E };
 
-type BaseError<Tag extends BaseTag, Extra extends BaseExtra> = {
-  _tag: Tag;
+const TAG: unique symbol = Symbol("TAG");
+
+type BaseError<Tag extends BaseTag, Ext extends BaseExtra> = {
+  [TAG]: Tag;
   message: string;
   stack: string;
   cause?: unknown;
-  extra?: Extra;
+  extra?: Ext;
 };
 
-type ErrorOptions<Extra extends BaseExtra> = {
+type ErrorOptions<Ext extends BaseExtra> = {
   cause?: unknown;
-} & ([Extra] extends [never] ? { extra?: Extra } : { extra: Extra });
+} & Extra<Ext>;
 
 type ErrorBuilder<Tag extends BaseTag, Extra extends BaseExtra> = {
   handle: (error: unknown) => BaseError<Tag, Extra>;
-  is: { _tag: Tag };
+  is: { [TAG]: Tag };
 } & ([Extra] extends [never]
   ? {
       (message: string, options?: ErrorOptions<Extra>): BaseError<Tag, Extra>;
     }
-    // Extra が指定されていたら options で extra を設定しないとコンパイルエラーにする
-  : {
+  : // Extra が指定されていたら options で extra を設定しないとコンパイルエラーにする
+    {
       (message: string, options: ErrorOptions<Extra>): BaseError<Tag, Extra>;
     });
 
-export type InferError<
-  Builder extends { handle: (error: unknown) => BaseError<BaseTag, BaseExtra> },
-> = ReturnType<Builder["handle"]>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type InferError<Builder extends ErrorBuilder<any, any>> =
+  ReturnType<Builder>;
 
 export const errorBuilder = <
   Tag extends BaseTag,
@@ -42,7 +47,7 @@ export const errorBuilder = <
     : never,
 >(
   tag: Tag,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   extraSchema?: Extra,
 ): ErrorBuilder<Tag, ActualExtra> =>
   Object.assign(
@@ -51,9 +56,9 @@ export const errorBuilder = <
       options?: ErrorOptions<ActualExtra>,
     ): BaseError<Tag, ActualExtra> => {
       return {
-        _tag: tag,
+        [TAG]: tag,
         message: message,
-        stack: new Error().stack ?? "",
+        stack: replaceErrorName(new Error().stack, tag),
         cause: options?.cause,
         extra: options?.extra,
       };
@@ -62,22 +67,27 @@ export const errorBuilder = <
       handle: (error: unknown): BaseError<Tag, ActualExtra> => {
         if (error instanceof Error) {
           return {
-            _tag: tag,
+            [TAG]: tag,
             message: error.message,
-            stack: new Error().stack ?? "",
+            stack: replaceErrorName(new Error().stack, tag),
             cause: error,
           };
         }
 
         return {
-          _tag: tag,
+          [TAG]: tag,
           message: "An unknown error occurred",
-          stack: new Error().stack ?? "",
+          stack: replaceErrorName(new Error().stack, tag),
           cause: error,
         };
       },
       is: {
-        _tag: tag,
+        [TAG]: tag,
       },
+      zod: extraSchema,
     },
   );
+
+function replaceErrorName(stack: string | undefined, name: string): string {
+  return stack?.replace(/Error/g, name) ?? "";
+}
