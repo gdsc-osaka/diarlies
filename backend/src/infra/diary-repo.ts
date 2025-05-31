@@ -1,29 +1,33 @@
 import type { DBorTx } from "../db/db";
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
-import { createDBError, DBError, handleDBError } from "./error/db-error";
+import { DBInternalError } from "./error/db-error";
 import { DBDiary, DBDiaryForCreate, DBDiaryWithDBUser } from "../domain/diary";
 import { diaries } from "../db/schema/diaries";
 import { infraLogger } from "../logger";
 import { and, eq } from "drizzle-orm";
+import {
+  DBDiaryAlreadyExistsError,
+  DBDiaryNotFoundError,
+} from "./diary-repo.error";
 
 export type CreateDBDiary = (
   db: DBorTx,
-) => (user: DBDiaryForCreate) => ResultAsync<DBDiary, DBError<"unknown">>;
+) => (
+  diary: DBDiaryForCreate,
+) => ResultAsync<DBDiary, DBInternalError | DBDiaryAlreadyExistsError>;
 
 export const createDBDiary: CreateDBDiary = (db) => (diary) =>
   ResultAsync.fromPromise(
     db.insert(diaries).values(diary).returning().execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "unknown",
-              `Diary with uid ${diary.id} not created`,
-              undefined,
-            ),
+            DBDiaryAlreadyExistsError("Diary already exists", {
+              extra: { diaryDate: diary.diaryDate, userId: diary.userId },
+            }),
           ),
     )
     .andTee(infraLogger("createDBDiary").info)
@@ -33,22 +37,18 @@ export type FetchDBDiaryById = (
   db: DBorTx,
 ) => (
   diaryId: string,
-) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+) => ResultAsync<DBDiary, DBInternalError | DBDiaryNotFoundError>;
 
 export const fetchDBDiaryById: FetchDBDiaryById = (db) => (diaryId) =>
   ResultAsync.fromPromise(
     db.select().from(diaries).where(eq(diaries.id, diaryId)).limit(1).execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "not-found",
-              `Diary with id ${diaryId} not found`,
-              undefined,
-            ),
+            DBDiaryNotFoundError(`Diary not found`, { extra: { diaryId } }),
           ),
     )
     .orTee(infraLogger("fetchDBDiaryById").error);
@@ -58,7 +58,7 @@ export type FetchDBDiaryByDate = (
 ) => (
   userId: string,
   date: Date,
-) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+) => ResultAsync<DBDiary, DBInternalError | DBDiaryNotFoundError>;
 
 export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
   ResultAsync.fromPromise(
@@ -68,17 +68,15 @@ export const fetchDBDiaryByDate: FetchDBDiaryByDate = (db) => (userId, date) =>
       .where(and(eq(diaries.userId, userId), eq(diaries.diaryDate, date)))
       .limit(1)
       .execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "not-found",
-              `Diary with date ${date} not found`,
-              undefined,
-            ),
+            DBDiaryNotFoundError("Diary not found", {
+              extra: { userId, date },
+            }),
           ),
     )
     .orTee(infraLogger("fetchDBDiaryByDate").error);
@@ -88,7 +86,7 @@ export type FetchDBDiariesByDuration = (
 ) => (
   startDate: Date,
   endOrEqualDate: Date,
-) => ResultAsync<DBDiaryWithDBUser[], DBError<"unknown">>;
+) => ResultAsync<DBDiaryWithDBUser[], DBInternalError>;
 
 export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
   (db) => (startDate, endDate) =>
@@ -106,7 +104,7 @@ export const fetchDBDiariesByDuration: FetchDBDiariesByDuration =
           },
         },
       }),
-      handleDBError,
+      DBInternalError.handle,
     )
       .map((records) =>
         records
@@ -121,22 +119,20 @@ export type DeleteDBDiary = (
   db: DBorTx,
 ) => (
   diaryId: string,
-) => ResultAsync<DBDiary, DBError<"unknown" | "not-found">>;
+) => ResultAsync<DBDiary, DBInternalError | DBDiaryNotFoundError>;
 
 export const deleteDBDiary: DeleteDBDiary = (db) => (diaryId) =>
   ResultAsync.fromPromise(
     db.delete(diaries).where(eq(diaries.id, diaryId)).returning().execute(),
-    handleDBError,
+    DBInternalError.handle,
   )
     .andThen((records) =>
       records.length > 0
         ? okAsync(records[0])
         : errAsync(
-            createDBError(
-              "not-found",
-              `Diary with id ${diaryId} not found`,
-              undefined,
-            ),
+            DBDiaryNotFoundError("Diary not found", {
+              extra: { diaryId },
+            }),
           ),
     )
     .andTee(infraLogger("deleteDBDiary").info)

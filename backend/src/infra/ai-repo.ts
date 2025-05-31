@@ -1,8 +1,8 @@
 import { ResultAsync } from "neverthrow";
-import { AIError, handleAIError } from "./error/ai-error";
 import { infraLogger } from "../logger";
 import { GenAI, GeneratedContent } from "../domain/ai";
 import { Modality } from "@google/genai";
+import { AIError } from "./ai-repo.error";
 
 export type GenerateContent = (
   prompt: string,
@@ -47,7 +47,7 @@ export const generateContent =
           image: image?.data ? Buffer.from(image?.data, "base64") : undefined,
         };
       })(),
-      handleAIError,
+      AIError.handle,
     )
       .andTee((result) =>
         infraLogger("generateContent").info({

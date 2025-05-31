@@ -12,10 +12,9 @@ export const diaries = pgTable(
       .$defaultFn(() => createId())
       .primaryKey()
       .notNull(),
-    userId: varchar("user_id", { length: CUID_LENGTH }).references(
-      () => users.id,
-      { onDelete: "cascade" },
-    ),
+    userId: varchar("user_id", { length: CUID_LENGTH })
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
     content: varchar("content", { length: 1000 }).notNull(),
     diaryDate: date("diary_date", { mode: "date" }).notNull(),
     thumbnailPath: varchar("thumbnail_path", { length: 64 }).notNull(),

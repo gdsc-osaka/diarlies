@@ -1,8 +1,8 @@
 import { MapPlace, MapPlaceClient } from "../domain/map";
-import { okAsync, ResultAsync } from "neverthrow";
+import { ResultAsync } from "neverthrow";
 import { LanguageCode } from "../domain/language";
-import { handleMapError, MapError } from "./error/map-error";
 import { infraLogger } from "../logger";
+import { MapError } from "./map-repo.error";
 
 export interface FetchNearbyPlacesArgs {
   languageCode: LanguageCode;
@@ -41,7 +41,7 @@ export const fetchNearbyPlaces =
           },
         },
       ),
-      handleMapError,
+      MapError.handle,
     )
       .map((responses) =>
         responses
@@ -53,5 +53,3 @@ export const fetchNearbyPlaces =
           })),
       )
       .orTee(infraLogger("fetchNearbyPlaces").error);
-
-export const fakeFetchNearbyPlaces: FetchNearbyPlaces = () => okAsync([]);

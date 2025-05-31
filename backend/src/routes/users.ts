@@ -11,13 +11,13 @@ import {
   deleteDBUser,
   fetchDBUserByUid,
   updateDBUser,
-} from "../infra/user-repository";
+} from "../infra/user-repo";
 import { toHTTPException } from "../service/error/service-error";
 import db from "../db/db";
 import { getAUthUser } from "./middleware/authorize";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
-import { deleteAuthUser } from "../infra/authenticator";
+import { deleteAuthUser } from "../infra/auth-repo";
 import usersRoute from "./users.route";
 
 const app = new Hono();

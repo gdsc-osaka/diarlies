@@ -1,15 +1,11 @@
 import { errAsync, okAsync, ResultAsync } from "neverthrow";
-import {
-  createDiscordError,
-  DiscordError,
-  handleDiscordError,
-} from "./error/discord-error";
 import env from "../env";
 import { infraLogger } from "../logger";
+import { DiscordError } from "./discord-repo.error";
 
 export type SendDiscordMessage = (
   message: string,
-) => ResultAsync<void, DiscordError<"unknown">>;
+) => ResultAsync<void, DiscordError>;
 
 export const sendDiscordMessage: SendDiscordMessage = (message) =>
   ResultAsync.fromPromise(
@@ -20,17 +16,13 @@ export const sendDiscordMessage: SendDiscordMessage = (message) =>
       },
       body: JSON.stringify({ content: message }),
     }),
-    handleDiscordError,
+    DiscordError.handle,
   )
     .andThen((res) =>
       res.ok
         ? okAsync(undefined)
         : errAsync(
-            createDiscordError(
-              "unknown",
-              `Failed to send discord webhook. (${res.status})`,
-              undefined,
-            ),
+            DiscordError(`Failed to send discord webhook. (${res.status})`),
           ),
     )
     .orTee(infraLogger("sendDiscordMessage").error);

@@ -1,6 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
-import { AuthUser, verifyIdToken } from "../../infra/authenticator";
+import { AuthUser, verifyIdToken } from "../../infra/auth-repo";
 import { Context } from "hono";
 import env from "../../env";
 
