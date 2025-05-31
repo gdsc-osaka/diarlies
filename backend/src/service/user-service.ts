@@ -13,7 +13,7 @@ import {
   FetchDBUserByUid,
   UpdateDBUser,
 } from "../infra/user-repo";
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import {
   createServiceError,
   ServiceError,
@@ -22,7 +22,7 @@ import {
 import { AuthUser } from "../domain/auth";
 import z from "zod";
 import { DB, DBorTx } from "../db/db";
-import { DeleteAuthUser } from "../infra/authenticator";
+import { DeleteAuthUser } from "../infra/auth-repo";
 import { serviceLogger } from "../logger";
 import { id } from "../shared/func";
 import { DBInternalError } from "../infra/error/db-error";
@@ -30,6 +30,12 @@ import {
   DBUserAlreadyExistsError,
   DBUserNotFoundError,
 } from "../infra/user-repo.error";
+import {
+  AuthTokenRevokedError,
+  AuthUnknownError,
+  AuthUserDisabledError,
+  AuthUserNotFoundError,
+} from "../infra/auth-repo.error";
 
 export type FetchUser = (authUser: AuthUser) => ResultAsync<User, ServiceError>;
 
@@ -190,10 +196,14 @@ export const deleteUser =
           .with(DBInternalError.is, (e) =>
             createServiceError(StatusCode.InternalServerError, e.message),
           )
-          .with({ __brand: "AuthError", code: "not-found" }, (e) =>
-            createServiceError(StatusCode.NotFound, e.message),
+          .with(
+            P.union(AuthUserNotFoundError.is, AuthUserDisabledError.is),
+            (e) => createServiceError(StatusCode.NotFound, e.message),
           )
-          .with({ __brand: "AuthError" }, (e) =>
+          .with(AuthTokenRevokedError.is, (e) =>
+            createServiceError(StatusCode.Unauthorized, e.message),
+          )
+          .with(AuthUnknownError.is, (e) =>
             createServiceError(StatusCode.InternalServerError, e.message),
           )
           .with("wrong-user", () =>

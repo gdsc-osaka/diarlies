@@ -7,7 +7,6 @@ import diaries from "./routes/diaries";
 import usersDiaries from "./routes/users-diaries";
 import env from "./env";
 import { logger } from "./routes/middleware/logger";
-import { DBUserNotFoundError } from "./infra/user-repo.error";
 
 const app = new Hono();
 
@@ -24,16 +23,5 @@ serve({
   fetch: app.fetch,
   port: env.PORT,
 });
-
-console.log(
-  "test",
-  JSON.stringify(
-    DBUserNotFoundError("Test", {
-      extra: { uid: "12345" },
-    }),
-    null,
-    2,
-  ),
-);
 
 console.log("Server started");

@@ -18,6 +18,7 @@ type BaseError<Tag extends BaseTag, Ext extends BaseExtra> = {
 
 type ErrorOptions<Ext extends BaseExtra> = {
   cause?: unknown;
+  stack?: string;
 } & Extra<Ext>;
 
 type ErrorBuilder<Tag extends BaseTag, Extra extends BaseExtra> = {
@@ -47,7 +48,6 @@ export const errorBuilder = <
     : never,
 >(
   tag: Tag,
-
   extraSchema?: Extra,
 ): ErrorBuilder<Tag, ActualExtra> =>
   Object.assign(
@@ -58,7 +58,7 @@ export const errorBuilder = <
       return {
         [TAG]: tag,
         message: message,
-        stack: replaceErrorName(new Error().stack, tag),
+        stack: options?.stack ?? replaceErrorName(new Error().stack, tag),
         cause: options?.cause,
         extra: options?.extra,
       };

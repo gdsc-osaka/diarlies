@@ -17,7 +17,7 @@ import db from "../db/db";
 import { getAUthUser } from "./middleware/authorize";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
-import { deleteAuthUser } from "../infra/authenticator";
+import { deleteAuthUser } from "../infra/auth-repo";
 import usersRoute from "./users.route";
 
 const app = new Hono();
